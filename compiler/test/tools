@@ -1,0 +1,6 @@
+ldd
+gcc
+gdb
+strace 
+nm
+lstrace

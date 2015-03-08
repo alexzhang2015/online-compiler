@@ -1,0 +1,27 @@
+#g++ -o fork fork.cpp
+#strace -f -F -o out   ./fork        //get the process and childprocess Call
+
+strace -c ./fork
+ % time seconds usecs/call calls errors syscall
+ 
+ -d 输出一些strace自身的调试信息到标准输出
+ 
+  -i 
+　　 显示发生系统调用时的IP寄存器值
+　　 strace -p 14653 -i
+　　 
+　　 -o filename
+　　 指定保存strace输出信息的文件，默认使用标准错误输出stderr
+　　 
+　　  -T 
+　　 这个选项显示单个系统调用耗时
+　　 
+　　 -u username 
+　　 用指定用户的UID、GID以及辅助组身份运行待跟踪程序
+　　 
+　　 -v             //gcc just the same!
+　　 冗余显示模式
+　　 Print unabbreviated versions of environment, stat, termios, etc. calls.
+　　 These structures are very common in calls and so the default behavior 
+　　 displays a reasonable subset of structure members. Use this option to 
+　　 get all of the gory details.

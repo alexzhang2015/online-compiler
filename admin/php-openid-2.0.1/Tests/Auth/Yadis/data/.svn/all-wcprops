@@ -1,0 +1,143 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data
+END
+spoof1.xrds
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/spoof1.xrds
+END
+spoof2.xrds
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/spoof2.xrds
+END
+spoof3.xrds
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/spoof3.xrds
+END
+test1-discover.txt
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/test1-discover.txt
+END
+test1-xrd.xml
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/test1-xrd.xml
+END
+ref.xrds
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/ref.xrds
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/README
+END
+prefixsometimes.xrds
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/prefixsometimes.xrds
+END
+sometimesprefix.xrds
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/sometimesprefix.xrds
+END
+delegated-20060809.xrds
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/delegated-20060809.xrds
+END
+brian.multi.xrds
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/brian.multi.xrds
+END
+no-xrd.xml
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/no-xrd.xml
+END
+pip.xrds
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/pip.xrds
+END
+example-xrds.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/example-xrds.xml
+END
+brian.xrds
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/brian.xrds
+END
+brian_priority.xrds
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/brian_priority.xrds
+END
+test1-parsehtml.txt
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/test1-parsehtml.txt
+END
+accept.txt
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/accept.txt
+END
+not-xrds.xml
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/not-xrds.xml
+END
+uri_priority.xrds
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/uri_priority.xrds
+END
+brian.multi_uri.xrds
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/brian.multi_uri.xrds
+END
+delegated-20060809-r1.xrds
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/delegated-20060809-r1.xrds
+END
+delegated-20060809-r2.xrds
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Tests/Auth/Yadis/data/delegated-20060809-r2.xrds
+END

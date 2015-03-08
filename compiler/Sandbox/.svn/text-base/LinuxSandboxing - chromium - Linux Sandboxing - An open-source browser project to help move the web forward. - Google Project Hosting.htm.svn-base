@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)http://code.google.com/p/chromium/wiki/LinuxSandboxing -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <link rel="icon" type="image/vnd.microsoft.icon" href="http://www.gstatic.com/codesite/ph/images/phosting.ico">
+ 
+ <script type="text/javascript">
+ 
+ 
+ 
+ 
+ var codesite_token = "4b97527dac6a4c3601204328ef379f00";
+ 
+ 
+ var CS_env = {"token":"4b97527dac6a4c3601204328ef379f00","assetHostPath":"http://www.gstatic.com/codesite/ph","domainName":null,"assetVersionPath":"http://www.gstatic.com/codesite/ph/303820367469322170","projectName":"chromium","projectHomeUrl":"/p/chromium","absoluteBaseUrl":"http://code.google.com","relativeBaseUrl":"","urlPrefix":"p","loggedInUserEmail":"zch051383471952@gmail.com"};
+ </script>
+ 
+ 
+ <title>LinuxSandboxing - 
+ chromium -
+ 
+ Linux Sandboxing - 
+ An open-source browser project to help move the web forward. - Google Project Hosting
+ </title>
+ 
+ <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+ 
+ <meta name="ROBOTS" content="NOARCHIVE">
+ 
+ <link type="text/css" rel="stylesheet" href="./LinuxSandboxing - chromium - Linux Sandboxing - An open-source browser project to help move the web forward. - Google Project Hosting_files/ph_core.css">
+ 
+ <link type="text/css" rel="stylesheet" href="./LinuxSandboxing - chromium - Linux Sandboxing - An open-source browser project to help move the web forward. - Google Project Hosting_files/ph_detail.css">
+ 
+ 
+ 
+ <link type="application/atom+xml" rel="alternate" href="http://code.google.com/feeds/p/chromium/svnchanges/basic?path=/wiki/LinuxSandboxing.wiki">
+ 
+ 
+<!--[if IE]>
+ <link type="text/css" rel="stylesheet" href="http://www.gstatic.com/codesite/ph/303820367469322170/css/d_ie.css" >
+<![endif]-->
+ <style type="text/css">
+ .menuIcon.off { background: no-repeat url(http://www.gstatic.com/codesite/ph/images/dropdown_sprite.gif) 0 -42px }
+ .menuIcon.on { background: no-repeat url(http://www.gstatic.com/codesite/ph/images/dropdown_sprite.gif) 0 -28px }
+ .menuIcon.down { background: no-repeat url(http://www.gstatic.com/codesite/ph/images/dropdown_sprite.gif) 0 0; }
+ 
+ 
+ #maincol {
+ padding-top: 0;
+ padding-bottom: 0;
+ }
+
+ </style>
+<script type="text/javascript" async="" src="./LinuxSandboxing - chromium - Linux Sandboxing - An open-source browser project to help move the web forward. - Google Project Hosting_files/ga.js"></script></head>
+<body class="t6">
+ <script type="text/javascript">
+ var _gaq = _gaq || [];
+ _gaq.push(
+ ['siteTracker._setAccount', 'UA-18071-1'],
+ ['siteTracker._trackPageview']);
+ 
+ (function() {
+ var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+ (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+ })();
+ </script>
+<div class="headbg">
+ <div id="gaia">
+ 
+
+ <span>
+ 
+ 
+ <b>zch051383471952@gmail.com</b>
+ 
+ 
+ | <a href="http://code.google.com/u/zch051383471952/" id="projects-dropdown" onclick="return false;"><u>My favorites</u> <small>▼</small></a>
+ | <a href="http://code.google.com/u/zch051383471952/" onclick="_CS_click(&#39;/gb/ph/profile&#39;);" title="Profile, Updates, and Settings"><u>Profile</u></a>
+ | <a href="https://www.google.com/accounts/Logout?continue=http%3A%2F%2Fcode.google.com%2Fp%2Fchromium%2Fwiki%2FLinuxSandboxing" onclick="_CS_click(&#39;/gb/ph/signout&#39;);"><u>Sign out</u></a>
+ 
+ </span>
+
+ </div>
+ <div class="gbh" style="left: 0pt;"></div>
+ <div class="gbh" style="right: 0pt;"></div>
+ 
+ 
+ <div style="height: 1px"></div>
+<!--[if lte IE 7]>
+<div style="text-align:center;">
+Your version of Internet Explorer is not supported. Try a browser that
+contributes to open source, such as <a href="http://www.firefox.com">Firefox</a>,
+<a href="http://www.google.com/chrome">Google Chrome</a>, or
+<a href="http://code.google.com/chrome/chromeframe/">Google Chrome Frame</a>.
+</div>
+<![endif]-->
+
+
+
+
+ <table style="padding:0px; margin: 0px 0px 10px 0px; width:100%" cellpadding="0" cellspacing="0">
+ <tbody><tr style="height: 58px;">
+ 
+ <td id="plogo">
+ <a href="http://code.google.com/p/chromium/">
+ 
+ 
+ <img src="./LinuxSandboxing - chromium - Linux Sandboxing - An open-source browser project to help move the web forward. - Google Project Hosting_files/logo" alt="Logo">
+ 
+ </a>
+ </td>
+ 
+ <td style="padding-left: 0.5em">
+ 
+ <div id="pname">
+ <a href="http://code.google.com/p/chromium/">chromium</a>
+ </div>
+ 
+ <div id="psum">
+ <a id="project_summary_link" href="http://code.google.com/p/chromium/">An open-source browser project to help move the web forward.</a>
+ 
+ </div>
+ 
+ 
+ </td>
+ <td style="white-space:nowrap;text-align:right; vertical-align:bottom;">
+ 
+ <form action="http://code.google.com/hosting/search">
+ <input size="30" name="q" value="" type="text">
+ <input type="submit" name="projectsearch" value="Search projects">
+ </form>
+ 
+ </td></tr>
+ </tbody></table>
+
+</div>
+
+ 
+<div id="mt" class="gtb"> 
+ <a href="http://code.google.com/p/chromium/" class="tab ">Project&nbsp;Home</a>
+ 
+ 
+ 
+ 
+ <a href="http://code.google.com/p/chromium/downloads/list" class="tab ">Downloads</a>
+ 
+ 
+ 
+ 
+ 
+ <a href="http://code.google.com/p/chromium/w/list" class="tab active">Wiki</a>
+ 
+ 
+ 
+ 
+ 
+ <a href="http://code.google.com/p/chromium/issues/list" class="tab ">Issues</a>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ <div class="gtbc"></div>
+</div>
+<table cellspacing="0" cellpadding="0" width="100%" align="center" border="0" class="st">
+ <tbody><tr>
+ 
+ 
+ 
+ <td class="subt">
+ <div class="issueDetail">
+<div class="isf">
+ 
+ <span class="inIssueList"> 
+ <span>Search</span>
+ <form action="http://code.google.com/p/chromium/w/list" method="GET" style="display:inline">
+ <select id="can" name="can" style="font-size:92%">
+ <option disabled="disabled">Search within:</option>
+ 
+ <option value="1">&nbsp;All wiki pages</option>
+ <option value="3">&nbsp;Featured pages</option>
+ <option value="2" selected="selected">&nbsp;Current pages</option>
+ 
+ 
+ <option value="5">&nbsp;My starred pages</option>
+ 
+ <option value="4">&nbsp;Deprecated pages</option>
+ 
+ </select>
+ <span>for</span>
+ <span id="qq"><input type="text" size="38" id="searchq" name="q" value="" autocomplete="off" style="font-size:92%"></span>
+ 
+ 
+ <input type="submit" value="Search" style="font-size:92%">
+ </form>
+ </span>
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+</div>
+</div>
+
+ </td>
+ 
+ 
+ 
+ 
+ 
+ 
+ <td align="right" valign="top" class="bevel-right"></td>
+ </tr>
+</tbody></table>
+<script type="text/javascript">
+ var cancelBubble = false;
+ function _go(url) { document.location = url; }
+</script>
+
+
+<div id="maincol">
+
+ 
+<!-- IE -->
+
+
+
+
+
+
+
+ <style type="text/css">
+ .delcom { background: #e8e8e8 }
+ .commentcontent {
+ margin: 2em;
+ padding: 0px 10px;
+ width: 66em;
+ }
+ .artifactcomment {
+ border-top: 3px solid #c3d9ff;
+ }
+ #commentform {
+ border-top: 3px solid #c3d9ff;
+ }
+ </style>
+
+<div id="wikipage">
+<table>
+ <tbody><tr>
+ 
+ 
+ <td style="vertical-align:top; padding-left:5px">
+ 
+ <div id="wikiheader">
+ 
+ <img width="15" height="15" id="star_img" src="./LinuxSandboxing - chromium - Linux Sandboxing - An open-source browser project to help move the web forward. - Google Project Hosting_files/star_off.gif" style="cursor:pointer" onclick="_CS_toggleStar(this,
+ &#39;&#39;,
+ {&#39;scope&#39;: &#39;wiki&#39;,
+ &#39;user&#39;: &#39;_CURRENT_USER&#39;,
+ &#39;item&#39;: &#39;chromium:LinuxSandboxing&#39;,
+ &#39;token&#39;: codesite_token
+ });">
+ 
+ <span style="font-size:120%;font-weight:bold">LinuxSandboxing</span>
+ &nbsp;
+ <div> 
+ 
+ <i>Linux Sandboxing</i>
+ 
+ 
+ 
+ <div id="wikiauthor" style="float:right">
+ Updated <span title="Fri Mar  5 07:25:52 2010">
+ Mar 5, 2010</span>
+ 
+ by <a style="white-space: nowrap" href="http://code.google.com/u/mseaborn@chromium.org/">mseaborn@chromium.org</a>
+ 
+ </div>
+ </div>
+ </div>
+ 
+ <div id="wikicontent">
+ <div class="vt" id="wikimaincol">
+ <p>Chromium uses a multiprocess model where each tab (roughly) is a separate process which performs IPCs to a UI process. This means that we can do parallel rendering and withstand crashes in the renderer. It also means that we are able to sandbox the renderers on Windows. </p><p>The Chromium sandbox is an important part of keeping users safe. The web is a very complicated place these days and the code to parse and interpret it is large and on the front-line of security. We try to make sure that this code is free of security bugs, but history suggests that we can't be perfect. So, we plan for the case where someone has an exploit against our rendering code and run it in its own process with limited authority. It's the sandbox's job to limit that authority as much as possible. </p><p>Chromium renderers need very little authority. They need access to fontconfig to find fonts on the system and to open those font files. However, these can be handled as IPC requests to the browser process. They do not need access to the X server (which is why we don't have GTK widgets on web pages), nor should they be able to access DBus, which is increasingly powerful these days. </p><p>Drawing is handled using SysV shared memory (so that we can share memory directly with X). Everything else is either serialised over a socketpair or passed using a file descriptor to a tmpfs file. This means that we can deny filesystem access completely. The renderer requires no network access: the network stack is entirely within the browser process. </p><h2><a name="The_SUID_sandbox"></a>The SUID sandbox<a href="http://code.google.com/p/chromium/wiki/LinuxSandboxing#The_SUID_sandbox" class="section_anchor"></a></h2><p><i>Main page: <a href="http://code.google.com/p/chromium/wiki/LinuxSUIDSandbox">LinuxSUIDSandbox</a></i> </p><p>(we need to readd a path restriction and remove the environment hack since we switched to 64-bit mode). This sandbox is currently used in most packages: </p><p><a href="http://src.chromium.org/viewvc/chrome/trunk/src/sandbox/linux/suid/" rel="nofollow">http://src.chromium.org/viewvc/chrome/trunk/src/sandbox/linux/suid/</a> </p><h2><a name="The_seccomp_sandbox"></a>The <tt>seccomp</tt> sandbox<a href="http://code.google.com/p/chromium/wiki/LinuxSandboxing#The_seccomp_sandbox" class="section_anchor"></a></h2><p>Currently building by default, but not enabled by default. </p><p>See: </p><ul><li><a href="http://www.imperialviolet.org/2009/08/26/seccomp.html" rel="nofollow">http://www.imperialviolet.org/2009/08/26/seccomp.html</a> </li><li><a href="http://lwn.net/Articles/346902/" rel="nofollow">http://lwn.net/Articles/346902/</a> </li><li><a href="http://src.chromium.org/viewvc/chrome/trunk/src/sandbox/linux/seccomp/" rel="nofollow">http://src.chromium.org/viewvc/chrome/trunk/src/sandbox/linux/seccomp/</a> </li><li><a href="http://code.google.com/p/seccompsandbox/" rel="nofollow">http://code.google.com/p/seccompsandbox/</a> </li></ul><p></p><h2><a name="SELinux"></a>SELinux<a href="http://code.google.com/p/chromium/wiki/LinuxSandboxing#SELinux" class="section_anchor"></a></h2><p>One can build Chromium with <tt>selinux=1</tt> and the renderers will do a dynamic transition. audit2allow will quickly build a usable module. </p><p><a href="http://src.chromium.org/viewvc/chrome?view=rev&revision=26257" rel="nofollow">http://src.chromium.org/viewvc/chrome?view=rev&amp;revision=26257</a> <a href="http://www.imperialviolet.org/2009/07/14/selinux.html" rel="nofollow">http://www.imperialviolet.org/2009/07/14/selinux.html</a>  (grep for 'dynamic' since dynamic transitions are a little obscure in SELinux) </p><h2><a name="AppArmor"></a>AppArmor<a href="http://code.google.com/p/chromium/wiki/LinuxSandboxing#AppArmor" class="section_anchor"></a></h2><p>Available on Ubuntu and openSUSE (XXX where else?). </p><p>It triggers based on the path of the binary. We can hard link <tt>/opt/chromium.org/chromium/chrome-renderer</tt> to <tt>chrome</tt> and have different triggers for each. </p><p>The configs are kept in <tt>/etc/apparmor.d</tt> and here's one which works for our renderers: </p><pre class="prettyprint"><span class="com">#include</span><span class="pln"> </span><span class="pun">&lt;</span><span class="pln">tunables</span><span class="pun">/</span><span class="kwd">global</span><span class="pun">&gt;</span><span class="pln"><br><br></span><span class="str">/dev/</span><span class="pln">chromium</span><span class="pun">/</span><span class="pln">chrome</span><span class="pun">/</span><span class="typ">Hammer</span><span class="pun">/</span><span class="pln">chrome</span><span class="pun">-</span><span class="pln">renderer </span><span class="pun">{</span><span class="pln"><br>&nbsp;</span><span class="com">#include</span><span class="pln"> </span><span class="pun">&lt;</span><span class="pln">abstractions</span><span class="pun">/</span><span class="kwd">base</span><span class="pun">&gt;</span><span class="pln"><br>&nbsp;</span><span class="com">#include</span><span class="pln"> </span><span class="pun">&lt;</span><span class="pln">abstractions</span><span class="pun">/</span><span class="pln">fonts</span><span class="pun">&gt;</span><span class="pln"><br><br>&nbsp;</span><span class="str">/proc/</span><span class="pun">**</span><span class="pln"> r</span><span class="pun">,</span><span class="pln"><br>&nbsp;</span><span class="str">/dev/</span><span class="pln">shm</span><span class="com">/** rwk,<br>&nbsp;/dev/chromium/chrome/Hammer/** r,<br>&nbsp;network,<br>}</span></pre><p>The <tt>/dev/shm</tt> access is needed because we still have to change the visited link table to use capabilities, not names. The "network" line grants full network access, which is very unfortunate. It seems that Apparmor thinks UNIX domain sockets are <tt>AF_INET</tt> and it cannot distinguish between socket creation and use. There may be ways around this, but I suspect it'll involve kernel patches. I can do that and push upstream, but it'll take time to deploy and we have do the best we can with what we've got. </p><p>If you drop this in a file in <tt>/etc/apparmor.d</tt>, then you can load the profile in enforcing mode with: </p><pre class="prettyprint"><span class="com"># apparmor_parser -r &lt;filename&gt;</span></pre><p>You can also put it in 'complain' mode (where violations are logged to <tt>dmesg</tt>) with: </p><pre class="prettyprint"><span class="com"># apparmor_parser -Cr &lt;filename&gt;</span></pre><h2><a name="See_also"></a>See also<a href="http://code.google.com/p/chromium/wiki/LinuxSandboxing#See_also" class="section_anchor"></a></h2><ul><li><a href="http://code.google.com/p/chromium/wiki/LinuxSandboxIPC">LinuxSandboxIPC</a> </li><li><a href="http://code.google.com/p/nativeclient/wiki/LinuxOuterSandbox" rel="nofollow">How Chromium's Linux sandbox affects Native Client</a> </li></ul>
+ </div>
+ </div>
+ </td></tr><tr>
+</tr></tbody></table>
+ </div>
+
+
+ 
+ <div id="wikicommentcol">
+ 
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+<div class="collapse">
+
+
+ 
+
+
+<div id="commentlist">
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VRJVQFBXARBNXwV1/">brin...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Tue Jun  2 13:44:13 2009">Jun 2, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>I blogged about SELinux and Chrome a while back, it has some helpful information, though it would need to be expanded quite a bit: <a href="http://securityblog.org/brindle/2008/09/02/web-browsers-security-and-google-chrome/" rel="nofollow">http://securityblog.org/brindle/2008/09/02/web-browsers-security-and-google-chrome/</a> </p><p>Also, Ubuntu has both Apparmor and SELinux built in the kernel, you can only use 1 at a time, specified on the kernel command line. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VxhRQlRYBxVFXgN8/">morri...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Jun  3 02:03:11 2009">Jun 3, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>To get help with SELinux sandboxing, please contact the SELinux mailing list: <a href="http://www.nsa.gov/research/selinux/list.shtml" rel="nofollow">http://www.nsa.gov/research/selinux/list.shtml</a> </p><p>There's also a Fedora SELinux mailing list: <a href="http://www.redhat.com/mailman/listinfo/fedora-selinux-list" rel="nofollow">http://www.redhat.com/mailman/listinfo/fedora-selinux-list</a> </p><p>Dan Walsh has been doing some work on sandboxing recently, see his blog post @: <a href="http://danwalsh.livejournal.com/28545.html" rel="nofollow">http://danwalsh.livejournal.com/28545.html</a> </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBBTRl1QDxJBVwN5Eg%3D%3D/">cdid...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Jun  3 02:11:11 2009">Jun 3, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>selinux is right way of doing this </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBBeRlRQDhZEWAl1GA%3D%3D/">gnomeu...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Jun  3 05:34:53 2009">Jun 3, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>Ubuntu are supposedly investigating SELinux to replace AppArmor<a href="http://code.google.com/p/chromium/w/edit/AppArmor">?</a> and openSUSE now also ships SELinux support. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by  project member 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VBdUQldUAhNCWgJ1/">michael....@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Jun  3 06:02:54 2009">Jun 3, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>SELinux has been <strong>the</strong> sandboxing technology for Linux for quite some time now. </p><p>Novell tried to re-invent the wheel with AppArmor<a href="http://code.google.com/p/chromium/w/edit/AppArmor">?</a>, but how is the state of it today? Is it still actively maintained by someone after Novell stopped development? Has it been accepted into the kernel like SELinux? I'm not sure actually but I think it still requires manual patching. </p><p>Right, both Ubuntu (for some time) and openSUSE (since 11.1) also ship SELinux, at least to some extend. Both don't enable it by default but then again, how is their support for AppArmor<a href="http://code.google.com/p/chromium/w/edit/AppArmor">?</a> by default? Ubuntu only ships AppArmor<a href="http://code.google.com/p/chromium/w/edit/AppArmor">?</a> profiles for a few selected services like CUPS and MySQL for example. </p><p>So, Fedora currently is the only Distribution shipping with a working sandbox (SELinux) enabled by default. IMHO Chrome on linux should use this and just keep the "no sandbox" option for distributions which don't see the need for it. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VBhQSl1QBhRBVgB%2B/">rhat...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Jun  3 07:17:34 2009">Jun 3, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>This would actually be fairly simple in SELinux, similar to what we have done with nsplugin.  Just a matter of setting up a domain for the renderer and allowing user domains (unconfined_t) to transition to the domain.   </p><p>SELinux is standard on Fedora, Red Hat Enterprise Linux, Centos, and all other distributions based on RHEL.  SELinux also works on Debian, Gentoo, Ubuntu and is currently turned on in Suse, I believe. </p><p>We would be willing to work with you on SELinux and Chromium integration. </p><p>dwalsh@redhat.com </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@WBdUS1RTABNNWwZ8/">nthdeg...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Sun Aug 29 02:30:19 2010">Aug 29, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>I'll start by saying I use Fedora and that I love SELinux; but it isn't the only in-kernel solution. LSM means there are many competing solutions in-kernel and despite what many believe; they are used throughout different distros as default: </p><ul><li>AppArmor<a href="http://code.google.com/p/chromium/w/edit/AppArmor">?</a>? - Ubuntu (and derivatives), OpenSuSE, SLED/SLES  </li><li>TOMOYO - Mandriva, Turbolinux </li><li>SELinux - RHEL (and clones), Fedora </li></ul><p>(NOTE: AppArmor<a href="http://code.google.com/p/chromium/w/edit/AppArmor">?</a>? is going mainline and Debian has not chosen any additional form of access control beyond DAC as default. I suspect they'll eventually push AA.) </p><p>Now, would anyone in their right mind go and use SELinux/AppArmor<a href="http://code.google.com/p/chromium/w/edit/AppArmor">?</a>?/TOMOYO as the solution for sandboxing Chrome? I hope not. Defensive programming using what is available across distros is the real solution, with SELinux policies being added to reference policy as modules and AppArmor<a href="http://code.google.com/p/chromium/w/edit/AppArmor">?</a>? policies being derived per-distro as an afterthought. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+</div>
+</div>
+
+ 
+
+
+ <script type="text/javascript">
+ function delComment(sequence_num, create_time, delete_mode) {
+ var f = document.forms["delcom"];
+ f.sequence_num.value = sequence_num;
+ f.create_time.value = create_time;
+ f.mode.value = delete_mode;
+ f.submit();
+ return false;
+ }
+ </script>
+
+
+ </div>
+ 
+
+
+
+ 
+ 
+ <div id="commentform">
+ <form action="http://code.google.com/p/chromium/w/detail.do" method="post">
+ <table>
+ <tbody><tr><td class="vt">
+ <input type="hidden" name="pagename" value="LinuxSandboxing">
+ <input type="hidden" name="token" value="4b97527dac6a4c3601204328ef379f00">
+ <div class="graytext" style="float: right;">
+ Hint: You can use <a href="http://code.google.com/p/support/wiki/WikiSyntax">Wiki Syntax.</a>
+ </div>
+ <div>Enter a comment:</div>
+ <textarea name="content" rows="6" cols="100"></textarea><br><br>
+ <input type="submit" name="submit" value="Submit">
+ </td>
+ </tr></tbody></table>
+ </form>
+ </div>
+ 
+ 
+ 
+<form name="delcom" action="http://code.google.com/p/chromium/w/delComment.do" method="POST">
+ <input type="hidden" name="sequence_num" value="">
+ <input type="hidden" name="create_time" value="">
+ <input type="hidden" name="mode" value="">
+ <input type="hidden" name="pagename" value="LinuxSandboxing">
+ <input type="hidden" name="token" value="4b97527dac6a4c3601204328ef379f00">
+</form>
+
+
+
+ <script src="./LinuxSandboxing - chromium - Linux Sandboxing - An open-source browser project to help move the web forward. - Google Project Hosting_files/prettify.js"></script>
+ <script type="text/javascript">
+ prettyPrint();
+ </script>
+
+<script type="text/javascript" src="./LinuxSandboxing - chromium - Linux Sandboxing - An open-source browser project to help move the web forward. - Google Project Hosting_files/dit_scripts.js"></script>
+
+
+
+  
+ 
+ <script type="text/javascript" src="./LinuxSandboxing - chromium - Linux Sandboxing - An open-source browser project to help move the web forward. - Google Project Hosting_files/core_scripts.js"></script>
+ <script type="text/javascript" src="./LinuxSandboxing - chromium - Linux Sandboxing - An open-source browser project to help move the web forward. - Google Project Hosting_files/codesite_product_dictionary_ph.pack.04102009.js"></script>
+</div> 
+<div id="footer" dir="ltr">
+ 
+ <div class="text">
+ 
+ ©2011 Google -
+ <a href="http://code.google.com/projecthosting/terms.html">Terms</a> -
+ <a href="http://www.google.com/privacy.html">Privacy</a> -
+ <a href="http://code.google.com/p/support/">Project Hosting Help</a>
+ 
+ </div>
+</div>
+ <div class="hostedBy" style="margin-top: -20px;">
+ <span style="vertical-align: top;">Powered by <a href="http://code.google.com/projecthosting/">Google Project Hosting</a></span>
+ </div>
+ 
+ 
+
+
+ 
+ 
+
+
+
+<div class="menuDiv instance0" id="menuDiv-projects-dropdown" style="position: absolute; display: none; top: 19px; left: 1064px; "><b class="categoryTitle projects" style="display: block; ">Projects</b><div class="menuCategory projects first"><a class="menuItem" style="display: block; " href="http://code.google.com/p/alex-design-pattern/">alex-design-pattern</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/alexcompiler/">alexcompiler</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/alexids/">alexids</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/qt4tools/">qt4tools</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/shell-simulator/">shell-simulator</a></div><b class="categoryTitle starred_projects" style="display: block; ">Starred projects</b><div class="menuCategory starred_projects"><a class="menuItem" style="display: block; " href="http://code.google.com/p/beansdb/">beansdb</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/connectbot/">connectbot</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/dsgfdgfd/">dsgfdgfd</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/emscripten/">emscripten</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/etherpad/">etherpad</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/freenos/">freenos</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/gappproxy/">gappproxy</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/gime/">gime</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/google-caja/">google-caja</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/googleappengine/">googleappengine</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/googlecl/">googlecl</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/gpuocelot/">gpuocelot</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/httpsqs/">httpsqs</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/iredmail/">iredmail</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/jquery-api-zh-cn/">jquery-api-zh-cn</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/jsbeautifier/">jsbeautifier</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/kenos/">kenos</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/latex-lab/">latex-lab</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/living-stories/">living-stories</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/minixlottery/">minixlottery</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/mytracks/">mytracks</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/namebench/">namebench</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/nativeclient/">nativeclient</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/noop/">noop</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/ofetion/">ofetion</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/phpvirtualbox/">phpvirtualbox</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/protobuf/">protobuf</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/pubsubhubbub/">pubsubhubbub</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/py-omegle/">py-omegle</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/pysqlite/">pysqlite</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/pywebkitgtk/">pywebkitgtk</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/pywebsocket/">pywebsocket</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/quake2-gwt-port/">quake2-gwt-port</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/rawtherapee/">rawtherapee</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/sandboxed/">sandboxed</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/scholarzhang/">scholarzhang</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/simplecd/">simplecd</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/skipfish/">skipfish</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/sshtunnel/">sshtunnel</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/tubewall/">tubewall</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/v8/">v8</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/vmxark/">vmxark</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/wave-cards/">wave-cards</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/web-shell/">web-shell</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/west-chamber-season-2/">west-chamber-season-2</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/wnp/">wnp</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/writeos/">writeos</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/yapgvb/">yapgvb</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/zen-coding/">zen-coding</a><a class="menuItem" style="display: block; " href="http://code.google.com/p/zimbu/">zimbu</a></div><b class="categoryTitle starred_products" style="display: block; ">Starred products</b><div class="menuCategory starred_products"><a class="menuItem" style="display: block; " href="http://code.google.com/apis/accounts/">Google Account Authentication</a><a class="menuItem" style="display: block; " href="http://code.google.com/apis/analytics/">Google Analytics</a><a class="menuItem" style="display: block; " href="http://code.google.com/android/">Android</a><a class="menuItem" style="display: block; " href="http://code.google.com/appengine/">Google App Engine</a><a class="menuItem" style="display: block; " href="http://code.google.com/apis/charttools/">Chart Tools</a><a class="menuItem" style="display: block; " href="http://code.google.com/chrome/">Google Chrome</a><a class="menuItem" style="display: block; " href="http://code.google.com/chromium/">Chromium</a><a class="menuItem" style="display: block; " href="http://code.google.com/closure/">Closure Tools (Labs)</a><a class="menuItem" style="display: block; " href="http://code.google.com/apis/desktop/">Google Desktop APIs (Labs)</a><a class="menuItem" style="display: block; " href="http://code.google.com/edu/">Google Code University</a><a class="menuItem" style="display: block; " href="http://code.google.com/apis/latitude/">Google Latitude API (Labs)</a><a class="menuItem" style="display: block; " href="http://code.google.com/soc/">Google Summer of Code</a><a class="menuItem" style="display: block; " href="http://code.google.com/apis/spreadsheets/">Google Spreadsheets Data API (Labs)</a><a class="menuItem" style="display: block; " href="http://code.google.com/apis/wave">Google Wave API (Labs)</a><a class="menuItem" style="display: block; " href="http://code.google.com/webtoolkit/">Google Web Toolkit</a></div><div class="menuCategory controls"><hr class="menuSeparator"><a class="menuItem" style="display: block; " href="http://code.google.com/more/">Find developer products...</a><a class="menuItem" style="display: block; " href="http://code.google.com/hosting/">Find open source projects...</a></div></div></body></html>

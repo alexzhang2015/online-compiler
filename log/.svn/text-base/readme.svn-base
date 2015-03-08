@@ -1,0 +1,64 @@
+   Originally,i want to write a log javascript to trace the user ip,os,browser,
+but it's complicated ,so use some tools implement the tools.
+1.Google Analytics
+Excellent tools ,
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-10642680-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+2.Site Meter
+
+
+<!-- Site Meter -->
+<script type="text/javascript" src="http://s32.sitemeter.com/js/counter.js?site=s32alexzhang">
+</script>
+<noscript>
+<a href="http://s32.sitemeter.com/stats.asp?site=s32alexzhang" target="_top">
+<img src="http://s32.sitemeter.com/meter.asp?site=s32alexzhang" alt="Site Meter" border="0"/></a>
+</noscript>
+<!-- Copyright (c)2009 Site Meter -->
+
+Thanks for creating a Site Meter account for your web site. You'll need
+to save this message because it contains the codename and password
+for your account. You'll need them when you want to login to your
+account on Site Meter.
+
+Your codename is   s32alexzhang
+Your password is   BALUBO
+
+To track the traffic to your site, there are two versions of the
+Site Meter HTML available. One uses javascript and the other doesn't.
+The javascript Site Meter can be more difficult to add to a page
+(when using some HTML editors), but it allows you to track the
+original URL from which your visitors came before linking to your
+site. Because many  email servers will filter out emails that
+contain javascript or even HTML, it was not included
+in this email.
+
+You can get the HTML for your account and the instructions for
+adding it by logging into Site Meter at http://www.sitemeter.com and
+selecting the MANAGER link from the top of the page. Then, from the
+account manager page, select "HTML CODE" to get the HTML for your
+account. From the account manager page, you can also make changes
+to your Site Meter account like updating your email address, your
+site's url, or the style of your counter.
+
+If you have any questions about Site Meter please first check the
+help page at http://www.sitemeter.com/?a=supportfaq
+If you don't find your answer or have any ideas on how
+the service can be improved, please feel free to contact me at
+webmaster@sitemeter.com. We will respond to emails as quickly as
+possible.
+
+Thanks,
+
+The Site Meter Team
+SiteMeter.com
+

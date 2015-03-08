@@ -1,0 +1,506 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0044)http://elinux.org/Runtime_Memory_Measurement -->
+<html lang="en" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Runtime Memory Measurement - eLinux.org</title>
+
+<meta name="generator" content="MediaWiki 1.16.0">
+<link rel="shortcut icon" href="http://elinux.org/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="http://elinux.org/opensearch_desc.php" title="eLinux.org (en)">
+<link title="Creative Commons" type="application/rdf+xml" href="http://elinux.org/index.php?title=Runtime_Memory_Measurement&action=creativecommons" rel="meta">
+<link rel="copyright" href="http://www.gnu.org/licenses/old-licenses/fdl-1.2.txt">
+<link rel="alternate" type="application/atom+xml" title="eLinux.org Atom feed" href="http://elinux.org/index.php?title=Special:RecentChanges&feed=atom">
+<link rel="stylesheet" href="http://elinux.org/skins/common/shared.css?270" media="screen">
+<link rel="stylesheet" href="http://elinux.org/skins/common/commonPrint.css?270" media="print">
+<link rel="stylesheet" href="http://elinux.org/skins/monobook/main.css?270" media="screen">
+<!--[if lt IE 5.5000]><link rel="stylesheet" href="/skins/monobook/IE50Fixes.css?270" media="screen" /><![endif]-->
+<!--[if IE 5.5000]><link rel="stylesheet" href="/skins/monobook/IE55Fixes.css?270" media="screen" /><![endif]-->
+<!--[if IE 6]><link rel="stylesheet" href="/skins/monobook/IE60Fixes.css?270" media="screen" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" href="/skins/monobook/IE70Fixes.css?270" media="screen" /><![endif]-->
+<link rel="stylesheet" href="http://elinux.org/index.php?title=MediaWiki:Common.css&usemsgcache=yes&ctype=text%2Fcss&smaxage=18000&action=raw&maxage=18000">
+<link rel="stylesheet" href="http://elinux.org/index.php?title=MediaWiki:Print.css&usemsgcache=yes&ctype=text%2Fcss&smaxage=18000&action=raw&maxage=18000" media="print">
+<link rel="stylesheet" href="http://elinux.org/index.php?title=MediaWiki:Monobook.css&usemsgcache=yes&ctype=text%2Fcss&smaxage=18000&action=raw&maxage=18000">
+<link rel="stylesheet" href="http://elinux.org/index.php?title=-&action=raw&maxage=18000&gen=css">
+<script>
+var skin="monobook",
+stylepath="/skins",
+wgUrlProtocols="http\\:\\/\\/|https\\:\\/\\/|ftp\\:\\/\\/|irc\\:\\/\\/|gopher\\:\\/\\/|telnet\\:\\/\\/|nntp\\:\\/\\/|worldwind\\:\\/\\/|mailto\\:|news\\:|svn\\:\\/\\/",
+wgArticlePath="/$1",
+wgScriptPath="",
+wgScriptExtension=".php",
+wgScript="/index.php",
+wgVariantArticlePath=false,
+wgActionPaths={},
+wgServer="http://elinux.org",
+wgCanonicalNamespace="",
+wgCanonicalSpecialPageName=false,
+wgNamespaceNumber=0,
+wgPageName="Runtime_Memory_Measurement",
+wgTitle="Runtime Memory Measurement",
+wgAction="view",
+wgArticleId=1694,
+wgIsArticle=true,
+wgUserName=null,
+wgUserGroups=null,
+wgUserLanguage="en",
+wgContentLanguage="en",
+wgBreakFrames=false,
+wgCurRevisionId=33841,
+wgVersion="1.16.0",
+wgEnableAPI=true,
+wgEnableWriteAPI=true,
+wgSeparatorTransformTable=["", ""],
+wgDigitTransformTable=["", ""],
+wgMainPageTitle="Main Page",
+wgFormattedNamespaces={"-2": "Media", "-1": "Special", "0": "", "1": "Talk", "2": "User", "3": "User talk", "4": "eLinux.org", "5": "eLinux.org talk", "6": "File", "7": "File talk", "8": "MediaWiki", "9": "MediaWiki talk", "10": "Template", "11": "Template talk", "12": "Help", "13": "Help talk", "14": "Category", "15": "Category talk"},
+wgNamespaceIds={"media": -2, "special": -1, "": 0, "talk": 1, "user": 2, "user_talk": 3, "elinux.org": 4, "elinux.org_talk": 5, "file": 6, "file_talk": 7, "mediawiki": 8, "mediawiki_talk": 9, "template": 10, "template_talk": 11, "help": 12, "help_talk": 13, "category": 14, "category_talk": 15, "image": 6, "image_talk": 7},
+wgSiteName="eLinux.org",
+wgCategories=["System Size"],
+wgRestrictionEdit=[],
+wgRestrictionMove=[];
+</script><script src="./Runtime Memory Measurement - eLinux.org_files/wikibits.js"></script>
+<script src="./Runtime Memory Measurement - eLinux.org_files/ajax.js"></script>
+<script src="./Runtime Memory Measurement - eLinux.org_files/index.php"></script>
+
+</head>
+<body class="mediawiki ltr ns-0 ns-subject page-Runtime_Memory_Measurement skin-monobook">
+<div id="globalWrapper">
+<div id="column-content"><div id="content">
+	<a id="top"></a>
+	<div id="siteNotice"><p>eLinux.org - Embedded Linux Wiki
+</p></div>
+	<h1 id="firstHeading" class="firstHeading">Runtime Memory Measurement</h1>
+	<div id="bodyContent">
+		<h3 id="siteSub">From eLinux.org</h3>
+		<div id="contentSub"></div>
+		<div id="jump-to-nav">Jump to: <a href="http://elinux.org/Runtime_Memory_Measurement#column-one">navigation</a>, <a href="http://elinux.org/Runtime_Memory_Measurement#searchInput">search</a></div>
+		<!-- start content -->
+<p>This page has a collection of ideas and resources having to do with measuring runtime memory
+of a Linux system.
+</p><p>Unfortunately, the existing memory measurement techniques do not give a 100% accurate 
+accounting of memory pages (since some pages are counted more than once by some measures).
+See <a href="http://elinux.org/Accurate_Memory_Measurement" title="Accurate Memory Measurement">Accurate Memory Measurement</a> - that page describes techniques (and patches) which can 
+be used to measure the runtime memory more accurately.
+</p>
+<table id="toc" class="toc"><tbody><tr><td><div id="toctitle"><h2>Contents</h2> <span class="toctoggle">[<a id="togglelink" class="internal" href="javascript:toggleToc()">hide</a>]</span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="http://elinux.org/Runtime_Memory_Measurement#Measuring_memory_in_Linux_.28the_basics.29"><span class="tocnumber">1</span> <span class="toctext">Measuring memory in Linux (the basics)</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="http://elinux.org/Runtime_Memory_Measurement#.27free.27_and_.2Fproc"><span class="tocnumber">1.1</span> <span class="toctext">'free' and /proc</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-3"><a href="http://elinux.org/Runtime_Memory_Measurement#Measuring_user_process_memory_use"><span class="tocnumber">2</span> <span class="toctext">Measuring user process memory use</span></a>
+<ul>
+<li class="toclevel-2 tocsection-4"><a href="http://elinux.org/Runtime_Memory_Measurement#.27ps.27_fields_for_memory_information"><span class="tocnumber">2.1</span> <span class="toctext">'ps' fields for memory information</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="http://elinux.org/Runtime_Memory_Measurement#.27top.27_fields_for_memory_information"><span class="tocnumber">2.2</span> <span class="toctext">'top' fields for memory information</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="http://elinux.org/Runtime_Memory_Measurement#.2Fproc_info"><span class="tocnumber">2.3</span> <span class="toctext">/proc info</span></a>
+<ul>
+<li class="toclevel-3 tocsection-7"><a href="http://elinux.org/Runtime_Memory_Measurement#.2Fproc.2F.3Cpid.3E.2Fstatm"><span class="tocnumber">2.3.1</span> <span class="toctext">/proc/&lt;pid&gt;/statm</span></a></li>
+<li class="toclevel-3 tocsection-8"><a href="http://elinux.org/Runtime_Memory_Measurement#.2Fproc.2F.3Cpid.3E.2Fstatus"><span class="tocnumber">2.3.2</span> <span class="toctext">/proc/&lt;pid&gt;/status</span></a></li>
+<li class="toclevel-3 tocsection-9"><a href="http://elinux.org/Runtime_Memory_Measurement#.2Fproc.2F.3Cpid.3E.2Fmaps"><span class="tocnumber">2.3.3</span> <span class="toctext">/proc/&lt;pid&gt;/maps</span></a>
+<ul>
+<li class="toclevel-4 tocsection-10"><a href="http://elinux.org/Runtime_Memory_Measurement#mem_usage_command_to_consolidate_data"><span class="tocnumber">2.3.3.1</span> <span class="toctext">mem_usage command to consolidate data</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-11"><a href="http://elinux.org/Runtime_Memory_Measurement#Inaccuracies_of_kernel_reporting_mechanisms"><span class="tocnumber">2.4</span> <span class="toctext">Inaccuracies of kernel reporting mechanisms</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="http://elinux.org/Runtime_Memory_Measurement#Heap_memory_usage"><span class="tocnumber">2.5</span> <span class="toctext">Heap memory usage</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-13"><a href="http://elinux.org/Runtime_Memory_Measurement#Memory_Debuggers"><span class="tocnumber">3</span> <span class="toctext">Memory Debuggers</span></a></li>
+<li class="toclevel-1 tocsection-14"><a href="http://elinux.org/Runtime_Memory_Measurement#Measuring_kernel_memory_use"><span class="tocnumber">4</span> <span class="toctext">Measuring kernel memory use</span></a>
+<ul>
+<li class="toclevel-2 tocsection-15"><a href="http://elinux.org/Runtime_Memory_Measurement#Kernel_Stack_Usage"><span class="tocnumber">4.1</span> <span class="toctext">Kernel Stack Usage</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="http://elinux.org/Runtime_Memory_Measurement#General_kernel_memory_use"><span class="tocnumber">4.2</span> <span class="toctext">General kernel memory use</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></tbody></table><script>if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<h2> <span class="mw-headline" id="Measuring_memory_in_Linux_.28the_basics.29"> Measuring memory in Linux (the basics) </span></h2>
+<p>Here are some basic techniques for measuring memory usage in Linux.
+</p>
+<h3> <span class="mw-headline" id=".27free.27_and_.2Fproc"> 'free' and /proc </span></h3>
+<p>The 'free' command shows the memory on a machine, in certain categories.
+</p><p>[need explanation of categories here...'man free' doesn't explain the numbers]
+</p><p><br>
+</p>
+<pre>$ free
+             total       used       free     shared    buffers     cached
+Mem:        507564     481560      26004          0      68888     185220
+-/+ buffers/cache:     227452     280112
+Swap:      2136604     105168    2031436
+</pre>
+<p><br>
+This information is obtained from /proc/meminfo, which has additional details not shown
+by the 'free' command.
+</p><p>The following is on my machine with 512 Mb RAM, running Linux 2.6.3:
+</p>
+<pre>$ cat /proc/meminfo
+MemTotal:       507564 kB
+MemFree:         26004 kB
+Buffers:         68888 kB
+Cached:         185220 kB
+SwapCached:      29348 kB
+Active:         342488 kB
+Inactive:        32092 kB
+HighTotal:           0 kB
+HighFree:            0 kB
+LowTotal:       507564 kB
+LowFree:         26004 kB
+SwapTotal:     2136604 kB
+SwapFree:      2031436 kB
+Dirty:              88 kB
+Writeback:           0 kB
+Mapped:         165648 kB
+Slab:            73212 kB
+Committed_AS:   343172 kB
+PageTables:       2644 kB
+VmallocTotal:   524212 kB
+VmallocUsed:      7692 kB
+VmallocChunk:   516328 kB
+</pre>
+<p>See <a href="http://lwn.net/Articles/28345/" class="external free" rel="nofollow">http://lwn.net/Articles/28345/</a> for a description of these fields
+</p>
+<h2> <span class="mw-headline" id="Measuring_user_process_memory_use"> Measuring user process memory use </span></h2>
+<h3> <span class="mw-headline" id=".27ps.27_fields_for_memory_information"> 'ps' fields for memory information </span></h3>
+<p>The 'ps' command provides information about the memory usage of processes on a Linux system.
+However, it is not well documented.  Here are some notes on using 'ps' and /proc to view
+memory usage information on a running Linux system:
+</p><p>meaning of ps fields:
+</p>
+<ul><li>&nbsp;%Mem - percent of memory
+</li><li> VSZ - Virtual Size
+</li><li> RSS - Resident Set Size
+</li><li> SIZE - Equivalent to VSZ
+</li><li> others??
+</li></ul>
+<h3> <span class="mw-headline" id=".27top.27_fields_for_memory_information"> 'top' fields for memory information </span></h3>
+<p>See 'man top':
+</p>
+<ul><li>&nbsp;%MEM  --  Memory usage (RES)
+<ul><li><ul><li> A task's currently used share of available physical memory.
+</li></ul>
+</li></ul>
+</li></ul>
+<ul><li> VIRT  --  Virtual Image (kb)
+<ul><li><ul><li> The  total  amount  of virtual memory used by the task.  It includes all code, data and  shared  libraries  plus  pages  that  have  been swapped out.
+</li><li> VIRT = SWAP + RES
+</li></ul>
+</li></ul>
+</li></ul>
+<ul><li> SWAP  --  Swapped size (kb)
+<ul><li><ul><li> The swapped out portion of a task's total virtual memory image.
+</li></ul>
+</li></ul>
+</li></ul>
+<ul><li> RES  --  Resident size (kb)
+<ul><li><ul><li><ul><li> The non-swapped physical memory a task has used.
+</li><li> RES = CODE + DATA.
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+<ul><li> CODE  --  Code size (kb)
+<ul><li><ul><li><ul><li> The amount of physical memory devoted to executable code, also known as the 'text resident set' size or TRS
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+<ul><li> DATA  --  Data+Stack size (kb)
+<ul><li><ul><li><ul><li> The amount of physical memory devoted to other than executable code, also known as the 'data resident set' size or DRS.
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+<ul><li> SHR  --  Shared Mem size (kb)
+<ul><li><ul><li><ul><li> The amount of shared memory used by a task.  It simply reflects memory that could be potentially shared with other processes.
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+<ul><li> nDRT  --  Dirty Pages count
+<ul><li><ul><li><ul><li> The number of pages that have been modified  since  they  were  last written  to  disk.   Dirty  pages must be written to disk before the corresponding physical memory location can be used  for  some  other virtual page.
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+<p>Are the following assertions true:??
+</p>
+<ul><li> virtual memory usage of a process, excluding shared libs = VIRT - SHR
+</li><li> physical memory usage of a process excluding shared libraries = RES - SHR
+</li></ul>
+<h3> <span class="mw-headline" id=".2Fproc_info"> /proc info </span></h3>
+<p>see 'man proc' for detailed information about the files and fields in the /proc filesystem.
+</p>
+<h4> <span class="mw-headline" id=".2Fproc.2F.3Cpid.3E.2Fstatm"> /proc/&lt;pid&gt;/statm </span></h4>
+<p>/proc/&lt;pid&gt;/statm fields:
+columns are (in pages):
+</p>
+<ul><li> size       total program size
+</li><li> resident   resident set size
+</li><li> share      shared pages
+</li><li> trs        text (code)
+</li><li> drs        data/stack
+</li><li> lrs        library
+</li><li> dt         dirty pages
+</li></ul>
+<p>Here an example:
+693 406 586 158 0 535 0
+</p>
+<h4> <span class="mw-headline" id=".2Fproc.2F.3Cpid.3E.2Fstatus"> /proc/&lt;pid&gt;/status </span></h4>
+<p>/proc/&lt;pid&gt;/status fields:
+</p>
+<ul><li> Vm Size:     2772 kB
+</li><li> Vm Lck:         0 kB -&nbsp;???
+</li><li> Vm RSS:      1624 kB
+</li><li> Vm Data:      404 kB
+</li><li> Vm Stk:        24 kB
+</li><li> Vm Exe:       608 kB
+</li><li> Vm Lib:      1440 kB
+</li></ul>
+<h4> <span class="mw-headline" id=".2Fproc.2F.3Cpid.3E.2Fmaps"> /proc/&lt;pid&gt;/maps </span></h4>
+<p>The process maps shows the actual memory areas that have been mapped into a process' address space,
+and their permissions.
+</p><p>Example:
+</p>
+<pre>$ cat /proc/25042/maps
+08048000-080e0000 r-xp 00000000 03:05 196610     /bin/bash
+080e0000-080e6000 rw-p 00097000 03:05 196610     /bin/bash
+080e6000-08148000 rwxp 00000000 00:00 0
+40000000-40016000 r-xp 00000000 03:05 147471     /lib/ld-2.3.3.so
+40016000-40017000 rw-p 00015000 03:05 147471     /lib/ld-2.3.3.so
+40017000-40018000 rw-p 00000000 00:00 0
+40018000-40019000 r--p 00000000 03:05 184090     /usr/share/locale/en_US/LC_IDENTIFICATION
+40019000-4001a000 r--p 00000000 03:05 184089     /usr/share/locale/en_US/LC_MEASUREMENT
+4001a000-4001b000 r--p 00000000 03:05 184083     /usr/share/locale/en_US/LC_TELEPHONE
+4001b000-4001c000 r--p 00000000 03:05 184091     /usr/share/locale/en_US/LC_ADDRESS
+4001c000-4001d000 r--p 00000000 03:05 184086     /usr/share/locale/en_US/LC_NAME
+4001d000-4001e000 r--p 00000000 03:05 184084     /usr/share/locale/en_US/LC_PAPER
+4001e000-4001f000 r--p 00000000 03:05 184088     /usr/share/locale/en_US/LC_MESSAGES/SYS_LC_MESSAGES
+4001f000-40020000 r--p 00000000 03:05 184087     /usr/share/locale/en_US/LC_MONETARY
+40020000-40026000 r--p 00000000 03:05 183689     /usr/share/locale/ISO-8859-1/LC_COLLATE
+40026000-40027000 r--p 00000000 03:05 184082     /usr/share/locale/en_US/LC_TIME
+40027000-4002a000 r-xp 00000000 03:05 147459     /lib/libtermcap.so.2.0.8
+4002a000-4002b000 rw-p 00002000 03:05 147459     /lib/libtermcap.so.2.0.8
+4002b000-4002c000 rw-p 00000000 00:00 0
+4002c000-4002e000 r-xp 00000000 03:05 147482     /lib/libdl-2.3.3.so
+4002e000-4002f000 rw-p 00001000 03:05 147482     /lib/libdl-2.3.3.so
+4002f000-40171000 r-xp 00000000 03:05 147511     /lib/tls/libc-2.3.3.so
+40171000-40174000 rw-p 00142000 03:05 147511     /lib/tls/libc-2.3.3.so
+40174000-40177000 rw-p 00000000 00:00 0
+40177000-40178000 r--p 00000000 03:05 184085     /usr/share/locale/en_US/LC_NUMERIC
+40178000-401a4000 r--p 00000000 03:05 183688     /usr/share/locale/ISO-8859-1/LC_CTYPE
+401a4000-401a5000 r-xp 00000000 03:05 180462     /usr/lib/gconv/ISO8859-1.so
+401a5000-401a6000 rw-p 00001000 03:05 180462     /usr/lib/gconv/ISO8859-1.so
+401b3000-401bd000 r-xp 00000000 03:05 147492     /lib/libnss_files-2.3.3.so
+401bd000-401be000 rw-p 00009000 03:05 147492     /lib/libnss_files-2.3.3.so
+bfffa000-c0000000 rwxp ffffb000 00:00 0
+ffffe000-fffff000 ---p 00000000 00:00 0
+</pre>
+<p><br>
+</p>
+<h5> <span class="mw-headline" id="mem_usage_command_to_consolidate_data"> mem_usage command to consolidate data </span></h5>
+<p>David Schleef wrote a program to consolidate the information from /proc/&lt;pid&gt;/maps, and total
+up each kind of memory for a process.
+</p><p>Here it is: <a href="http://elinux.org/images/d/d3/Mem_usage" class="internal" title="Mem usage">Media:mem_usage</a>
+(It was obtained from <a href="http://www.schleef.org/~ds/mem_usage" class="external free" rel="nofollow">http://www.schleef.org/~ds/mem_usage</a>)
+</p><p>Here is the result of running mem_usage on the process used in the previous example:
+</p>
+<pre>$ ./mem_usage 25042
+Backed by file:
+  Executable                r-x  2048
+  Write/Exec (jump tables)  rwx  0
+  RO data                   r--  240
+  Data                      rw-  56
+  Unreadable                ---  0
+  Unknown                        0
+Anonymous:
+  Writable code (stack)     rwx  416
+  Data (malloc, mmap)       rw-  20
+  RO data                   r--  0
+  Unreadable                ---  4
+  Unknown                        0
+</pre>
+<p><br>
+</p>
+<h3> <span class="mw-headline" id="Inaccuracies_of_kernel_reporting_mechanisms"> Inaccuracies of kernel reporting mechanisms </span></h3>
+<p>Many of the memory reporting mechanisms for the kernel are inaccurate, due to not recording
+sufficient information about the true state of the system.  Here are some random notes on these
+inaccuracies.  To see information on different methods of getting more accurate memory information,
+see <a href="http://elinux.org/Accurate_Memory_Measurement" title="Accurate Memory Measurement">Accurate Memory Measurement</a>
+</p>
+<ul><li> "copy-on-write" pages - an mmap'ed file may be very large in the process address space, but empty until written to.
+</li></ul>
+<p>From Ratboy on Slashdot:
+</p>
+<pre>The mmap() call can map a file (backing store) and allow data to be shared. Memory does
+not need to be used until the data is read (or written). And this time, the backing
+store doesn't even need swap (because the file is the backing store).
+
+...
+
+A page of code that is shared - may become a page of code that is private. A page of
+data that is unwritten doesn't have to exist. Even if it is read! A page of data that
+is written may STILL be shared.
+</pre>
+<p><br>
+From others on Slashdot:
+</p><p>Top will show you the same as ps does, ps reads /proc/&lt;pid&gt;/statm and asks what's
+going on. The problem on linux is the copy on write principle wich saves heaps of
+memory, but makes it virtually impossible to figure out what belongs to what. The
+thing is, when you fork it maps the memory and marks everything as copy on write,
+when something needs to write to part of the memory, then it will make the copy for
+each process.
+</p><p>However asking the process how much memory it has allocated will show all memory
+including stuff that is marked copy on write - that is, I could have 100 processes
+showing they each use 1.4MB of memory, because they all share the same libray,
+but in fact, its the same copy they are all using so I'm only using 1.4 MB instead
+of 140MB (+PCB et. al)
+</p>
+<hr>
+<p>Each thread in a process shows up as consuming the same amount of memory
+(either this only happens under Linuxthreads or I don't have any threaded
+applications running on my system).
+</p><p>Device mappings show up as consumed memory (which generates plenty of
+complaints about the X server). If you want to find out how much memory X
+is actually using (bytes in cached pixmaps on behalf of each process and sans
+device mappings), try the program here: <a href="http://69.142.116.122/dist/pixmap_mem-1.0.tgz" class="external free" rel="nofollow">http://69.142.116.122/dist/pixmap_mem-1.0.tgz</a>
+</p><p>This contains a tiny program that lists how much memory X is using for other
+programs by caching pixmaps and a perl script that lists how much memory X is
+using sans device mappings.
+}}}
+</p>
+<ul><li> pmap is a utility which shows the memory usage of a process (it looks like it just reads and interprets /proc/&lt;pid&gt;/maps).
+</li></ul>
+<p>Someone on Slashdot said:
+</p>
+<pre>pmap *also* overestimates memory usage, because some portion of the mapped address
+space isn't actually in use. RSS, on the other hand, only measures memory that is
+actually in use, but doesn't distinguish between memory that is shared and memory
+that is not. VSZ is the most pessimistic measure, since it includes all mapped
+memory, shared and unshared.
+</pre>
+<h3> <span class="mw-headline" id="Heap_memory_usage"> <a href="http://elinux.org/Heap_memory" title="Heap memory">Heap memory</a> usage </span></h3>
+<p>Heap is the dynamically allocated memory inside each process' address space that is
+managed by the application itself.  The structure of this memory is actually managed by
+the C library, with the application calling malloc() and free().
+</p><p>glibc has the capability to collect statistics information of heap functions like malloc()
+and other functions like memory leak checking or double free.
+</p>
+<h2> <span class="mw-headline" id="Memory_Debuggers"> Memory Debuggers </span></h2>
+<p>Several tools are available to analyze memory allocations, watch for reading and writing
+beyond the end of allocated memory, and do other tasks which help with debugging and tuning
+memory operations of a program. See <a href="http://elinux.org/Memory_Debuggers" title="Memory Debuggers">Memory Debuggers</a> for a list of different
+tools and their features.
+</p>
+<h2> <span class="mw-headline" id="Measuring_kernel_memory_use"> Measuring kernel memory use </span></h2>
+<h3> <span class="mw-headline" id="Kernel_Stack_Usage"> Kernel Stack Usage </span></h3>
+<ul><li> Tim is adding a stack checking function to KFT (See <a href="http://elinux.org/Kernel_Function_Trace" title="Kernel Function Trace">Kernel Function Trace</a>)
+<ul><li><ul><li> This new feature has not yet been published
+</li></ul>
+</li></ul>
+</li><li> Recent -mm tree added stack-corruption-detector.patch (8th March, 2006)
+</li><li> The scripts/checkstack.pl script in the kernel tree will show the functions with the largest static stack footprint.
+</li><li> Enabling CONFIG_DEBUG_STACKOVERFLOW in the kernel will enable checking for low-stack situations in the irq handler.
+</li><li> Enabling CONFIG_4KSTACKS will cause stack overflows to occur more frequently, particularly with certain kernel code such as XFS enabled.
+</li></ul>
+<h3> <span class="mw-headline" id="General_kernel_memory_use"> General kernel memory use </span></h3>
+<ul><li> <a href="http://www.halobates.de/memorywaste.pdf" class="external free" rel="nofollow">http://www.halobates.de/memorywaste.pdf</a> - Great paper by Andi Kleen, of SUSE Labs, about dynamic memory usage of Linux systems
+</li><li> Check /proc/slabinfo to find how much memory is being used by the kernel SLAB allocator (or SLUB or SLOB, depending on what is enabled).
+</li></ul>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 118/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key elinux:pcache:idhash:1694-0!1!0!!en!2!edit=0 and timestamp 20110405151220 -->
+<div class="printfooter">
+Retrieved from "<a href="./Runtime Memory Measurement - eLinux.org_files/Runtime Memory Measurement - eLinux.org.htm">http://elinux.org/Runtime_Memory_Measurement</a>"</div>
+		<div id="catlinks" class="catlinks"><div id="mw-normal-catlinks"><a href="http://elinux.org/Special:Categories" title="Special:Categories">Category</a>: <span dir="ltr"><a href="http://elinux.org/Category:System_Size" title="Category:System Size">System Size</a></span></div></div>		<!-- end content -->
+				<div class="visualClear"></div>
+	</div>
+</div></div>
+<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+				 <li id="ca-nstab-main" class="selected"><a href="./Runtime Memory Measurement - eLinux.org_files/Runtime Memory Measurement - eLinux.org.htm" title="View the content page [alt-c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk" class="new"><a href="http://elinux.org/index.php?title=Talk:Runtime_Memory_Measurement&action=edit&redlink=1" title="Discussion about the content page [alt-t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-viewsource"><a href="http://elinux.org/index.php?title=Runtime_Memory_Measurement&action=edit" title="This page is protected.
+You can view its source [alt-e]" accesskey="e">View source</a></li>
+				 <li id="ca-history"><a href="http://elinux.org/index.php?title=Runtime_Memory_Measurement&action=history" title="Past revisions of this page [alt-h]" accesskey="h">History</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-login"><a href="http://elinux.org/index.php?title=Special:UserLogin&returnto=Runtime_Memory_Measurement" title="You are encouraged to log in; however, it is not mandatory [alt-o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(/images/3/34/Final_penguin_only_color.jpg);" href="http://elinux.org/Main_Page" title="Visit the main page"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class="generated-sidebar portlet" id="p-navigation">
+		<h5>Navigation</h5>
+		<div class="pBody">
+			<ul>
+				<li id="n-mainpage"><a href="http://elinux.org/Main_Page" title="Visit the main page [alt-z]" accesskey="z">Main Page</a></li>
+				<li id="n-portal"><a href="http://elinux.org/eLinux.org:Community_portal" title="About the project, what you can do, where to find things">Community portal</a></li>
+				<li id="n-currentevents"><a href="http://elinux.org/eLinux.org:Current_events" title="Find background information on current events">Current events</a></li>
+				<li id="n-recentchanges"><a href="http://elinux.org/Special:RecentChanges" title="The list of recent changes in the wiki [alt-r]" accesskey="r">Recent changes</a></li>
+				<li id="n-help"><a href="http://elinux.org/Help:Contents" title="The place to find out">Help</a></li>
+				<li id="n-Volunteering"><a href="http://elinux.org/Sitesupport-url">Volunteering</a></li>
+				<li id="n-Popular-Pages"><a href="http://elinux.org/Special:PopularPages">Popular Pages</a></li>
+				<li id="n-Who.27s-Online"><a href="http://elinux.org/Special:WhosOnline">Who's Online</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="http://elinux.org/index.php" id="searchform">
+				<input type="hidden" name="title" value="Special:Search">
+				<input id="searchInput" title="Search eLinux.org" accesskey="f" type="search" name="search">
+				<input type="submit" name="go" class="searchButton" id="searchGoButton" value="Go" title="Go to a page with this exact name if exists">&nbsp;
+				<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text">
+			</form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="http://elinux.org/Special:WhatLinksHere/Runtime_Memory_Measurement" title="List of all wiki pages that link here [alt-j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="http://elinux.org/Special:RecentChangesLinked/Runtime_Memory_Measurement" title="Recent changes in pages linked from this page [alt-k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="http://elinux.org/Special:SpecialPages" title="List of all special pages [alt-q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="http://elinux.org/index.php?title=Runtime_Memory_Measurement&printable=yes" rel="alternate" title="Printable version of this page [alt-p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="http://elinux.org/index.php?title=Runtime_Memory_Measurement&oldid=33841" title="Permanent link to this revision of the page">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+</div><!-- end of the left (by default at least) column -->
+<div class="visualClear"></div>
+<div id="footer">
+	<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="./Runtime Memory Measurement - eLinux.org_files/poweredby_mediawiki_88x31.png" height="31" width="88" alt="Powered by MediaWiki"></a></div>
+	<div id="f-copyrightico"><a href="http://www.gnu.org/licenses/old-licenses/fdl-1.2.txt"><img src="./Runtime Memory Measurement - eLinux.org_files/gnu-fdl.png" alt="GNU Free Documentation License 1.2" width="88" height="31"></a></div>
+	<ul id="f-list">
+		<li id="lastmod"> This page was last modified on 5 February 2011, at 00:56.</li>
+		<li id="viewcount">This page has been accessed 16,798 times.</li>
+		<li id="copyright">Content is available under <a href="http://www.gnu.org/licenses/old-licenses/fdl-1.2.txt" class="external ">GNU Free Documentation License 1.2</a>.</li>
+		<li id="privacy"><a href="http://elinux.org/eLinux.org:Privacy_policy" title="eLinux.org:Privacy policy">Privacy policy</a></li>
+		<li id="about"><a href="http://elinux.org/eLinux.org:About" title="eLinux.org:About">About eLinux.org</a></li>
+		<li id="disclaimer"><a href="http://elinux.org/eLinux.org:General_disclaimer" title="eLinux.org:General disclaimer">Disclaimers</a></li>
+	</ul>
+</div>
+</div>
+
+<script>if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.083 secs. -->
+</body></html>

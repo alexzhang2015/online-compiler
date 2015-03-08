@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0036)http://linux.die.net/man/2/setrlimit -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>setrlimit(2): get/set resource limits - Linux man page</title>
+<link rel="stylesheet" type="text/css" href="./setrlimit(2)  get set resource limits - Linux man page_files/white.css">
+<link rel="shortcut icon" href="http://linux.die.net/favicon.ico" type="image/x-icon">
+<meta name="viewport" content="width=800,maximum-scale=1.0">
+<meta name="description" content="getrlimit() and setrlimit() get and set resource limits respectively. Each resource has an associated soft and hard limit, as defined by the rlimit ...">
+</head>
+
+<body bgcolor="#ffffff" text="#333333" link="#660000" vlink="#660000" alink="#000000">
+<div id="bg"><div id="content">
+
+<!-- google_ad_section_start -->
+<h1>setrlimit(2) - Linux man page</h1>
+
+<h2>Name</h2>
+
+<p>getrlimit, setrlimit - get/set resource limits
+</p><h2>Synopsis</h2>
+
+<p><b>#include &lt;<a href="http://linux.die.net/include/sys/time.h" rel="nofollow">sys/time.h</a>&gt;<br>
+#include &lt;<a href="http://linux.die.net/include/sys/resource.h" rel="nofollow">sys/resource.h</a>&gt;</b>
+</p><p><b>int getrlimit(int</b> <i>resource</i><b>, struct rlimit *</b><i>rlim</i><b>);<br>
+int setrlimit(int</b> <i>resource</i><b>, const struct rlimit *</b><i>rlim</i><b>);</b>
+</p><h2>Description</h2>
+
+<p><b>getrlimit</b>() and <b>setrlimit</b>() get and set resource limits respectively. Each resource has an associated soft and hard limit, as defined by the
+<i>rlimit</i> structure (the <i>rlim</i> argument to both <b>getrlimit</b>() and <b>setrlimit</b>()):
+</p><dl compact="">
+<dd>
+
+<pre class="code">struct rlimit {
+    rlim_t rlim_cur;  /* Soft limit */
+    rlim_t rlim_max;  /* Hard limit (ceiling for rlim_cur) */
+};</pre>
+</dd><dt>The soft limit is the value that the kernel enforces for the corresponding resource. The hard limit acts as a ceiling for the soft limit: an unprivileged
+process may only set its soft limit to a value in the range from 0 up to the hard limit, and (irreversibly) lower its hard limit. A privileged process (under
+Linux: one with the <b>CAP_SYS_RESOURCE</b> capability) may make arbitrary changes to either limit value.
+<p>The value <b>RLIM_INFINITY</b> denotes no limit on a resource (both in the structure returned by <b>getrlimit</b>() and in the structure passed to
+<b>setrlimit</b>()).
+</p><p><i>resource</i> must be one of:
+</p></dt><dt><b>RLIMIT_AS</b>
+</dt><dd>The maximum size of the process's virtual memory (address space) in bytes. This limit affects calls to <b><a href="http://linux.die.net/man/2/brk">brk</a></b>(2), <b><a href="http://linux.die.net/man/2/mmap">mmap</a></b>(2) and <b><a href="http://linux.die.net/man/2/mremap">mremap</a></b>(2),
+which fail with the error <b>ENOMEM</b> upon exceeding this limit. Also automatic stack expansion will fail (and generate a <b>SIGSEGV</b> that kills the
+process if no alternate stack has been made available via <b><a href="http://linux.die.net/man/2/sigaltstack">sigaltstack</a></b>(2)). Since the value is a <i>long</i>, on machines with a 32-bit <i>long</i>
+either this limit is at most 2 GiB, or this resource is unlimited.
+</dd><dt><b>RLIMIT_CORE</b>
+</dt><dd>Maximum size of <i>core</i> file. When 0 no core dump files are created. When non-zero, larger dumps are truncated to this size.
+</dd><dt><b>RLIMIT_CPU</b>
+</dt><dd>CPU time limit in seconds. When the process reaches the soft limit, it is sent a <b>SIGXCPU</b> signal. The default action for this signal is to terminate
+the process. However, the signal can be caught, and the handler can return control to the main program. If the process continues to consume CPU time, it will
+be sent <b>SIGXCPU</b> once per second until the hard limit is reached, at which time it is sent <b>SIGKILL</b>. (This latter point describes Linux 2.2 through
+2.6 behaviour. Implementations vary in how they treat processes which continue to consume CPU time after reaching the soft limit. Portable applications that
+need to catch this signal should perform an orderly termination upon first receipt of <b>SIGXCPU</b>.)
+</dd><dt><b>RLIMIT_DATA</b>
+</dt><dd>The maximum size of the process's data segment (initialized data, uninitialized data, and heap). This limit affects calls to <b>brk</b>() and <b>sbrk</b>(),
+which fail with the error <b>ENOMEM</b> upon encountering the soft limit of this resource.
+</dd><dt><b>RLIMIT_FSIZE</b>
+</dt><dd>The maximum size of files that the process may create. Attempts to extend a file beyond this limit result in delivery of a <b>SIGXFSZ</b> signal. By
+default, this signal terminates a process, but a process can catch this signal instead, in which case the relevant system call (e.g., <b>write</b>()
+<b>truncate</b>()) fails with the error <b>EFBIG</b>.
+</dd><dt><b>RLIMIT_LOCKS</b> (Early Linux 2.4 only)
+</dt><dd>A limit on the combined number of <b>flock</b>() locks and <b>fcntl</b>() leases that this process may establish.
+</dd><dt><b>RLIMIT_MEMLOCK</b>
+</dt><dd>The maximum number of bytes of memory that may be locked into RAM. In effect this limit is rounded down to the nearest multiple of the system page size.
+This limit affects <b><a href="http://linux.die.net/man/2/mlock">mlock</a></b>(2) and <b><a href="http://linux.die.net/man/2/mlockall">mlockall</a></b>(2) and the <b><a href="http://linux.die.net/man/2/mmap" rel="nofollow">mmap</a></b>(2) <b>MAP_LOCKED</b> operation. Since Linux 2.6.9 it also affects the
+<b><a href="http://linux.die.net/man/2/shmctl">shmctl</a></b>(2) <b>SHM_LOCK</b> operation, where it sets a maximum on the total bytes in shared memory segments (see <b><a href="http://linux.die.net/man/2/shmget">shmget</a></b>(2)) that may be locked by
+the real user ID of the calling process. The <b><a href="http://linux.die.net/man/2/shmctl" rel="nofollow">shmctl</a></b>(2) <b>SHM_LOCK</b> locks are accounted for separately from the per-process memory locks established
+by <b><a href="http://linux.die.net/man/2/mlock" rel="nofollow">mlock</a></b>(2), <b><a href="http://linux.die.net/man/2/mlockall" rel="nofollow">mlockall</a></b>(2), and <b><a href="http://linux.die.net/man/2/mmap" rel="nofollow">mmap</a></b>(2) <b>MAP_LOCKED</b>; a process can lock bytes up to this limit in each of these two categories. In
+Linux kernels before 2.6.9, this limit controlled the amount of memory that could be locked by a privileged process. Since Linux 2.6.9, no limits are placed on
+the amount of memory that a privileged process may lock, and this limit instead governs the amount of memory that an unprivileged process may lock.
+</dd><dt><b>RLIMIT_MSGQUEUE</b> (Since Linux 2.6.8)
+</dt><dd>Specifies the limit on the number of bytes that can be allocated for POSIX message queues for the real user ID of the calling process. This limit is
+enforced for <b><a href="http://linux.die.net/man/3/mq_open">mq_open</a></b>(3). Each message queue that the user creates counts (until it is removed) against this limit according to the formula:
+
+<pre class="code">bytes = attr.mq_maxmsg * sizeof(struct msg_msg *) +
+        attr.mq_maxmsg * attr.mq_msgsize</pre>where <i>attr</i> is the <i>mq_attr</i> structure specified as the fourth argument to <b>mq_open</b>().
+<p>The first addend in the formula, which includes <i>sizeof(struct msg_msg *)</i> (4 bytes on Linux/x86), ensures that the user cannot create an unlimited
+number of zero-length messages (such messages nevertheless each consume some system memory for bookkeeping overhead).
+</p></dd><dt><b>RLIMIT_NICE</b> (since kernel 2.6.12, but see BUGS below)
+</dt><dd>Specifies a ceiling to which the process's nice value can be raised using <b><a href="http://linux.die.net/man/2/setpriority">setpriority</a></b>(2) or <b><a href="http://linux.die.net/man/2/nice">nice</a></b>(2). The actual ceiling for the nice value is
+calculated as <i>20 - rlim_cur</i>. (This strangeness occurs because negative numbers cannot be specified as resource limit values, since they typically
+have special meanings. For example, RLIM_INFINITY typically is the same as -1.)
+</dd><dt><b>RLIMIT_NOFILE</b>
+</dt><dd>Specifies a value one greater than the maximum file descriptor number that can be opened by this process. Attempts (<b>open</b>(), <b>pipe</b>(),
+<b>dup</b>(), etc.) to exceed this limit yield the error <b>EMFILE</b>.
+</dd><dt><b>RLIMIT_NPROC</b>
+</dt><dd>The maximum number of threads that can be created for the real user ID of the calling process. Upon encountering this limit, <b>fork</b>() fails with the
+error <b>EAGAIN</b>.
+</dd><dt><b>RLIMIT_RSS</b>
+</dt><dd>Specifies the limit (in pages) of the process's resident set (the number of virtual pages resident in RAM). This limit only has effect in Linux 2.4.x, x
+&lt; 30, and there only affects calls to <b>madvise</b>() specifying <b>MADV_WILLNEED</b>.
+</dd><dt><b>RLIMIT_RTPRIO</b> (Since Linux 2.6.12, but see BUGS)
+</dt><dd>Specifies a ceiling on the real-time priority that may be set for this process using <b><a href="http://linux.die.net/man/2/sched_setscheduler">sched_setscheduler</a></b>(2) and <b><a href="http://linux.die.net/man/2/sched_setparam">sched_setparam</a></b>(2).
+</dd><dt><b>RLIMIT_SIGPENDING</b> (Since Linux 2.6.8)
+</dt><dd>Specifies the limit on the number of signals that may be queued for the real user ID of the calling process. Both standard and real-time signals are counted
+for the purpose of checking this limit. However, the limit is only enforced for <b><a href="http://linux.die.net/man/2/sigqueue">sigqueue</a></b>(2); it is always possible to use <b><a href="http://linux.die.net/man/2/kill">kill</a></b>(2) to queue one
+instance of any of the signals that are not already queued to the process.
+</dd><dt><b>RLIMIT_STACK</b>
+</dt><dd>The maximum size of the process stack, in bytes. Upon reaching this limit, a <b>SIGSEGV</b> signal is generated. To handle this signal, a process must
+employ an alternate signal stack (<b><a href="http://linux.die.net/man/2/sigaltstack" rel="nofollow">sigaltstack</a></b>(2)).
+</dd><dt><b>RLIMIT_OFILE</b> is the BSD name for <b>RLIMIT_NOFILE</b>.
+</dt></dl>
+<h2>Return Value</h2>
+<div id="adright">
+<script type="text/javascript"><!--
+google_ad_client = "pub-5823754184406795";
+google_ad_slot = "5992934909";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript" src="./setrlimit(2)  get set resource limits - Linux man page_files/show_ads.js">
+</script>
+</div>
+
+
+
+<p>On success, zero is returned. On error, -1 is returned, and <i>errno</i> is set appropriately.
+</p><h2>Errors</h2>
+<dl compact="">
+<dt><b>EFAULT</b>
+
+<p><i>rlim</i> points outside the accessible address space.
+
+</p><p><b>EINVAL</b>
+
+</p><p><i>resource</i> is not valid; or, for <b>setrlimit</b>():
+</p></dt><dt><i>rlim-&gt;rlim_cur</i> was greater than <i>rlim-&gt;rlim_max</i>.
+</dt><dt><b>EPERM</b>
+
+<p>An unprivileged process tried to use <b>setrlimit</b>() to increase a soft or hard limit above the current hard limit; the <b>CAP_SYS_RESOURCE</b>
+capability is required to do this. Or, the process tried to use <b>setrlimit</b>() to increase the soft or hard RLIMIT_NOFILE limit above the current kernel
+maximum (NR_OPEN).
+</p></dt></dl>
+<h2>Bugs</h2>
+
+<p>In older Linux kernels, the <b>SIGXCPU</b> and <b>SIGKILL</b> signals delivered when a process encountered the soft and hard <b>RLIMIT_CPU</b> limits were
+delivered one (CPU) second later than they should have been. This was fixed in kernel 2.6.8.
+</p><p>In 2.6.x kernels before 2.6.17, a <b>RLIMIT_CPU</b> limit of 0 is wrongly treated as "no limit" (like <b>RLIM_INFINITY</b>). Since kernel 2.6.17, setting a
+limit of 0 does have an effect, but is actually treated as a limit of 1 second.
+</p><p>A kernel bug means that <b>RLIMIT_RTPRIO</b> does not work in kernel 2.6.12; the problem is fixed in kernel 2.6.13.
+</p><p>In kernel 2.6.12, there was an off-by-one mismatch between the priority ranges returned by <b><a href="http://linux.die.net/man/2/getpriority">getpriority</a></b>(2) and <b>RLIMIT_NICE</b>. This had the effect
+that actual ceiling for the nice value was calculated as <i>19 - rlim_cur</i>. This was fixed in kernel 2.6.13.
+</p><p>Kernels before 2.4.22 did not diagnose the error <b>EINVAL</b> for <b>setrlimit</b>() when <i>rlim-&gt;rlim_cur</i> was greater than
+<i>rlim-&gt;rlim_max</i>.
+</p><h2>Notes</h2>
+
+<p>A child process created via <b><a href="http://linux.die.net/man/2/fork">fork</a></b>(2) inherits its parents resource limits. Resource limits are preserved across <b><a href="http://linux.die.net/man/2/execve">execve</a></b>(2).
+</p><h2>Conforming To</h2>
+
+<p>SVr4, 4.3BSD, POSIX.1-2001. <b>RLIMIT_MEMLOCK</b> and <b>RLIMIT_NPROC</b> derive from BSD and are not specified in POSIX.1-2001; they are present on the
+BSDs and Linux, but on few other implementations. <b>RLIMIT_RSS</b> derives from BSD and is not specified in POSIX.1-2001; it is nevertheless present on most
+implementations. <b>RLIMIT_MSGQUEUE</b>, <b>RLIMIT_NICE</b>, <b>RLIMIT_RTPRIO</b>, and <b>RLIMIT_SIGPENDING</b> are Linux specific.
+</p><h2>See Also</h2>
+
+<p><b><a href="http://linux.die.net/man/2/dup">dup</a></b>(2), <b><a href="http://linux.die.net/man/2/fcntl">fcntl</a></b>(2), <b><a href="http://linux.die.net/man/2/fork" rel="nofollow">fork</a></b>(2), <b><a href="http://linux.die.net/man/2/getrusage">getrusage</a></b>(2), <b><a href="http://linux.die.net/man/2/mlock" rel="nofollow">mlock</a></b>(2), <b><a href="http://linux.die.net/man/2/mmap" rel="nofollow">mmap</a></b>(2), <b><a href="http://linux.die.net/man/2/open">open</a></b>(2), <b><a href="http://linux.die.net/man/2/quotactl">quotactl</a></b>(2), <b><a href="http://linux.die.net/man/2/sbrk">sbrk</a></b>(2),
+<b><a href="http://linux.die.net/man/2/shmctl" rel="nofollow">shmctl</a></b>(2), <b><a href="http://linux.die.net/man/2/sigqueue" rel="nofollow">sigqueue</a></b>(2), <b><a href="http://linux.die.net/man/3/malloc">malloc</a></b>(3), <b><a href="http://linux.die.net/man/3/ulimit">ulimit</a></b>(3), <b><a href="http://linux.die.net/man/5/core">core</a></b>(5), <b><a href="http://linux.die.net/man/7/capabilities">capabilities</a></b>(7), <b><a href="http://linux.die.net/man/7/signal">signal</a></b>(7)
+
+<!-- google_ad_section_end -->
+</p><h2>Referenced By</h2>
+<b><a href="http://linux.die.net/man/8/avahi-daemon" rel="nofollow">avahi-daemon</a></b>(8),
+<b><a href="http://linux.die.net/man/5/avahi-daemon.conf" rel="nofollow">avahi-daemon.conf</a></b>(5),
+<b><a href="http://linux.die.net/man/1/csh" rel="nofollow">csh</a></b>(1),
+<b><a href="http://linux.die.net/man/8/dccifd" rel="nofollow">dccifd</a></b>(8),
+<b><a href="http://linux.die.net/man/1/dhcp-fwd" rel="nofollow">dhcp-fwd</a></b>(1),
+<b><a href="http://linux.die.net/man/8/mimedefang-multiplexor" rel="nofollow">mimedefang-multiplexor</a></b>(8),
+<b><a href="http://linux.die.net/man/5/proc" rel="nofollow">proc</a></b>(5),
+<b><a href="http://linux.die.net/man/7/pthreads" rel="nofollow">pthreads</a></b>(7),
+<b><a href="http://linux.die.net/man/1/pulseaudio" rel="nofollow">pulseaudio</a></b>(1),
+<b><a href="http://linux.die.net/man/5/sge_queue_conf" rel="nofollow">sge_queue_conf</a></b>(5),
+<b><a href="http://linux.die.net/man/2/syscalls" rel="nofollow">syscalls</a></b>(2)
+<div id="adbottom">
+<script type="text/javascript"><!--
+google_ad_client = "pub-5823754184406795";
+google_ad_slot = "8789940313";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript" src="./setrlimit(2)  get set resource limits - Linux man page_files/show_ads.js">
+</script>
+</div>
+
+
+</div>
+<div id="menu">
+<a href="http://www.die.net/"><img src="./setrlimit(2)  get set resource limits - Linux man page_files/logo.gif" alt="die.net" width="119" height="121" border="0"></a>
+
+
+<dl><dd>
+<form id="cse-search-box-menu" action="http://www.die.net/search/">
+<label><a href="http://www.die.net/search/">site search</a></label>
+<input name="q" type="text" size="10">
+<span style="font-family:Arial, Helvetica, sans-serif; font-size:75%">Google Custom Search</span>
+<input type="hidden" name="sa" value="Search">
+<input type="hidden" name="ie" value="ISO-8859-1">
+<input type="hidden" name="cx" value="partner-pub-5823754184406795:54htp1rtx5u">
+<input type="hidden" name="cof" value="FORID:9">
+</form>
+<script type="text/javascript">
+<!--
+document.forms["cse-search-box-menu"].action = "http://www.die.net/search/";
+// -->
+</script>
+</dd></dl>
+
+
+
+
+<dl>
+<dt>Library</dt>
+<dd><a href="http://dictionary.die.net/">online dictionary</a></dd>
+<dd><a href="http://linux.die.net/">linux docs</a></dd>
+<dd><a href="http://linux.die.net/man/">linux man pages</a></dd>
+<dd><a href="http://www.die.net/musings/page_load_time/">page load time</a></dd>
+</dl>
+<dl>
+<dt>Toys</dt>
+<dd><a href="http://www.die.net/earth/">world sunlight</a></dd>
+<dd><a href="http://www.die.net/moon/">moon phase</a></dd>
+<dd><a href="http://trace.die.net/">trace explorer</a></dd>
+</dl>
+
+
+
+</div></div>
+<script type="text/javascript">
+<!--
+if (top.location != self.location) top.location = self.location;
+// -->
+</script>
+
+
+
+</body></html>

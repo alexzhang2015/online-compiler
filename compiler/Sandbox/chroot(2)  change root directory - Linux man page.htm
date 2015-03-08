@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0033)http://linux.die.net/man/2/chroot -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>chroot(2): change root directory - Linux man page</title>
+<link rel="stylesheet" type="text/css" href="./chroot(2)  change root directory - Linux man page_files/white.css">
+<link rel="shortcut icon" href="http://linux.die.net/favicon.ico" type="image/x-icon">
+<meta name="viewport" content="width=800,maximum-scale=1.0">
+<meta name="description" content="chroot() changes the root directory to that specified in path. This directory will be used for pathnames beginning with /. The root directory is inherited by all children of the current process.">
+</head>
+
+<body bgcolor="#ffffff" text="#333333" link="#660000" vlink="#660000" alink="#000000">
+<div id="bg"><div id="content">
+
+<!-- google_ad_section_start -->
+<h1>chroot(2) - Linux man page</h1>
+
+<h2>Name</h2>
+chroot - change root directory
+<h2>Synopsis</h2>
+<b>#include &lt;<a href="http://linux.die.net/include/unistd.h" rel="nofollow">unistd.h</a>&gt;</b>
+<p><b>int chroot(const char *</b><i>path</i><b>);</b>
+</p><h2>Description</h2>
+<div id="adright">
+<script type="text/javascript"><!--
+google_ad_client = "pub-5823754184406795";
+google_ad_slot = "5992934909";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript" src="./chroot(2)  change root directory - Linux man page_files/show_ads.js">
+</script>
+</div>
+
+
+<b>chroot</b>() changes the root directory to that specified in <i>path</i>. This directory
+will be used for pathnames beginning with /. The root directory is inherited by all children of the current process.
+<p>Only a privileged process (Linux: one with the <b>CAP_SYS_CHROOT</b> capability) may call <i><b>chroot</b>(2)</i>.
+</p><p>This call changes an ingredient in the pathname resolution process and does nothing else.
+</p><p>This call does not change the current working directory, so that after the call '.' can be outside the tree rooted at '/'. In particular, the superuser can
+escape from a 'chroot jail' by doing 'mkdir foo; chroot foo; cd ..'.
+</p><p>This call does not close open file descriptors, and such file descriptors may allow access to files outside the chroot tree.
+</p><h2>Return Value</h2>
+On success, zero is returned. On error, -1 is returned, and <i>errno</i> is set appropriately.
+<h2>Errors</h2>
+Depending on the file system, other errors can be returned. The more general errors are listed
+below:
+<dl compact="">
+<dt><b>EACCES</b>
+</dt><dd>Search permission is denied on a component of the path prefix. (See also <i><b><a href="http://linux.die.net/man/2/path_resolution">path_resolution</a></b>(2)</i>.)
+</dd><dt><b>EFAULT</b>
+</dt><dd><i>path</i> points outside your accessible address space.
+</dd><dt><b>EIO</b>
+</dt><dd>An I/O error occurred.
+</dd><dt><b>ELOOP</b>
+</dt><dd>Too many symbolic links were encountered in resolving <i>path</i>.
+</dd><dt><b>ENAMETOOLONG</b>
+</dt><dd><i>path</i> is too long.
+</dd><dt><b>ENOENT</b>
+</dt><dd>The file does not exist.
+</dd><dt><b>ENOMEM</b>
+</dt><dd>Insufficient kernel memory was available.
+</dd><dt><b>ENOTDIR</b>
+</dt><dd>A component of <i>path</i> is not a directory.
+</dd><dt><b>EPERM</b>
+</dt><dd>The caller has insufficient privilege.</dd></dl>
+<h2>Conforming to</h2>
+SVr4, 4.4BSD, SUSv2 (marked LEGACY). This function is not part of POSIX.1-2001.
+<h2>Notes</h2>
+A child process created via <i><b><a href="http://linux.die.net/man/2/fork">fork</a></b>(2)</i> inherits its parent's root directory. The root
+directory is left unchanged by <i><b><a href="http://linux.die.net/man/2/execve">execve</a></b>(2)</i>.
+<p>FreeBSD has a stronger <b>jail</b>() system call.
+</p><h2>See Also</h2>
+<i><b><a href="http://linux.die.net/man/2/chdir">chdir</a></b>(2)</i>, <i><b><a href="http://linux.die.net/man/2/path_resolution" rel="nofollow">path_resolution</a></b>(2)</i>
+
+<!-- google_ad_section_end -->
+<h2>Referenced By</h2>
+<b><a href="http://linux.die.net/man/8/avahi-autoipd" rel="nofollow">avahi-autoipd</a></b>(8),
+<b><a href="http://linux.die.net/man/8/avahi-daemon" rel="nofollow">avahi-daemon</a></b>(8),
+<b><a href="http://linux.die.net/man/5/avahi-daemon.conf" rel="nofollow">avahi-daemon.conf</a></b>(5),
+<b><a href="http://linux.die.net/man/7/capabilities" rel="nofollow">capabilities</a></b>(7),
+<b><a href="http://linux.die.net/man/2/clone" rel="nofollow">clone</a></b>(2),
+<b><a href="http://linux.die.net/man/1/fakechroot" rel="nofollow">fakechroot</a></b>(1),
+<b><a href="http://linux.die.net/man/8/ftpd" rel="nofollow">ftpd</a></b>(8),
+<b><a href="http://linux.die.net/man/8/ftpshut" rel="nofollow">ftpshut</a></b>(8),
+<b><a href="http://linux.die.net/man/8/jailkit" rel="nofollow">jailkit</a></b>(8),
+<b><a href="http://linux.die.net/man/8/jk_chrootlaunch" rel="nofollow">jk_chrootlaunch</a></b>(8),
+<b><a href="http://linux.die.net/man/8/jk_chrootsh" rel="nofollow">jk_chrootsh</a></b>(8),
+<b><a href="http://linux.die.net/man/2/mount" rel="nofollow">mount</a></b>(2),
+<b><a href="http://linux.die.net/man/8/nutupsdrv" rel="nofollow">nutupsdrv</a></b>(8),
+<b><a href="http://linux.die.net/man/1/op" rel="nofollow">op</a></b>(1),
+<b><a href="http://linux.die.net/man/7/path_resolution" rel="nofollow">path_resolution</a></b>(7),
+<b><a href="http://linux.die.net/man/2/pivot_root" rel="nofollow">pivot_root</a></b>(2),
+<b><a href="http://linux.die.net/man/5/proc" rel="nofollow">proc</a></b>(5),
+<b><a href="http://linux.die.net/man/7/pthreads" rel="nofollow">pthreads</a></b>(7),
+<b><a href="http://linux.die.net/man/8/pure-ftpd" rel="nofollow">pure-ftpd</a></b>(8),
+<b><a href="http://linux.die.net/man/5/racoon.conf" rel="nofollow">racoon.conf</a></b>(5),
+<b><a href="http://linux.die.net/man/8/rpm" rel="nofollow">rpm</a></b>(8),
+<b><a href="http://linux.die.net/man/8/rpmbuild" rel="nofollow">rpmbuild</a></b>(8),
+<b><a href="http://linux.die.net/man/1/rssh" rel="nofollow">rssh</a></b>(1),
+<b><a href="http://linux.die.net/man/5/rssh.conf" rel="nofollow">rssh.conf</a></b>(5),
+<b><a href="http://linux.die.net/man/8/scponly" rel="nofollow">scponly</a></b>(8),
+<b><a href="http://linux.die.net/man/8/slapd" rel="nofollow">slapd</a></b>(8),
+<b><a href="http://linux.die.net/man/8/sshd" rel="nofollow">sshd</a></b>(8),
+<b><a href="http://linux.die.net/man/2/syscalls" rel="nofollow">syscalls</a></b>(2),
+<b><a href="http://linux.die.net/man/3/system" rel="nofollow">system</a></b>(3),
+<b><a href="http://linux.die.net/man/2/unshare" rel="nofollow">unshare</a></b>(2),
+<b><a href="http://linux.die.net/man/5/ups.conf" rel="nofollow">ups.conf</a></b>(5),
+<b><a href="http://linux.die.net/man/8/upsd" rel="nofollow">upsd</a></b>(8),
+<b><a href="http://linux.die.net/man/8/upsdrvctl" rel="nofollow">upsdrvctl</a></b>(8)
+<div id="adbottom">
+<script type="text/javascript"><!--
+google_ad_client = "pub-5823754184406795";
+google_ad_slot = "8789940313";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript" src="./chroot(2)  change root directory - Linux man page_files/show_ads.js">
+</script>
+</div>
+
+
+</div>
+<div id="menu">
+<a href="http://www.die.net/"><img src="./chroot(2)  change root directory - Linux man page_files/logo.gif" alt="die.net" width="119" height="121" border="0"></a>
+
+
+<dl><dd>
+<form id="cse-search-box-menu" action="http://www.die.net/search/">
+<label><a href="http://www.die.net/search/">site search</a></label>
+<input name="q" type="text" size="10">
+<span style="font-family:Arial, Helvetica, sans-serif; font-size:75%">Google Custom Search</span>
+<input type="hidden" name="sa" value="Search">
+<input type="hidden" name="ie" value="ISO-8859-1">
+<input type="hidden" name="cx" value="partner-pub-5823754184406795:54htp1rtx5u">
+<input type="hidden" name="cof" value="FORID:9">
+</form>
+<script type="text/javascript">
+<!--
+document.forms["cse-search-box-menu"].action = "http://www.die.net/search/";
+// -->
+</script>
+</dd></dl>
+
+
+
+
+<dl>
+<dt>Library</dt>
+<dd><a href="http://dictionary.die.net/">online dictionary</a></dd>
+<dd><a href="http://linux.die.net/">linux docs</a></dd>
+<dd><a href="http://linux.die.net/man/">linux man pages</a></dd>
+<dd><a href="http://www.die.net/musings/page_load_time/">page load time</a></dd>
+</dl>
+<dl>
+<dt>Toys</dt>
+<dd><a href="http://www.die.net/earth/">world sunlight</a></dd>
+<dd><a href="http://www.die.net/moon/">moon phase</a></dd>
+<dd><a href="http://trace.die.net/">trace explorer</a></dd>
+</dl>
+
+
+
+</div></div>
+<script type="text/javascript">
+<!--
+if (top.location != self.location) top.location = self.location;
+// -->
+</script>
+
+
+
+</body></html>

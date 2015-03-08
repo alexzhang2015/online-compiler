@@ -1,0 +1,24 @@
+Process memory usage
+a process's memory contains (VIRT SWAP RES  SHR CODE DATA)
+VIRT = SWAP + RES. virtual memory  usageThe total amount of virtual memory used by the task. It includes all code, data and shared libraries plus pages that have been swapped out.
+SWAP -- Swapped size   The swapped out portion of a task's total virtual memory image.
+RES£ºresident memory usage  The non-swapped physical memory a task has used.
+RES = CODE + DATA.
+CODE -- Code size  The amount of physical memory devoted to executable code, also known as the 'text resident set' size or TRS.
+DATA£ºData+Stack size  The amount of physical memory devoted to other than executable code, also known as the 'data resident set' size or DRS.
+SHR£ºshared memory  The amount of shared memory used by a task. It simply reflects memory that could be potentially shared with other processes.
+
+tools:
+pstree  
+ps  aux     
+top 
+pmap -X pid  
+cat /proc/1234/smaps
+/proc/[pid]/statm
+Valgrind 
+
+
+how to measurement
+Use ptrace() to trace the process ,and monitor the   (__NR_exit_group 252) syscall,
+then parser the /proc/process-pid/status ,get VmPeak virtual memory size ,
+that's what i what.

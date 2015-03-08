@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/examples/consumer
+END
+try_auth.php
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/examples/consumer/try_auth.php
+END
+finish_auth.php
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/examples/consumer/finish_auth.php
+END
+index.php
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/examples/consumer/index.php
+END
+common.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/examples/consumer/common.php
+END

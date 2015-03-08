@@ -1,0 +1,14 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=true
+Icon[zh_CN]=gnome-panel-launcher
+Name[zh_CN]=onlinecompiler
+Exec=onlinecompiler
+Comment[zh_CN]=onlinecompiler
+Name=onlinecompiler
+Comment=onlinecompiler
+Icon=gnome-panel-launcher

@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/svn/!svn/ver/61/trunk/compiler
+END
+compiler1.workspace
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/4/trunk/compiler/compiler1.workspace
+END
+compiler.depend
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/22/trunk/compiler/compiler.depend
+END
+compiler2.workspace
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/4/trunk/compiler/compiler2.workspace
+END
+handlewrong.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/32/trunk/compiler/handlewrong.cpp
+END
+compile.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/61/trunk/compiler/compile.cpp
+END
+compiler
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/22/trunk/compiler/compiler
+END
+compiler1
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/46/trunk/compiler/compiler1
+END
+readme
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/59/trunk/compiler/readme
+END
+block_syscalls.h
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/46/trunk/compiler/block_syscalls.h
+END
+compiler.cbp
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/4/trunk/compiler/compiler.cbp
+END
+handlewrong.h
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/14/trunk/compiler/handlewrong.h
+END
+Writing go programs
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/59/trunk/compiler/Writing%20go%20programs
+END
+getruntime.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/22/trunk/compiler/getruntime.cpp
+END
+compiler.layout
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/22/trunk/compiler/compiler.layout
+END

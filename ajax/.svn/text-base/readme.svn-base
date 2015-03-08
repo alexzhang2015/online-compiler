@@ -1,0 +1,8 @@
+//2011.04.06
+Use ajax framework to be a web app,provide api.
+Redesign the front end.
+
+To online-compiler's design ,loading the basic page ,like user'd code ,then to load 
+the other thing with asynchronous way.Trigger the server's compiler process (like compiler.php)
+,after compiler.php done, encapsulate the data to XML format to the user client ,user parser 
+the XML file ,and load the data to the appointed place.

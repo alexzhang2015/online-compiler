@@ -1,0 +1,1769 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0063)http://www.ibm.com/developerworks/linux/library/l-system-calls/ -->
+<HTML xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<TITLE>Kernel command using Linux system calls</TITLE>
+<META http-equiv="PICS-Label" content="(PICS-1.1 &quot;http://www.icra.org/ratingsv02.html&quot; l gen true r (cz 1 lz 1 nz 1 oz 1 vz 1) &quot;http://www.rsac.org/ratingsv01.html&quot; l gen true r (n 0 s 0 v 0 l 0) &quot;http://www.classify.org/safesurf/&quot; l gen true r (SS~~000 1))">
+<LINK rel="schema.DC" href="http://purl.org/DC/elements/1.0/">
+<LINK rel="SHORTCUT ICON" href="http://www.ibm.com/favicon.ico">
+<META name="Owner" content="developerWorks Content/Raleigh/IBM">
+<META name="DC.Language" scheme="rfc1766" content="en">
+<META name="IBM.Country" content="ZZ">
+<META name="Security" content="Public">
+<META name="IBM.SpecialPurpose" content="SP001">
+<META name="IBM.PageAttributes" content="sid=1003">
+<META name="Source" content="v16 Template Generator">
+<META name="Robots" content="index,follow">
+<META name="Abstract" content="Linux system calls -- we use them every day. But do you know how a system call is performed from user-space to the kernel? Explore the Linux system call interface (SCI), learn how to add new system calls (and alternatives for doing so), and discover utilities related to the SCI.">
+<META name="Description" content="Linux system calls -- we use them every day. But do you know how a system call is performed from user-space to the kernel? Explore the Linux system call interface (SCI), learn how to add new system calls (and alternatives for doing so), and discover utilities related to the SCI.">
+<META name="Keywords" content="Linux System Calls, syscalls, strace, M. Tim Jones, tttlca">
+<META name="DC.Date" scheme="iso8601" content="2007-03-21">
+<META name="DC.Type" scheme="IBM_ContentClassTaxonomy" content="CT316">
+<META name="DC.Subject" scheme="IBM_SubjectTaxonomy" content="SWGC0">
+<META scheme="IBM_WTMCategory" name="IBM.WTMCategory" content="SOFDCLNXZZ">
+<META name="DC.Rights" content="&copy; Copyright&nbsp;IBM Corporation&nbsp;2007">
+<META name="IBM.Effective" scheme="W3CDTF" content="2007-03-21">
+<META name="title" content="Kernel command using Linux system calls">
+
+<!-- HEADER_SCRIPTS_AND_CSS_INCLUDE -->
+<LINK href="./Kernel command using Linux system calls_files/all.css" media="all" rel="stylesheet" title="www" type="text/css">
+<LINK href="./Kernel command using Linux system calls_files/screen.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<LINK href="./Kernel command using Linux system calls_files/screen-uas.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<LINK href="./Kernel command using Linux system calls_files/screen-fonts.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<LINK href="./Kernel command using Linux system calls_files/handheld.css" media="handheld" rel="stylesheet" title="www" type="text/css">
+<LINK href="./Kernel command using Linux system calls_files/print.css" media="print" rel="stylesheet" title="www" type="text/css">
+<LINK href="./Kernel command using Linux system calls_files/overlay.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+
+<!-- dW-specific CSS -->
+<LINK href="./Kernel command using Linux system calls_files/dw-screen.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<LINK href="./Kernel command using Linux system calls_files/jquery.cluetip.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+
+<SCRIPT src="./Kernel command using Linux system calls_files/ibmcommon.js" type="text/javascript">//</SCRIPT><LINK rel="search" type="application/opensearchdescription+xml" href="http://www.ibm.com/search/opensearch/description.xml" title="IBM Search">
+<SCRIPT src="./Kernel command using Linux system calls_files/dynamicnav.js" type="text/javascript">//</SCRIPT>
+
+<!-- dW functional JS -->
+<SCRIPT language="JavaScript" src="./Kernel command using Linux system calls_files/urltactic.js" type="text/javascript"></SCRIPT>
+<!-- Rating_START -->
+<SCRIPT language="JavaScript" src="./Kernel command using Linux system calls_files/artrating.js" type="text/javascript"></SCRIPT>
+<STYLE type="text/css">
+.metavalue {
+  display: none;
+}
+</STYLE>
+<!-- Rating_END --><!-- RESERVED_HEADER_INCLUDE -->
+<SCRIPT language="javascript" src="./Kernel command using Linux system calls_files/ajax1.js" type="text/javascript"></SCRIPT>
+<SCRIPT language="javascript" src="./Kernel command using Linux system calls_files/search_counter-maverick.js" type="text/javascript"></SCRIPT>
+<SCRIPT language="javascript" src="./Kernel command using Linux system calls_files/request_referer_capture-maverick.js" type="text/javascript"></SCRIPT>
+<SCRIPT language="JavaScript" type="text/javascript">
+ <!--
+ setDefaultQuery('');
+ //-->
+</SCRIPT>
+<SCRIPT language="JavaScript" type="text/javascript">
+ <!--
+ function openNewWindow(url,tar,arg){window.open(url,tar,arg);}
+ //-->
+</SCRIPT>
+<SCRIPT id="flashdetect" type="text/javascript" src="./Kernel command using Linux system calls_files/flash-detect.js" charset="UTF-8"></SCRIPT><SCRIPT id="mhMenu" type="text/javascript" src="./Kernel command using Linux system calls_files/usen-utf8.js" charset="UTF-8"></SCRIPT><SCRIPT id="dynavEA" type="text/javascript" src="./Kernel command using Linux system calls_files/Controller" charset="UTF-8"></SCRIPT><SCRIPT id="wiBundle" type="text/javascript" src="./Kernel command using Linux system calls_files/Controller(1)" charset="UTF-8"></SCRIPT></HEAD><BODY id="ibm-com">
+<DIV id="ibm-top" class="ibm-landing-page">
+
+<!-- MASTHEAD_BEGIN -->
+<DIV class="ibm-access"><A href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#ibm-content">Skip to main content</A></DIV>
+<DIV id="ibm-masthead"><IMG src="./Kernel command using Linux system calls_files/print-header.gif" width="510" height="32" id="ibm-print-masthead">
+<DIV id="ibm-logo"><A href="http://www.ibm.com/"><IMG height="50" src="./Kernel command using Linux system calls_files/ibm-logo.gif" width="110" alt="IBM&reg;"></A></DIV>
+<UL id="ibm-geo"><LI id="ibm-country" class="ibm-first">Country/region</LI><LI id="ibm-change-country">[ <A href="http://www.ibm.com/developerworks/country/">select</A> ]</LI></UL>
+  <FORM id="ibm-search-form" action="http://www.ibm.com/developerworks/search/searchResults.jsp" method="get" name="form1"><INPUT type="hidden" name="searchType" value="1"><INPUT type="hidden" name="searchSite" value="dW"><P>
+<SPAN id="ibm-search-scope">
+<LABEL for="sn"><IMG src="./Kernel command using Linux system calls_files/c.gif" width="1" height="1" alt="Search in:"></LABEL>
+<SELECT name="searchScope" id="sn">
+<OPTION value="dW" selected="selected">All of dW</OPTION>
+<OPTION value="dW">-----------------</OPTION>
+<OPTION value="aixunix">&nbsp;AIX and UNIX</OPTION>
+<OPTION value="db2">&nbsp;Information Mgmt</OPTION>
+<OPTION value="lotus">&nbsp;Lotus</OPTION>
+<OPTION value="rdd">&nbsp;Rational</OPTION>
+<OPTION value="tivoli">&nbsp;Tivoli</OPTION>  
+<OPTION value="WSDD">&nbsp;WebSphere</OPTION>
+<OPTION value="dW">-----------------</OPTION> 
+<OPTION value="javaZ">&nbsp;Java technology</OPTION> 
+<OPTION value="linuxZ">&nbsp;Linux</OPTION> 
+<OPTION value="opensrcZ">&nbsp;Open source</OPTION>
+<OPTION value="webservZ">&nbsp;SOA/Web services</OPTION>
+<OPTION value="webarchZ">&nbsp;Web development</OPTION>  
+<OPTION value="xmlZ">&nbsp;XML</OPTION>
+<OPTION value="dW">-----------------</OPTION>
+<OPTION value="forums">&nbsp;dW forums</OPTION> 
+<OPTION value="dW">-----------------</OPTION>
+<OPTION value="aI">University</OPTION>
+<OPTION value="dW">-----------------</OPTION>
+<OPTION value="aW">alphaWorks</OPTION>
+<OPTION value="dW">-----------------</OPTION>
+<OPTION value="all">All of IBM</OPTION>
+</SELECT>
+</SPAN>
+
+<LABEL for="q"><IMG alt="Search for:" height="1" width="1" src="./Kernel command using Linux system calls_files/c.gif"></LABEL><INPUT type="text" name="query" maxlength="100" id="q"><INPUT type="submit" id="ibm-search" class="ibm-btn-search" name="Search" value="Search"></P></FORM>
+<DIV id="ibm-site-name">
+<!-- IBM site name container -->
+</DIV>
+<DIV id="ibm-universal-nav">
+<UL><LI id="ibm-unav-home" class="ibm-first"><A href="http://www.ibm.com/us/en/">Home</A></LI><LI id="ibm-unav-solutions"><A href="http://www.ibm.com/solutions/us/en/" class=" ibm-unav-has-child">Solutions</A><DIV class="ibm-unav-menu" id="gi-c0e1f43f"><SPAN class="ibm-unav-menu-ehb" id="gi-c0e1f43f-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL><LI class=" ibm-place-holder"><A href="javascript:void(0);" class=" ibm-unav-menu-has-child" id="gi-f6ab806f-trigger">By industry</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-f6ab806f"><SPAN class="ibm-unav-menu-ehb" id="gi-f6ab806f-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL><LI><A href="http://www.ibm.com/industries/aerodefense/?cm_re=masthead-_-business-_-ind-aerodef">Aerospace and defense</A></LI><LI><A href="http://www.ibm.com/industries/automotive/?cm_re=masthead-_-business-_-ind-auto">Automotive</A></LI><LI><A href="http://www.ibm.com/industries/financialservices/banking/?cm_re=masthead-_-business-_-ind-banking">Banking</A></LI><LI><A href="http://www.ibm.com/industries/chemicalspetroleum/?cm_re=masthead-_-business-_-ind-chem">Chemicals and petroleum</A></LI><LI><A href="http://www.ibm.com/industries/construction/?cm_re=masthead-_-solutions-_-ind-construction">Construction</A></LI><LI><A href="http://www.ibm.com/industries/consumerproducts/?cm_re=masthead-_-business-_-ind-consumer">Consumer products</A></LI><LI><A href="http://www.ibm.com/industries/education/?cm_re=masthead-_-business-_-ind-edu">Education</A></LI><LI><A href="http://www.ibm.com/industries/electronics/?cm_re=masthead-_-business-_-ind-elec">Electronics</A></LI><LI><A href="http://www.ibm.com/industries/utilities/?cm_re=masthead-_-business-_-ind-energy">Energy and utilities</A></LI><LI><A href="http://www.ibm.com/industries/financialservices/financialmarkets/?cm_re=masthead-_-business-_-ind-finance">Financial markets</A></LI><LI><A href="http://www.ibm.com/industries/forestpaper/?cm_re=masthead-_-solutions-_-ind-forestpaper">Forest and paper</A></LI><LI><A href="http://www.ibm.com/industries/government/?cm_re=masthead-_-business-_-ind-gov">Government</A></LI><LI><A href="http://www.ibm.com/industries/healthcare/?cm_re=masthead-_-solutions-_-ind-health">Healthcare</A></LI><LI><A href="http://www.ibm.com/industries/financialservices/insurance/?cm_re=masthead-_-business-_-ind-ins">Insurance</A></LI><LI><A href="http://www.ibm.com/services/gbs/lifesciences?cm_re=masthead-_-solutions-_-ind-lifesci">Life sciences</A></LI><LI><A href="http://www.ibm.com/industries/media/?cm_re=masthead-_-business-_-ind-media">Media and entertainment</A></LI><LI><A href="http://www.ibm.com/industries/metalsmining/?cm_re=masthead-_-solutions-_-ind-metalsmining">Metals and mining</A></LI><LI><A href="http://www.ibm.com/industries/retail/?cm_re=masthead-_-business-_-ind-retail">Retail</A></LI><LI><A href="http://www.ibm.com/industries/telecom/?cm_re=masthead-_-business-_-ind-tele">Telecommunications</A></LI><LI><A href="http://www.ibm.com/industries/travel/?cm_re=masthead-_-business-_-ind-travel">Travel and transportation</A></LI><LI><A href="http://www.ibm.com/wholesaledistribution/?cm_re=masthead-_-business-_-ind-wholesale">Wholesale distribution</A></LI><LI><A href="http://www.ibm.com/businesscenter/smb/us/en/industries?cm_re=masthead-_-business-_-ind-medbus">Medium business industries</A></LI></UL></DIV></LI><LI class=" ibm-place-holder"><A href="javascript:void(0);" class=" ibm-unav-menu-has-child" id="gi-388b45e8-trigger">By business need</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-388b45e8"><SPAN class="ibm-unav-menu-ehb" id="gi-388b45e8-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL><LI><A href="http://www.ibm.com/software/data/db2bi/?cm_re=masthead-_-business-_-bzn-busint">Business intelligence</A></LI><LI><A href="http://www.ibm.com/services/crm/?cm_re=masthead-_-business-_-bzn-crm">Customer relationship management</A></LI><LI><A href="http://www.ibm.com/solutions/erp/?cm_re=masthead-_-business-_-bzn-erp">Enterprise resource planning</A></LI><LI><A href="http://www.ibm.com/services/us/gbs/bus/html/bcs_financialmgmt.html?re=bcs_home&cm_re=masthead-_-business-_-bzn-finmgmt">Financial management</A></LI><LI><A href="http://www.ibm.com/services/us/gbs/bus/html/bcs_humancapitalmgmt.html?re=bcs_home&cm_re=masthead-_-business-_-bzn-humancap">Human capital management</A></LI><LI><A href="http://www.ibm.com/software/plm/?cm_re=masthead-_-business-_-bzn-plm">Product lifecycle management</A></LI><LI><A href="http://www.ibm.com/security/?cm_re=masthead-_-business-_-bzn-sec">Security</A></LI><LI><A href="http://www.ibm.com/software/solutions/sensors/?cm_re=masthead-_-business-_-bzn-sensors">Sensors</A></LI><LI><A href="http://www.ibm.com/services/us/gbs/bus/html/bcs_strategyplanning.html?re=bcs_home&cm_re=masthead-_-business-_-bzn-strat">Strategy and change</A></LI><LI><A href="http://www.ibm.com/services/scm/?cm_re=masthead-_-business-_-bzn-scm">Supply chain management</A></LI></UL></DIV></LI><LI class=" ibm-place-holder"><A href="javascript:void(0);" class=" ibm-unav-menu-has-child" id="gi-3aedced8-trigger">By IT issue</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-3aedced8"><SPAN class="ibm-unav-menu-ehb" id="gi-3aedced8-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL><LI><A href="http://www.ibm.com/itsolutions/business-process-management/?cm_re=masthead-_-business-_-bzn-bpm">Business process management</A></LI><LI><A href="http://www.ibm.com/itsolutions/collaboration/?cm_re=masthead-_-business-_-bzn-collab">Collaboration</A></LI><LI><A href="http://www.ibm.com/itsolutions/content-management//?cm_re=masthead-_-business-_-bzn-content">Content management</A></LI><LI><A href="http://www.ibm.com/itsolutions/it-cost/?cm_re=masthead-_-business-_-bzn-cost">Cost management</A></LI><LI><A href="http://www.ibm.com/itsolutions/data/?cm_re=masthead-_-business-_-bzn-data">Data management</A></LI><LI><A href="http://www.ibm.com/itsolutions/disaster-recovery/?cm_re=masthead-_-business-_-bzn-recovery">Disaster recovery</A></LI><LI><A href="http://www.ibm.com/itsolutions/distribution-management/?cm_re=masthead-_-business-_-bzn-disman">Distribution management</A></LI><LI><A href="http://www.ibm.com/itsolutions/energy-efficiency/?cm_re=masthead-_-business-_-bzn-energy">Energy efficiency</A></LI><LI><A href="http://www.ibm.com/itsolutions/eai/?cm_re=masthead-_-business-_-bzn-eai">Enterprise application integration</A></LI><LI><A href="http://www.ibm.com/itsolutions/enterprisearchitecture/">Enterprise architecture</A></LI><LI><A href="http://www.ibm.com/itsolutions/compliance/?cm_re=masthead-_-business-_-bzn-compliance">Regulatory compliance</A></LI><LI><A href="http://www.ibm.com/security?cm_re=masthead-_-business-_-bzn-security">Security</A></LI><LI><A href="http://www.ibm.com/itsolutions/systems-management/?cm_re=masthead-_-business-_-bzn-sysman">Systems management</A></LI><LI><A href="http://www.ibm.com/itsolutions/virtualization/?cm_re=masthead-_-business-_-bzn-virtual">Virtualization</A></LI><LI><A href="http://www.ibm.com/itsolutions/portals/?cm_re=masthead-_-business-_-bzn-wrkforce">Workforce productivity</A></LI></UL></DIV></LI><LI class=" ibm-mhdyn-rule"><A href="javascript:void(0);" class=" ibm-unav-menu-has-child" id="gi-9b1a3177-trigger">By Business Partner</A><DIV class="ibm-unav-menu ibm-mhdyn-rule" id="gi-9b1a3177"><SPAN class="ibm-unav-menu-ehb" id="gi-9b1a3177-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL><LI><A href="http://www.ibm.com/solutions/cisco/us/en/?cm_re=masthead-_-business-_-bp-cisco">IBM and Cisco</A></LI><LI><A href="http://www.ibm.com/solutions/oracle/us/en/?cm_re=masthead-_-business-_-bp-oracle">IBM and Oracle</A></LI><LI><A href="http://www.ibm.com/solutions/sap/us/en/?cm_re=masthead-_-business-_-bp-sap">IBM and SAP</A></LI><LI><A href="http://www.ibm.com/solutions/alliance/us/en/?cm_re=masthead-_-business-_-bp-more">More alliance partners</A></LI><LI><A href="http://www-304.ibm.com/jct09002c/gsdod/showcase.do?cm_re=masthead-_-business-_-bp-select">Select Business Partners</A></LI></UL></DIV></LI><LI><A href="http://www.ibm.com/services/us/gbs/bus/html/bcs_index.html?cm_re=masthead-_-business-_-busconsult">Business consulting</A></LI><LI><A href="http://www.ibm.com/cloud?cm_re=masthead-_-solutions-_-cloud">Cloud computing</A></LI><LI><A href="http://www.ibm.com/systems/dynamicinfrastructure/?cm_re=masthead-_-business-_-di">Dynamic infrastructure</A></LI><LI><A href="http://www.ibm.com/financing/us/?cm_re=masthead-_-business-_-financing">Financing</A></LI><LI><A href="http://www.ibm.com/green/?cm_re=masthead-_-business-_-green">Green: energy, environment &amp; sustainability</A></LI><LI class=" ibm-mhdyn-rule"><A href="http://www.ibm.com/soa?pgel=ibmhzn&cm_re=masthead-_-business-_-soa" id="gi-ce7d8783-trigger">Service oriented architecture (SOA)</A><DIV class="ibm-unav-menu ibm-mhdyn-rule" id="gi-ce7d8783"><SPAN class="ibm-unav-menu-ehb" id="gi-ce7d8783-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-mhdyn-rule"><A href="http://www.ibm.com/businesscenter/smb/us/en/businessstrategies?cm_re=masthead-_-business-_-sol4mb" id="gi-e92a918f-trigger">Small and medium business solutions</A><DIV class="ibm-unav-menu ibm-mhdyn-rule" id="gi-e92a918f"><SPAN class="ibm-unav-menu-ehb" id="gi-e92a918f-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI><A href="http://www.ibm.com/businesssolutions/us/en/?cm_re=masthead-_-business-_-more">More</A></LI></UL></DIV></LI><LI id="ibm-unav-services"><A href="http://www.ibm.com/technologyservices/us/en/" class=" ibm-unav-has-child">Services</A><DIV class="ibm-unav-menu" id="gi-471c84b8"><SPAN class="ibm-unav-menu-ehb" id="gi-471c84b8-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL><LI class=" ibm-mhdyn-rule"><A href="javascript:void(0);" class=" ibm-unav-menu-has-child" id="gi-8ed6090f-trigger">IT services</A><DIV class="ibm-unav-menu ibm-mhdyn-rule" id="gi-8ed6090f"><SPAN class="ibm-unav-menu-ehb" id="gi-8ed6090f-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL><LI><A href="http://www.ibm.com/services/us/index.wss">All IT services</A></LI><LI><A href="http://www.ibm.com/services/continuity/?cm_re=masthead-_-itservices-_-buscont">Business continuity and resiliency services</A></LI><LI><A href="http://www.ibm.com/services/enduser/?cm_re=masthead-_-itservices-_-enduser">End-user services</A></LI><LI><A href="http://www.ibm.com/services/integratedcommunications/?cm_re=masthead-_-itservices-_-communications">Integrated communications services</A></LI><LI><A href="http://www.ibm.com/services/itsaconsulting/?cm_re=masthead-_-itservices-_-strategy">IT strategy and architecture services</A></LI><LI><A href="http://www.ibm.com/services/maintenance/?cm_re=masthead-_-itservices-_-maint">Maintenance and technical support services</A></LI><LI><A href="http://www.ibm.com/services/middleware/?cm_re=masthead-_-itservices-_-middleware">Middleware services</A></LI><LI><A href="http://www.ibm.com/services/security/?cm_re=masthead-_-itservices-_-security">Security services</A></LI><LI><A href="http://www.ibm.com/services/server/?cm_re=masthead-_-itservices-_-server">Server services</A></LI><LI><A href="http://www.ibm.com/services/siteandfacilities/?cm_re=masthead-_-itservices-_-site">Site and facilities services</A></LI><LI><A href="http://www.ibm.com/services/storage/?cm_re=masthead-_-itservices-_-storage">Storage and data services</A></LI><LI><A href="http://www.ibm.com/services/us/index.wss/allservices">IT services A-Z</A></LI></UL></DIV></LI><LI class=" ibm-mhdyn-rule"><A href="javascript:void(0);" class=" ibm-unav-menu-has-child" id="gi-1de50410-trigger">Business consulting</A><DIV class="ibm-unav-menu ibm-mhdyn-rule" id="gi-1de50410"><SPAN class="ibm-unav-menu-ehb" id="gi-1de50410-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL><LI><A href="http://www.ibm.com/services/us/gbs/bus/html/bcs_index.html?cm_re=masthead-_-itservices-_-busconsult">All business consulting</A></LI><LI><A href="http://www.ibm.com/gbs/bao?cm_re=masthead-_-itservices-_-bao">Business analytics and optimization</A></LI><LI><A href="http://www.ibm.com/services/us/gbs/bus/html/bcs_salesmrktingservices.html?re=bcs_home">Customer relationship management</A></LI><LI><A href="http://www.ibm.com/services/us/gbs/bus/html/bcs_financialmgmt.html?re=bcs_home">Financial management</A></LI><LI><A href="http://www.ibm.com/services/us/gbs/bus/html/bcs_humancapitalmgmt.html?re=bcs_home">Human capital management</A></LI><LI><A href="http://www.ibm.com/services/us/gbs/bus/html/bcs_strategyplanning.html?re=bcs_home">Strategy and change</A></LI><LI><A href="http://www.ibm.com/services/us/gbs/bus/html/bcs_supplychainprocurement.html?re=bcs_home">Supply chain management</A></LI></UL></DIV></LI><LI class=" ibm-mhdyn-rule"><A href="javascript:void(0);" class=" ibm-unav-menu-has-child" id="gi-d3178b57-trigger">Application services</A><DIV class="ibm-unav-menu ibm-mhdyn-rule" id="gi-d3178b57"><SPAN class="ibm-unav-menu-ehb" id="gi-d3178b57-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL><LI><A href="http://www.ibm.com/services/applications?cm_re=masthead-_-business-_-apps-allappserv">All application services</A></LI><LI><A href="http://www.ibm.com/services/us/gbs/app/html/gbs_app_custom_appdev_sysinteg.html?cm_re=masthead-_-business-_-apps-appdev">Custom application development and system integration</A></LI><LI><A href="http://www.ibm.com/services/us/gbs/app/html/gbs_app_appmanagement.html?cm_re=masthead-_-business-_-apps-appmgmt">Application management</A></LI></UL></DIV></LI><LI class=" ibm-mhdyn-rule"><A href="javascript:void(0);" class=" ibm-unav-menu-has-child" id="gi-95497cd7-trigger">Outsourcing services</A><DIV class="ibm-unav-menu ibm-mhdyn-rule" id="gi-95497cd7"><SPAN class="ibm-unav-menu-ehb" id="gi-95497cd7-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL><LI><A href="http://www.ibm.com/services/us/index.wss/offerfamily/aod/a1028600">Applications outsourcing</A></LI><LI><A href="http://www.ibm.com/services/us/index.wss/offerfamily/igs/a1001429">Business process outsourcing</A></LI><LI><A href="http://www.ibm.com/services/us/index.wss/offerfamily/gts/a1029385">IT outsourcing and hosting</A></LI></UL></DIV></LI><LI class=" ibm-mhdyn-rule"><A href="http://www.ibm.com/training" id="gi-e2d532d3-trigger">Training</A><DIV class="ibm-unav-menu ibm-mhdyn-rule" id="gi-e2d532d3"><SPAN class="ibm-unav-menu-ehb" id="gi-e2d532d3-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-mhdyn-rule"><A href="http://www.ibm.com/businesscenter/smb/us/en/itsolutions?cm_re=masthead-_-itservices-_-medbus" id="gi-bdfd7883-trigger">Small and medium business services</A><DIV class="ibm-unav-menu ibm-mhdyn-rule" id="gi-bdfd7883"><SPAN class="ibm-unav-menu-ehb" id="gi-bdfd7883-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-mhdyn-rule"><A href="javascript:void(0);" class=" ibm-unav-menu-has-child" id="gi-bcbb9b8f-trigger">Other services</A><DIV class="ibm-unav-menu ibm-mhdyn-rule" id="gi-bcbb9b8f"><SPAN class="ibm-unav-menu-ehb" id="gi-bcbb9b8f-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL><LI><A href="http://www.ibm.com/financing/us/recovery/?cm_re=masthead-_-itservices-_-asset">Asset recovery</A></LI><LI><A href="http://www.ibm.com/software/sw-services/?cm_re=masthead-_-itservices-_-software">Software services</A></LI></UL></DIV></LI><LI><A href="http://www.ibm.com/technologyservices/us/en/?cm_re=masthead-_-itservices-_-more">More</A></LI></UL></DIV></LI><LI id="ibm-unav-products"><A href="http://www.ibm.com/products/us/en/" class=" ibm-unav-has-child">Products</A><DIV class="ibm-unav-menu" id="gi-73774a88"><SPAN class="ibm-unav-menu-ehb" id="gi-73774a88-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL><LI class=" ibm-place-holder"><A href="http://www.ibm.com/products/specialoffers/us/en/index.html?cm_re=masthead-_-products-_-promo" id="gi-25dff708-trigger">Special offers</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-25dff708"><SPAN class="ibm-unav-menu-ehb" id="gi-25dff708-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-place-holder"><A href="javascript:void(0);" class=" ibm-unav-menu-has-child" id="gi-885cbcef-trigger">Software</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-885cbcef"><SPAN class="ibm-unav-menu-ehb" id="gi-885cbcef-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL><LI><A href="http://www.ibm.com/software?pgel=ibmhzn&cm_re=masthead-_-products-_-sw-allsoftware">Software overview</A></LI><LI><A href="http://www.ibm.com/software/products/us/en/?pgel=ibmhzn&cm_re=masthead-_-products-_-swprodfinder">Products</A></LI><LI class=" ibm-mhdyn-rule"><A href="http://www14.software.ibm.com/webapp/download/byproduct.jsp?pgel=ibmhzn&cm_re=masthead-_-products-_-sw-trials" id="gi-e3eb41f3-trigger">Trials and demos</A><DIV class="ibm-unav-menu ibm-mhdyn-rule" id="gi-e3eb41f3"><SPAN class="ibm-unav-menu-ehb" id="gi-e3eb41f3-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI><A href="http://www.ibm.com/software/data?pgel=ibmhzn&cm_re=masthead-_-products-_-sw-infomgmt">Information Management</A></LI><LI><A href="http://www.ibm.com/software/data/cognos/?pgel=ibmhzn&cm_re=masthead-_-products-_-sw-cognos">- Cognos</A></LI><LI><A href="http://www.ibm.com/software/data/management/?pgel=ibmhzn&cm_re=masthead-_-products-_-sw-db2">- DB2</A></LI><LI><A href="http://www.ibm.com/software/data/content-management/?pgel=ibmhzn&cm_re=masthead-_-products-_-sw-filenet">- ECM (including FileNet)</A></LI><LI><A href="http://www.ibm.com/software/data/informix/?pgel=ibmhzn&cm_re=masthead-_-products-_-sw-informix">- Informix</A></LI><LI><A href="http://www.ibm.com/software/data/infosphere/?pgel=ibmhzn&cm_re=masthead-_-products-_-sw-infosphere">- InfoSphere</A></LI><LI><A href="http://www.ibm.com/software/lotus?pgel=ibmhzn&cm_re=masthead-_-products-_-sw-lotus">Lotus</A></LI><LI><A href="http://www.ibm.com/software/rational?pgel=ibmhzn&cm_re=masthead-_-products-_-sw-rational">Rational</A></LI><LI><A href="http://www.ibm.com/software/tivoli?pgel=ibmhzn&cm_re=masthead-_-products-_-sw-tivoli">Tivoli</A></LI><LI><A href="http://www.ibm.com/software/websphere?pgel=ibmhzn&cm_re=masthead-_-products-_-sw-websphere">WebSphere</A></LI><LI><A href="http://www.ibm.com/software/os/systemz/en_US/?pgel=ibmhzn&cm_re=masthead-_-products-_-sw-sysz">System z software</A></LI></UL></DIV></LI><LI class=" ibm-place-holder"><A href="javascript:void(0);" class=" ibm-unav-menu-has-child" id="gi-d77ede1f-trigger">Storage</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-d77ede1f"><SPAN class="ibm-unav-menu-ehb" id="gi-d77ede1f-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL><LI><A href="http://www.ibm.com/storage/?cm_re=masthead-_-products-_-stg-allstorage">All storage</A></LI><LI><A href="http://www.ibm.com/storage/disk/?cm_re=masthead-_-products-_-stg-disk">Disk systems</A></LI><LI><A href="http://www.ibm.com/storage/tape/?cm_re=masthead-_-products-_-stg-tape">Tape systems</A></LI><LI><A href="http://www.ibm.com/storage/snetwork/?cm_re=masthead-_-products-_-stg-san">Storage area networks</A></LI><LI><A href="http://www.ibm.com/totalstorage/nas/?cm_re=masthead-_-products-_-stg-nas">Network attached storage</A></LI><LI><A href="http://www.ibm.com/storage/software/?cm_re=masthead-_-products-_-stg-storagesoft">Storage software</A></LI><LI><A href="http://www.ibm.com/pc/ww/hdd/hddredirect.html?cm_re=masthead-_-products-_-stg-hdd">Hard drives/microdrives</A></LI><LI><A href="http://www.ibm.com/systems/storage/product/?cm_re=masthead-_-products-_-stg-storagea2z">Storage A to Z</A></LI></UL></DIV></LI><LI class=" ibm-mhdyn-rule"><A href="javascript:void(0);" class=" ibm-unav-menu-has-child" id="gi-32d5f2a4-trigger">Servers &amp; systems</A><DIV class="ibm-unav-menu ibm-mhdyn-rule" id="gi-32d5f2a4"><SPAN class="ibm-unav-menu-ehb" id="gi-32d5f2a4-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL><LI><A href="http://www.ibm.com/systems/?cm_re=masthead-_-products-_-sys-allsystems">All servers and systems</A></LI><LI><A href="http://www.ibm.com/systems/power/?cm_re=masthead-_-products-_-sys-power">Power Systems</A></LI><LI><A href="http://www.ibm.com/systems/i/?cm_re=masthead-_-products-_-sys-iseries">System i (iSeries)</A></LI><LI><A href="http://www.ibm.com/systems/p/?cm_re=masthead-_-products-_-sys-pseries">System p (pSeries)</A></LI><LI><A href="http://www.ibm.com/systems/z/?cm_re=masthead-_-products-_-sys-zseries">System z (Mainframe)</A></LI><LI><A href="http://www.ibm.com/systems/x/?cm_re=masthead-_-products-_-sys-xseries">System x (xSeries)</A></LI><LI><A href="http://www.ibm.com/servers/eserver/bladecenter/?cm_re=masthead-_-products-_-sys-blade">BladeCenter</A></LI><LI class=" ibm-mhdyn-rule"><A href="http://www.ibm.com/systems/clusters/?cm_re=masthead-_-products-_-sys-cluster" id="gi-22ed38d4-trigger">Cluster systems</A><DIV class="ibm-unav-menu ibm-mhdyn-rule" id="gi-22ed38d4"><SPAN class="ibm-unav-menu-ehb" id="gi-22ed38d4-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI><A href="http://www.ibm.com/systems/hardware/browse/unix/?cm_re=masthead-_-products-_-sys-unix">UNIX servers</A></LI><LI class=" ibm-mhdyn-rule"><A href="http://www.ibm.com/servers/eserver/linux/?cm_re=masthead-_-products-_-sys-linux" id="gi-2f79df5c-trigger">Linux servers</A><DIV class="ibm-unav-menu ibm-mhdyn-rule" id="gi-2f79df5c"><SPAN class="ibm-unav-menu-ehb" id="gi-2f79df5c-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI><A href="http://www.ibm.com/servers/jump_intel.html?cm_re=masthead-_-products-_-sys-intel">Intel processor-based servers</A></LI><LI class=" ibm-mhdyn-rule"><A href="http://www.ibm.com/servers/eserver/opteron/?cm_re=masthead-_-products-_-sys-amd" id="gi-9c547d13-trigger">AMD processor-based servers</A><DIV class="ibm-unav-menu ibm-mhdyn-rule" id="gi-9c547d13"><SPAN class="ibm-unav-menu-ehb" id="gi-9c547d13-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI><A href="http://www.ibm.com/systems/oem?cm_re=masthead-_-products-_-oemsys">OEM systems</A></LI></UL></DIV></LI><LI class=" ibm-place-holder"><A href="http://www.ibm.com/services/us/internet-security-products?cm_re=masthead-_-products-_-iss" id="gi-7938763c-trigger">Internet security</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-7938763c"><SPAN class="ibm-unav-menu-ehb" id="gi-7938763c-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-place-holder"><A href="http://www.ibm.com/shop/pc" id="gi-4163939c-trigger">Personal computers</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-4163939c"><SPAN class="ibm-unav-menu-ehb" id="gi-4163939c-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-place-holder"><A href="http://www.ibm.com/products/retail/?cm_re=masthead-_-products-_-pos" id="gi-35975310-trigger">Point of sale</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-35975310"><SPAN class="ibm-unav-menu-ehb" id="gi-35975310-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-place-holder"><A href="http://www.infoprint.com/us" id="gi-eefce857-trigger">Printing systems from InfoPrint</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-eefce857"><SPAN class="ibm-unav-menu-ehb" id="gi-eefce857-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-place-holder"><A href="http://www.ibm.com/technology/?cm_re=masthead-_-products-_-chips" id="gi-94d15ea3-trigger">Semiconductors</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-94d15ea3"><SPAN class="ibm-unav-menu-ehb" id="gi-94d15ea3-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-mhdyn-rule"><A href="http://www.ibm.com/shop/americas/content/home/store_IBMPublicUSA/en_US/Upgrades.html?cm_re=masthead-_-products-_-upgrades" id="gi-902098eb-trigger">Upgrades, accessories &amp; parts</A><DIV class="ibm-unav-menu ibm-mhdyn-rule" id="gi-902098eb"><SPAN class="ibm-unav-menu-ehb" id="gi-902098eb-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-mhdyn-rule"><A href="http://www.ibm.com/shop/usedsystems" id="gi-17bc730-trigger">Certified used systems &amp; storage</A><DIV class="ibm-unav-menu ibm-mhdyn-rule" id="gi-17bc730"><SPAN class="ibm-unav-menu-ehb" id="gi-17bc730-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-mhdyn-rule"><A href="http://www.ibm.com/community/?cm_re=masthead-_-products-_-promo" id="gi-1cc0f3d0-trigger">Communities</A><DIV class="ibm-unav-menu ibm-mhdyn-rule" id="gi-1cc0f3d0"><SPAN class="ibm-unav-menu-ehb" id="gi-1cc0f3d0-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-place-holder"><A href="http://www.ibm.com/businesscenter/smb/us/en/smallbusiness?cm_re=masthead-_-products-_-smallbus" id="gi-5bfc1f7c-trigger">Small business products</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-5bfc1f7c"><SPAN class="ibm-unav-menu-ehb" id="gi-5bfc1f7c-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-mhdyn-rule"><A href="javascript:void(0);" class=" ibm-unav-menu-has-child" id="gi-3bcf95f8-trigger">Medium business products</A><DIV class="ibm-unav-menu ibm-mhdyn-rule" id="gi-3bcf95f8"><SPAN class="ibm-unav-menu-ehb" id="gi-3bcf95f8-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL><LI><A href="http://www.ibm.com/finder/businesscenter/us/en/hardware_topic.wss?cm_re=masthead-_-products-_-med-hardware">Hardware</A></LI><LI><A href="http://www.ibm.com/finder/businesscenter/us/en/software_topic.wss?cm_re=masthead-_-products-_-med-software">Software</A></LI></UL></DIV></LI><LI class=" ibm-place-holder"><A href="http://www.ibm.com/products/us/?cm_re=masthead-_-products-_-more" id="gi-2bcfa3bc-trigger">More</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-2bcfa3bc"><SPAN class="ibm-unav-menu-ehb" id="gi-2bcfa3bc-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI></UL></DIV></LI><LI id="ibm-unav-support"><A href="http://www.ibm.com/support/us/en/" class=" ibm-unav-has-child">Support &amp; downloads</A><DIV class="ibm-unav-menu" id="gi-d86b2e2b"><SPAN class="ibm-unav-menu-ehb" id="gi-d86b2e2b-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL><LI class=" ibm-place-holder"><A href="javascript:void(0);" class=" ibm-unav-menu-has-child" id="gi-ebc7b673-trigger">Download</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-ebc7b673"><SPAN class="ibm-unav-menu-ehb" id="gi-ebc7b673-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL><LI><A href="http://www.ibm.com/products/finder/us/finders?pg=ddfinder&cm_re=other-_-suprcn-_-download">Fixes, updates and drivers</A></LI><LI><A href="http://www14.software.ibm.com/webapp/download/byproduct.jsp?pgel=ibmhzn1&cm_re=masthead-_-supdl-_-dl-trials">Trials and demos</A></LI></UL></DIV></LI><LI class=" ibm-place-holder"><A href="http://www.ibm.com/support/troubleshooting/en_US?cm_re=masthead-_-supdl-_-troubleshoot" id="gi-fde330f3-trigger">Troubleshoot</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-fde330f3"><SPAN class="ibm-unav-menu-ehb" id="gi-fde330f3-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-place-holder"><A href="http://www.ibm.com/support/advsrch.wss?rs=0&loc=en_US&cm_re=masthead-_-supdl-_-search" id="gi-a5de4173-trigger">Search</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-a5de4173"><SPAN class="ibm-unav-menu-ehb" id="gi-a5de4173-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-place-holder"><A href="http://www.ibm.com/support/documentation/en_US?cm_re=masthead-_-supdl-_-documentation" id="gi-7aedcbc-trigger">Documentation</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-7aedcbc"><SPAN class="ibm-unav-menu-ehb" id="gi-7aedcbc-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-place-holder"><A href="http://www.ibm.com/support/forums/en_US?cm_re=masthead-_-supdl-_-forums" id="gi-d386683b-trigger">Forums &amp; communities</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-d386683b"><SPAN class="ibm-unav-menu-ehb" id="gi-d386683b-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-place-holder"><A href="http://www.ibm.com/support/plan/en_US?cm_re=masthead-_-supdl-_-plan" id="gi-b6b2ef07-trigger">Plan</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-b6b2ef07"><SPAN class="ibm-unav-menu-ehb" id="gi-b6b2ef07-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-place-holder"><A href="http://www.ibm.com/support/install/en_US?cm_re=masthead-_-supdl-_-install" id="gi-16bc75d8-trigger">Install</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-16bc75d8"><SPAN class="ibm-unav-menu-ehb" id="gi-16bc75d8-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-place-holder"><A href="http://www.ibm.com/support/use/en_US?cm_re=masthead-_-supdl-_-use" id="gi-a946040-trigger">Use</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-a946040"><SPAN class="ibm-unav-menu-ehb" id="gi-a946040-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-place-holder"><A href="http://www.ibm.com/support/electronic/uprtransition.wss?category=2&locale=en_us&cm_re=masthead-_-supdl-_-request" id="gi-33f2591c-trigger">Open a technical service request</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-33f2591c"><SPAN class="ibm-unav-menu-ehb" id="gi-33f2591c-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-mhdyn-rule"><A href="javascript:void(0);" class=" ibm-unav-menu-has-child" id="gi-e3d2a26f-trigger">Support by product</A><DIV class="ibm-unav-menu ibm-mhdyn-rule" id="gi-e3d2a26f"><SPAN class="ibm-unav-menu-ehb" id="gi-e3d2a26f-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL><LI><A href="http://www.ibm.com/software/support/?cm_re=masthead-_-supdl-_-sbp-software">Software</A></LI><LI><A href="http://www.ibm.com/systems/support?cm_re=masthead-_-supdl-_-sbp-systems">Servers and systems</A></LI><LI><A href="http://www.ibm.com/systems/support/supportsite.wss/brandmain?brandind=5345868&cm_re=masthead-_-supdl-_-sbp-storage">System storage</A></LI><LI><A href="http://www.infoprintsolutionscompany.com/internet/wwsites.nsf/vwwebpublished/sm_home_us?opendocument&cm_re=masthead-_-supdl-_-sbp-print">Printing systems from InfoPrint</A></LI><LI><A href="http://www.lenovo.com/support/?cm_re=masthead-_-supdl-_-sbp-lenovo">Lenovo ThinkPads and ThinkCentres</A></LI></UL></DIV></LI><LI class=" ibm-mhdyn-rule"><A href="http://www.ibm.com/support/operations/us/en?cm_re=masthead-_-supdl-_-getadmin" id="gi-1e054408-trigger">Customer support</A><DIV class="ibm-unav-menu ibm-mhdyn-rule" id="gi-1e054408"><SPAN class="ibm-unav-menu-ehb" id="gi-1e054408-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-place-holder"><A href="http://www.ibm.com/support/us/en/?cm_re=masthead-_-supdl-_-more" id="gi-a091bb13-trigger">More</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-a091bb13"><SPAN class="ibm-unav-menu-ehb" id="gi-a091bb13-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI></UL></DIV></LI><LI id="ibm-unav-myibm"><A href="http://www.ibm.com/account/us/en/" class=" ibm-unav-has-child">My IBM</A><DIV class="ibm-unav-menu" id="gi-ebfec8eb"><SPAN class="ibm-unav-menu-ehb" id="gi-ebfec8eb-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL><LI class=" ibm-place-holder"><A href="http://www.ibm.com/account/myaccounts/us/en/?cm_re=masthead-_-myibm-_-myacct" id="gi-962810f3-trigger">My accounts</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-962810f3"><SPAN class="ibm-unav-menu-ehb" id="gi-962810f3-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-place-holder"><A href="https://www.ibm.com/account/myibm/profile.do?cc=us&lc=&cm_re=masthead-_-myibm-_-myprofile" id="gi-2bf2df3c-trigger">My profile</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-2bf2df3c"><SPAN class="ibm-unav-menu-ehb" id="gi-2bf2df3c-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-myinterest"><A href="https://www.ibm.com/account/myibm/myinterestView.do?cc=us&lc=en&cm_re=masthead-_-myibm-_-myinterests" id="gi-ea8c3e73-trigger">My interests</A><DIV class="ibm-unav-menu ibm-myinterest" id="gi-ea8c3e73"><SPAN class="ibm-unav-menu-ehb" id="gi-ea8c3e73-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-place-holder"><A href="http://www.ibm.com/account/mycommunity/us/en/?cm_re=masthead-_-myibm-_-community" id="gi-2d06a2f4-trigger">My community spaces</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-2d06a2f4"><SPAN class="ibm-unav-menu-ehb" id="gi-2d06a2f4-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-place-holder"><A href="https://www.ibm.com/systems/support/myview/subscription/css.wss/folders?methodName=listMyFolders&cm_re=masthead-_-myibm-_-tech" id="gi-ec2d7bdb-trigger">My technical support</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-ec2d7bdb"><SPAN class="ibm-unav-menu-ehb" id="gi-ec2d7bdb-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-place-holder"><A href="javascript:void(0)" class=" ibm-unav-menu-has-child" id="gi-68aeae8c-trigger">My customer support</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-68aeae8c"><SPAN class="ibm-unav-menu-ehb" id="gi-68aeae8c-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL><LI><A href="https://www-132.ibm.com/webapp/wcs/stores/servlet/OrderItemDisplay?langId=-1&storeId=1&catalogId=-840&krypto=g3mOZ2uZQalqnkMCJkVJ1Q%3D%3D&ddkey=OrderItemDisplay&cm_re=masthead-_-myibm-_-cs-cart">Shopping cart</A></LI><LI><A href="http://www.ibm.com/support/operations/us/en/contracts?cm_re=masthead-_-myibm-_-cs-contracts">Contracts</A></LI><LI><A href="http://www.ibm.com/support/operations/us/en/orderdelivery?cm_re=masthead-_-myibm-_-cs-orders">Orders and delivery</A></LI><LI><A href="http://www.ibm.com/support/operations/us/en/inventory?cm_re=masthead-_-myibm-_-cs-inventory">Inventory and maintenance</A></LI><LI><A href="http://www.ibm.com/support/operations/us/en/invoicespayments?cm_re=masthead-_-myibm-_-cs-invoices">Invoices and payments</A></LI><LI><A href="http://www.ibm.com/support/operations/us/en/learnmore3a?cm_re=masthead-_-myibm-_-cs-self">Self-service tools</A></LI><LI><A href="http://www.ibm.com/support/operations/us?cm_re=masthead-_-myibm-_-cs-more">More customer support</A></LI></UL></DIV></LI><LI class=" ibm-mhdyn-rule"><A href="http://www-931.ibm.com/bin/subscriptions/welcome.cgi?cl=usen&cm_re=masthead-_-myibm-_-subscriptions" id="gi-c43160f3-trigger">Subscriptions</A><DIV class="ibm-unav-menu ibm-mhdyn-rule" id="gi-c43160f3"><SPAN class="ibm-unav-menu-ehb" id="gi-c43160f3-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI><LI class=" ibm-place-holder"><A href="http://www.ibm.com/account/us/en/?cm_re=masthead-_-myibm-_-more" id="gi-b2be27df-trigger">More</A><DIV class="ibm-unav-menu ibm-place-holder" id="gi-b2be27df"><SPAN class="ibm-unav-menu-ehb" id="gi-b2be27df-ehb"><IMG alt="" src="./Kernel command using Linux system calls_files/c.gif"></SPAN><A class="ibm-access"></A><UL></UL></DIV></LI></UL></DIV></LI></UL>
+</DIV>
+</DIV>
+<!-- MASTHEAD_END -->
+
+<DIV id="ibm-pcon">
+
+<!-- CONTENT_BEGIN -->
+<DIV id="ibm-content">
+
+<!-- Navigation_Trail_BEGIN -->
+<!-- &nbsp; -->
+      <DIV id="ibm-content-head"><UL id="ibm-navigation-trail"><LI class="ibm-first"><A href="http://www.ibm.com/developerworks/">developerWorks</A></LI><LI><A href="http://www.ibm.com/developerworks/linux/">Linux</A></LI><LI><A href="http://www.ibm.com/developerworks/views/linux/library.jsp">Technical library</A></LI></UL></DIV>
+<!-- Navigation_Trail_END -->
+
+<!-- dW_Summary Area_START -->
+<DIV id="dw-summary-article">
+
+<DIV class="dw-content-head">
+<H1>Kernel command using Linux system calls</H1><P><EM>Explore the SCI and add your own calls</EM></P>
+</DIV>
+
+<DIV class="ibm-container-body ibm-two-column">
+
+<DIV class="ibm-column ibm-first">
+<DIV class="author"><A class="dwauthor" rel="#authortip1" href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#author1">M. Tim Jones</A> (<A href="mailto:mtj@mtjones.com?subject=Kernel%20command%20using%20Linux%20system%20calls&cc=tomyoung@us.ibm.com">mtj@mtjones.com</A>), Consultant Engineer, Emulex</DIV><DIV id="authortip1" class="dwauthor-onload-state ibm-no-print" style="display: none; "><DIV class="position"><IMG src="./Kernel command using Linux system calls_files/p-mjones.jpg" width="64" height="80" alt="M. Tim Jones"></DIV>M. Tim Jones is an embedded software architect and the author of <I>GNU/Linux Application Programming</I>, <I>AI Application Programming</I>, and <I>BSD Sockets Programming from a Multilanguage Perspective</I>. His engineering background ranges from the development of kernels for geosynchronous spacecraft to embedded systems architecture and networking protocols development. Tim is a Consultant Engineer for Emulex Corp. in Longmont, Colorado.</DIV>
+<P></P>
+<P><B>Summary:</B>&nbsp; Linux® system calls -- we use them every day. But do you know
+      how a system call is performed from user-space to the kernel? Explore the Linux
+      system call interface (SCI), learn how to add new system calls (and alternatives for
+      doing so), and discover utilities related to the SCI.</P>
+
+<DIV id="dw-tag-content" class="ibm-no-print"></DIV><DIV id="dw-moretags-access" class="ibm-access"></DIV>
+<P class="ibm-no-print"></P><DIV id="dw-tag-this" class="ibm-no-print"><A class="ibm-external-link" onclick="jQuery.launchTagThisWindow(); return false;" href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#">Tag this!</A></DIV><DIV id="interestShow" class="ibm-no-print"><DIV id="dw-interest-anon"><A id="intAnonBtn" class="ibm-external-link" href="">Update My dW interests</A> (<A class="dw-interest" href="https://www.ibm.com/developerworks/dwwi/DWAuthRouter?m=loginpage&d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Flinux%2Flibrary%2Fl-system-calls%2F">Log in</A> | <A class="dw-interest" href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#overlay" onclick="ibmCommon.Overlays.show(&#39;dwmyinterestadd&#39;, this);return false;">What's this?</A>) <A class="ibm-access" href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#dwmyinterestaddhelp">Skip to help for Update My dW interests</A></DIV></DIV><P></P>
+</DIV>
+
+<DIV class="ibm-column ibm-second">
+
+<P class="leading"><B>Date:</B>&nbsp; 21 Mar  2007
+<BR><B>Level: </B>&nbsp;Intermediate
+
+<BR><B>Activity:</B>&nbsp; 32556 views
+<BR><B>Comments:</B> &nbsp; <SPAN id="nCmts">0&nbsp;(<A href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#icomments">Add comments</A>)</SPAN>
+<!-- Rating_Area_Begin -->
+<!-- Ensure that div id is based on input id and ends with -widget -->	
+<INPUT id="art-rating" name="ratinga" type="hidden" value="4"></P><DIV id="art-rating-widget"><A href="javascript:void(0);"><IMG alt="1 star" title="Click to rate 1 star" height="20" src="./Kernel command using Linux system calls_files/avg-star-on.gif" width="20"></A><A href="javascript:void(0);"><IMG alt="2 stars" title="Click to rate 2 stars" height="20" src="./Kernel command using Linux system calls_files/avg-star-on.gif" width="20"></A><A href="javascript:void(0);"><IMG alt="3 stars" title="Click to rate 3 stars" height="20" src="./Kernel command using Linux system calls_files/avg-star-on.gif" width="20"></A><A href="javascript:void(0);"><IMG alt="4 stars" title="Click to rate 4 stars" height="20" src="./Kernel command using Linux system calls_files/avg-star-on.gif" width="20"></A><A href="javascript:void(0);"><IMG alt="5 stars" title="Click to rate 5 stars" height="20" src="./Kernel command using Linux system calls_files/star-off.gif" width="20"></A><SPAN id="rateTxt">  Average rating (based on 178 votes)</SPAN></DIV>
+<SCRIPT language="JavaScript" type="text/javascript">
+// <![CDATA[
+   // widget div id and article id as args
+   window.artRating.init('art-rating-widget');
+// ]]>
+</SCRIPT>
+<!-- Rating_Area_End -->
+<P></P>
+</DIV>
+
+</DIV>
+</DIV>
+<!-- dW_Summary_Area_END -->
+
+<!-- CONTENT_BODY -->
+<DIV id="ibm-content-body">
+
+<!-- MAIN_COLUMN_BEGIN -->
+<DIV id="ibm-content-main">
+
+<!-- Related_Searches_Area -->
+<!-- Related_Searches_Area_Begin -->
+<SCRIPT type="text/javascript" language="javascript">
+	     capture_referrer();
+</SCRIPT>
+
+<DIV id="dw-related-searches-article" style="display: block; ">
+<DIV class="ibm-container ibm-alternate-two">
+<DIV class="ibm-container-body">
+
+<!--  START : HTML FOR ARTICLE SEARCH -->
+  <DIV id="article_results" style="display:block"><UL class="ibm-twisty" id="dw-content-twisty">
+<LI class="">
+<A href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#toggle" class="ibm-twisty-trigger ibm-twisty-trigger-closed"><IMG height="1" width="1" src="./Kernel command using Linux system calls_files/c.gif" alt="+"></A><SPAN class="ibm-twisty-head"><STRONG>Show articles and other content related to my search: linux syscalls</STRONG></SPAN>
+<DIV class="ibm-twisty-body" style="display: none; ">
+<DIV class="ibm-container ibm-simple-show-hide" id="dw-content-showhide">
+<DIV class="ibm-container-body">
+<P class="ibm-show-hide-controls" style="display: block; ">
+<A href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#show">Show descriptions</A> | <A href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#hide" class="ibm-active">Hide descriptions</A>
+</P><DIV class="ibm-rule"><HR></DIV><DIV class="ibm-rule"></DIV>
+<P>(1 - 10 of 82 search results) <A target="results" class="ibm-external-link" href="http://www.ibm.com/developerworks/search/searchResults.jsp?searchType=1&searchSite=dW&searchScope=dW&query=linux%20syscalls">View all search results</A>
+</P>
+<H3>
+<A target="results" alt="Putting Linux reliability to the test" title="Putting Linux reliability to the test" href="http://www.ibm.com/developerworks/linux/library/l-rel/?S_TACT=105AGY82&S_CMP=MAVE" class="ibm-show-hide-link">Putting Linux reliability to the test</A>
+</H3>
+<DIV class="ibm-hideable">
+<P>This article documents the test results and analysis of the Linux kernel and other core OS components, including everything from libraries and device drivers to file systems and networking, all under some fairly adverse conditions, and over lengthy durations. The IBM Linux Technology Center has just finished this comprehensive testing over a period of more than three months and shares the results of their LTP (Linux Test Project) testing with developerWorks readers.</P>
+</DIV>
+<H3>
+<A target="results" alt="Kernel command using Linux system calls" title="Kernel command using Linux system calls" href="http://www.ibm.com/developerworks/library/l-system-calls/?S_TACT=105AGY82&S_CMP=MAVE" class="ibm-show-hide-link">Kernel command using Linux system calls</A>
+</H3>
+<DIV class="ibm-hideable">
+<P>Linux system calls -- we use them every day. But do you know how a system call is performed from user-space to the kernel? Explore the Linux system call interface (SCI), learn how to add new system calls (and alternatives for doing so), and discover utilities related to the SCI.</P>
+</DIV>
+<H3>
+<A target="results" alt="Get started with the Linux key retention service" title="Get started with the Linux key retention service" href="http://www.ibm.com/developerworks/linux/library/l-key-retention.html?S_TACT=105AGY82&S_CMP=MAVE" class="ibm-show-hide-link">Get started with the Linux key retention service</A>
+</H3>
+<DIV class="ibm-hideable">
+<P>The Linux key retention service introduced with Linux 2.6 is a great new way to handle authentication, cryptography, cross-domain user mappings, and other security concerns for the Linux platform. Learn the components of the Linux key retention service and get an understanding of its usage with a working sample application.</P>
+</DIV>
+<H3>
+<A target="results" alt="Redbooks - Tuning Linux OS on System p The POWER Of Innovation" title="Redbooks - Tuning Linux OS on System p The POWER Of Innovation" href="http://www.redbooks.ibm.com/abstracts/SG247338.html?Open?S_TACT=105AGY82&S_CMP=MAVE" class="ibm-show-hide-link">Redbooks - Tuning Linux OS on System p The POWER Of Innovation</A>
+</H3>
+<DIV class="ibm-hideable">
+<P>This IBM Redbooks publication describes what you can do to improve and maximize the performance of your business server applications running on System p hardware with the Linux operating system. It describes how to improve the performance of the System p hardware, the operating system, and specific server applications. The book is divided into three parts: Part 1 explains the technology implemented in the major subsystems in System p servers and shows what settings can be selected or adjusted to obtain the best performance. Part 2 describes the performance aspects of the operating systems: Red Hat Enterprise Linux, SUSE LINUX Enterprise Server, and IBM Virtual I/O Server. Part 3 introduces the performance monitoring tools that are available to users of System p servers. Part 4 shows you how to analyze your system to find performance bottlenecks and what to do to eliminate them. Part 5 examines specific performance characteristics of specific server applications. This book is targeted at people who configure POWER processor based servers running Linux and seek to maximize performance. Some knowledge of servers is required. Skills in performance tuning are not assumed.</P>
+</DIV>
+<H3>
+<A target="results" alt="DeveloperToolbox Technical Magazine: Linux for S/390: Linux meets the mainframe" title="DeveloperToolbox Technical Magazine: Linux for S/390: Linux meets the mainframe" href="http://www.ibm.com/developerworks/ibm/library/it-0401art31/?S_TACT=105AGY82&S_CMP=MAVE" class="ibm-show-hide-link">DeveloperToolbox Technical Magazine: Linux for S/390: Linux meets the mainframe</A>
+</H3>
+<DIV class="ibm-hideable">
+<P>The Linux operating system has generated a lot of interest in the world of Internet computing. Users and developers alike praise its speed, open standardization, reliability, and flexibility. These characteristics are the foundation for successful e-business applications.</P>
+</DIV>
+<H3>
+<A target="results" alt="IBM Linux Scholar Challenge: Jeanna&#39;s story" title="IBM Linux Scholar Challenge: Jeanna&#39;s story" href="http://www.ibm.com/developerworks/ibm/library/i-clarkson/jeanna.html?S_TACT=105AGY82&S_CMP=MAVE" class="ibm-show-hide-link">IBM Linux Scholar Challenge: Jeanna's story</A>
+</H3>
+<DIV class="ibm-hideable">
+<P>How did this small technology school in the frozen north country of New York State produce three of the 25 winning Linux Scholar Challenge projects worldwide? To tell you how, Dr. Matthews shares her classroom experiences and illustrates the teaching environment at Clarkson.</P>
+</DIV>
+<H3>
+<A target="results" alt="Broadcom (tg3) NetXtreme Linux driver v3.81c for Red Hat Enterprise Linux 3 (32-bit and 64-bit) - Blade and System x" title="Broadcom (tg3) NetXtreme Linux driver v3.81c for Red Hat Enterprise Linux 3 (32-bit and 64-bit) - Blade and System x" href="http://www.ibm.com/systems/support/supportsite.wss/docdisplay?brandind=5000008&lndocid=MIGR-5070021?S_TACT=105AGY82&S_CMP=MAVE" class="ibm-show-hide-link">Broadcom (tg3) NetXtreme Linux driver v3.81c for Red Hat Enterprise Linux 3 (32-bit and 64-bit) - Blade and System x</A>
+</H3>
+<DIV class="ibm-hideable">
+<P>Download the latest Broadcom (tg3) NetXtreme Driver for Red Hat Enterprise Linux 3 (32-bit and 64-bit)</P>
+</DIV>
+<H3>
+<A target="results" alt="Redpaper - Secure Your E-mail Server on IBM eServer i5 with Linux" title="Redpaper - Secure Your E-mail Server on IBM eServer i5 with Linux" href="http://www.redbooks.ibm.com/abstracts/REDP4012.html?Open?S_TACT=105AGY82&S_CMP=MAVE" class="ibm-show-hide-link">Redpaper - Secure Your E-mail Server on IBM eServer i5 with Linux</A>
+</H3>
+<DIV class="ibm-hideable">
+<P>This IBM Redpaper will help you design a solution to protect your e-mail servers on IBM eServer i5 using various security solutions of Linux. Like many of Linux solutions, security implementation can be done using either free software solutions (that is, Open Source Software based solutions) or commerce software solutions (that is, Independent Software Vendor based solutions). This redpaper has two main parts: Part I covers OSS-based solutions and Part II covers ISV-based solutions. In either case, the goal protecting your e-mail servers from various attacks.</P>
+</DIV>
+<H3>
+<A target="results" alt="Redpaper - SystemTap: Instrumenting the Linux Kernel for Analyzing Performance and Functional Problems" title="Redpaper - SystemTap: Instrumenting the Linux Kernel for Analyzing Performance and Functional Problems" href="http://www.redbooks.ibm.com/abstracts/REDP4469.html?Open?S_TACT=105AGY82&S_CMP=MAVE" class="ibm-show-hide-link">Redpaper - SystemTap: Instrumenting the Linux Kernel for Analyzing Performance and Functional Problems</A>
+</H3>
+<DIV class="ibm-hideable">
+<P>This IBM® Redbooks® paper provides information related to the Linux® -based SystemTap tool. This tool can be used by developers, analysts and specialists to better understand and analyze Linux systems and applications. Until now, its primary use has been to look into the workings of the Linux kernel and various system calls. Its function is expanding to provide information related to user space as well, but that will not be the focus of this paper. This paper describes the basic mechanisms used by SystemTap to gather data and offers guidance on getting started using the tool. Using examples, we show how to use the tool to capture and present useful information that may not be readily available by the myriad of other tools generally available on the Linux platform. Though our examples are relatively simple, they provide the basics to build on to develop more robust scripts that meet the reader's specific needs. The reader will appreciate the power and simple elegance of SystemTap and how it can be used to help analyze Linux systems to identify functional and performance-related problems, which in turn can help ensure that system and application design will minimize the chances for problems in the future. This paper is intended for individuals who have programming experience and familiarity with Linux and existing system facilities.</P>
+</DIV>
+<H3>
+<A target="results" alt="Redbooks - IBM Tivoli Storage Manager in a Clustered Environment" title="Redbooks - IBM Tivoli Storage Manager in a Clustered Environment" href="http://www.redbooks.ibm.com/abstracts/SG246679.html?Open?S_TACT=105AGY82&S_CMP=MAVE" class="ibm-show-hide-link">Redbooks - IBM Tivoli Storage Manager in a Clustered Environment</A>
+</H3>
+<DIV class="ibm-hideable">
+<P>This IBM Redbook is an easy-to-follow guide that describes how to implement IBM Tivoli Storage Manager Version 5.3 products in highly available clustered environments. The book is intended for those who want to plan, install, test, and manage the IBM Tivoli Storage Manager Version 5.3 in various environments by providing best practices and showing how to develop scripts for clustered environments. The book covers the following environments: IBM AIX HACMP, IBM Tivoli System Automation for Multiplatforms on Linux and AIX, MicrosoftCluster Server on Windows 2000 and Windows 2003, VERITAS Storage Foundation HA on AIX, and Windows Server 2003 Enterprise Edition.</P>
+</DIV>
+</DIV>
+</DIV>
+</DIV>
+</LI>
+</UL>
+
+</DIV>
+<!--  END : HTML FOR ARTICLE SEARCH -->
+
+</DIV>
+</DIV>
+</DIV>
+<!-- Related_Searches_Area_End -->
+<!-- MAIN_COLUMN_CONTAINER_BEGIN -->
+<DIV class="ibm-container">
+
+<!-- MAIN_COLUMN_CONTENT_BEGIN -->
+<P>A <B>system call</B> is an interface between a user-space application and a
+        service that the kernel provides. Because the service is provided in the kernel, a
+        direct call cannot be performed; instead, you must use a process of crossing the
+        user-space/kernel boundary. The way you do this differs based on the particular
+        architecture. For this reason, I'll stick to the most common architecture, i386.</P>
+            <P>In this article, I explore the Linux SCI, demonstrate adding a system call to the
+        2.6.20 kernel, and then use this function from user-space. I also investigate some
+        of the functions that you'll find useful for system call development and
+        alternatives to system calls. Finally, I look at some of the ancillary mechanisms
+        related to system calls, such as tracing their usage from a given process.</P>
+            <P><A name="N10060"><SPAN class="atitle">The SCI</SPAN></A></P>
+
+            <P>The implementation of system calls in Linux is varied based on the architecture,
+        but it can also differ within a given architecture. For example, older x86
+        processors used an interrupt mechanism to migrate from user-space to kernel-space,
+        but new IA-32 processors provide instructions that optimize this transition (using
+        <CODE>sysenter</CODE> and <CODE>sysexit</CODE>
+        instructions). Because so many options exist and the end-result is so complicated,
+        I'll stick to a surface-level discussion of the interface details. See the <A href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#resources">Resources</A> at the end of this article for the gory details.</P>
+
+            <P>You needn't fully understand the internals of the SCI to amend it, so I explore a
+        simple version of the system call process (see Figure 1). Each system call is
+        multiplexed into the kernel through a single entry point. The eax register is used
+        to identify the particular system call that should be invoked, which is specified
+        in the <CODE>C</CODE> library (per the call from the user-space
+        application). When the <CODE>C</CODE> library has loaded the system
+        call index and any arguments, a software interrupt is invoked (interrupt 0x80),
+        which results in execution (through the interrupt handler) of the
+        <CODE>system_call</CODE> function. This function handles all system
+        calls, as identified by the contents of eax. After a few simple tests, the actual
+        system call is invoked using the <CODE>system_call_table</CODE> and
+        index contained in eax. Upon return from the system call,
+        <CODE>syscall_exit</CODE> is eventually reached, and a call to
+        <CODE>resume_userspace</CODE> transitions back to user-space.
+        Execution resumes in the <CODE>C</CODE> library, which then returns
+        to the user application.</P>
+            
+                <BR><A name="fig1"><B>Figure 1. The simplified flow of a
+          system call using the interrupt method</B></A><BR>
+                <IMG alt="Simplified flow of a system           call" height="361" src="./Kernel command using Linux system calls_files/figure1.gif" width="571">
+            <BR>
+
+            <P>At the core of the SCI is the system call demultiplexing table. This table, shown
+        in Figure 2, uses the index provided in eax to identify which system call to
+        invoke from the table (<CODE>sys_call_table</CODE>). A sample of the
+        contents of this table and the locations of these entities is also shown. (For
+        more about demultiplexing, see the sidebar, "<A href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#sidebar1">System call
+          demultiplexing</A>.")</P>
+            
+                <BR><A name="fig2"><B>Figure 2. The system call table
+          and various linkages</B></A><BR>
+                <IMG alt="System call table and various           linkages" height="273" src="./Kernel command using Linux system calls_files/figure2.gif" width="532">
+            <BR>
+            <DIV class="ibm-alternate-rule"><HR></DIV><P class="ibm-ind-link ibm-back-to-top"><A href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#ibm-pcon" class="ibm-anchor-up-link">Back to top</A></P><P><A name="N100BD"><SPAN class="atitle">Adding a Linux system call</SPAN></A></P>
+            <DIV class="ibm-container ibm-alt-header dw-container-sidebar"><A name="sidebar1"></A><H2>System call demultiplexing</H2><DIV class="ibm-container-body">
+                
+
+                <P>Some system calls are further demultiplexed by the kernel. For example, the
+          Berkeley Software Distribution (BSD) socket calls
+          (<CODE>socket</CODE>, <CODE>bind</CODE>,
+          <CODE>connect</CODE>, and so on) are associated with a single
+          system call index (<CODE>__NR_socketcall</CODE>) but are
+          demultiplexed in the kernel to the appropriate call through another argument.
+          See ./linux/net/socket.c function <CODE>sys_socketcall</CODE>.</P>
+            </DIV></DIV>
+            <P>Adding a new system call is mostly procedural, although you should look out for a
+        few things. This section walks through the construction of a few system calls to
+        demonstrate their implementation and use by a user-space application.</P>
+            <P>You perform three basic steps to add a new system call to the kernel:</P>
+            <OL>
+                <LI>Add the new function.</LI>
+                <LI>Update the header files.</LI>
+                <LI>Update the system call table for the new function.</LI>
+            </OL>
+            <P>
+                <B>Note:</B> This process ignores user-space needs, which I address later.</P>
+            <P>Most often, you create a new file for your functions. However, for the sake of
+        simplicity, I add my new functions to an existing source file. The first two
+        functions, shown in Listing 1, are simple examples of a system call. Listing 2
+        provides a slightly more complicated function that uses pointer arguments.</P>
+            <BR><A name="list1"><B>Listing 1. Simple kernel functions for the system
+		call example</B></A><BR><TABLE width="60%" cellpadding="0" cellspacing="0" border="0"><TBODY><TR><TD class="code-outline"><PRE class="displaycode">                
+asmlinkage long <STRONG>sys_getjiffies</STRONG>( void )
+{
+  return (long)get_jiffies_64();
+}
+
+asmlinkage long <STRONG>sys_diffjiffies</STRONG>( long ujiffies )
+{
+  return (long)get_jiffies_64() - ujiffies;
+}
+</PRE></TD></TR></TBODY></TABLE><BR>
+
+            <P>In Listing 1, two functions are provided for jiffies monitoring. (For more
+        information about jiffies, see the sidebar, "<A href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#sidebar2">Kernel
+        jiffies</A>.") The first function returns the current jiffies, while the second
+        returns the difference of the current and the value that the caller passes in.
+        Note the use of the <CODE>asmlinkage</CODE> modifier. This macro
+        (defined in linux/include/asm-i386/linkage.h) tells the compiler to pass all
+        function arguments on the stack.</P>
+            <BR><A name="list2"><B>Listing 2. Final kernel function for the system
+		call example</B></A><BR><TABLE width="60%" cellpadding="0" cellspacing="0" border="0"><TBODY><TR><TD class="code-outline"><PRE class="displaycode">                
+asmlinkage long <STRONG>sys_pdiffjiffies</STRONG>( long ujiffies,
+                                  long __user *presult )
+{
+  long cur_jiffies = (long)get_jiffies_64();
+  long result;
+  int  err = 0;
+
+  if (presult) {
+
+    result = cur_jiffies - ujiffies;
+    err = <STRONG>put_user</STRONG>( result, presult );
+
+  }
+
+  return err ? -EFAULT : 0;
+}
+</PRE></TD></TR></TBODY></TABLE><BR>
+            <DIV class="ibm-container ibm-alt-header dw-container-sidebar"><A name="sidebar2"></A><H2>Kernel jiffies</H2><DIV class="ibm-container-body">
+                
+
+                <P>The Linux kernel maintains a global variable called
+          <CODE>jiffies</CODE>, which represents the number of timer ticks
+          since the machine started. This variable is initialized to zero and increments
+          each timer interrupt. You can read jiffies with the
+          <CODE>get_jiffies_64</CODE> function, and then convert this value
+          to milliseconds (msec) with <CODE>jiffies_to_msecs</CODE> or to
+          microseconds (usec) with <CODE>jiffies_to_usecs</CODE>. The
+          jiffies' global and associated functions are provided in
+          ./linux/include/linux/jiffies.h.</P>
+            </DIV></DIV>
+
+            <P>Listing 2 provides the third function. This function takes two arguments: a
+        <CODE>long</CODE> and a pointer to a <CODE>long</CODE>
+        that's defined as <CODE>__user</CODE>. The
+        <CODE>__user</CODE> macro simply tells the compiler (through
+        <CODE>noderef</CODE>) that the pointer should not be dereferenced
+        (as it's not meaningful in the current address space). This function calculates
+        the difference between two jiffies values, and then provides the result to the
+        user through a user-space pointer. The <CODE>put_user</CODE>
+        function places the result value into user-space at the location that
+        <CODE>presult </CODE> specifies. If an error occurs during this
+        operation, it will be returned, and you'll likewise notify the user-space caller.</P>
+            <P>For step 2, I update the header files to make room for the new functions in the
+        system call table. For this, I update the header file linux/include/asm/unistd.h
+        with the new system call numbers. The updates are shown in bold in Listing 3.</P>
+            <BR><A name="list3"><B>Listing 3. Updates to unistd.h to make room for the
+		new system calls</B></A><BR><TABLE width="60%" cellpadding="0" cellspacing="0" border="0"><TBODY><TR><TD class="code-outline"><PRE class="displaycode">                
+#define __NR_getcpu		318
+#define __NR_epoll_pwait	319
+<STRONG>#define __NR_getjiffies		320</STRONG>
+                <STRONG>#define __NR_diffjiffies	321</STRONG>
+                <STRONG>#define __NR_pdiffjiffies	322</STRONG>
+                <STRONG>#define NR_syscalls	323</STRONG>
+            </PRE></TD></TR></TBODY></TABLE><BR>
+            <P>Now I have my kernel system calls and numbers to represent them. All I need to do
+        now is draw an equivalence among these numbers (table indexes) and the functions
+        themselves. This is step 3, updating the system call table. As shown in Listing 4,
+        I update the file linux/arch/i386/kernel/syscall_table.S for the new functions
+        that will populate the particular indexes shown in Listing 3.</P>
+            <BR><A name="list4"><B>Listing 4. Update the system call table with the
+		new Functions</B></A><BR><TABLE width="60%" cellpadding="0" cellspacing="0" border="0"><TBODY><TR><TD class="code-outline"><PRE class="displaycode">                
+.long sys_getcpu
+.long sys_epoll_pwait
+<STRONG>.long sys_getjiffies</STRONG>		/* 320 */
+<STRONG>.long sys_diffjiffies</STRONG>
+                <STRONG>.long sys_pdiffjiffies</STRONG>
+            </PRE></TD></TR></TBODY></TABLE><BR>
+            <P>
+
+                <B>Note:</B> The size of this table is defined by the symbolic constant
+        <CODE>NR_syscalls</CODE>.</P>
+            <P>At this point, the kernel is updated. I must recompile the kernel and make the
+        new image available for booting before testing the user-space application.</P>
+            <P><A name="usermemory"><SPAN class="smalltitle">Reading and writing user memory</SPAN></A></P>
+
+            <P>The Linux kernel provides several functions that you can use to move system call
+        arguments to and from user-space. Options include simple functions for basic types
+        (such as <CODE>get_user</CODE> or
+        <CODE>put_user</CODE>). For moving blocks of data such as structures
+        or arrays, you can use another set of functions:
+        <CODE>copy_from_user</CODE> and
+        <CODE>copy_to_user</CODE>. Moving null-terminated strings have their
+        own calls: <CODE>strncpy_from_user</CODE> and
+        <CODE>strlen_from_user</CODE>. You can also test whether a
+        user-space pointer is valid through a call to
+        <CODE>access_ok</CODE>. These functions are defined in
+        linux/include/asm/uaccess.h.</P>
+            <P>You use the <CODE>access_ok</CODE> macro to validate a user-space
+        pointer for a given operation. This function takes the type of access
+        (<CODE>VERIFY_READ</CODE> or
+        <CODE>VERIFY_WRITE</CODE>), the pointer to the user-space memory
+        block, and the size of the block (in bytes). The function returns zero on success:</P>
+            <TABLE width="60%" cellpadding="0" cellspacing="0" border="0"><TBODY><TR><TD class="code-outline"><PRE class="displaycode">int <STRONG>access_ok</STRONG>( type, address, size );
+</PRE></TD></TR></TBODY></TABLE><BR>
+
+            <P>Moving simple types between the kernel and user-space (such as ints or longs) is
+        accomplished easily with <CODE>get_user</CODE> and
+        <CODE>put_user</CODE>. These macros each take a value and a pointer
+        to a variable. The <CODE>get_user</CODE> function moves the value
+        that the user-space address specifies (<CODE>ptr</CODE>) into the
+        kernel variable specified (<CODE>var</CODE>). The
+        <CODE>put_user</CODE> function moves the value that the kernel
+        variable (<CODE>var</CODE>) specifies into the user-space address
+        (<CODE>ptr</CODE>). The functions return zero on success:</P>
+            <TABLE width="60%" cellpadding="0" cellspacing="0" border="0"><TBODY><TR><TD class="code-outline"><PRE class="displaycode">int <STRONG>get_user</STRONG>( var, ptr );
+int <STRONG>put_user</STRONG>( var, ptr );
+</PRE></TD></TR></TBODY></TABLE><BR>
+
+            <P>To move larger objects, such as structures or arrays, you can use the
+        <CODE>copy_from_user</CODE> and
+        <CODE>copy_to_user</CODE> functions. These functions move an entire
+        block of data between user-space and the kernel. The
+        <CODE>copy_from_user</CODE> function moves a block of data from
+        user-space into kernel-space, and <CODE>copy_to_user</CODE> moves a
+        block of data from the kernel into user-space:</P>
+            <TABLE width="60%" cellpadding="0" cellspacing="0" border="0"><TBODY><TR><TD class="code-outline"><PRE class="displaycode">unsigned long <STRONG>copy_from_user</STRONG>( void *to, const void __user *from, unsigned long n );
+unsigned long <STRONG>copy_to_user</STRONG>( void *to, const void __user *from, unsigned long n );
+</PRE></TD></TR></TBODY></TABLE><BR>
+
+            <P>Finally, you can copy a NULL-terminated string from user-space to the kernel by
+        using the <CODE>strncpy_from_user</CODE> function. Before calling
+        this function, you can get the size of the user-space string with a call to the
+        <CODE>strlen_user</CODE> macro:</P>
+            <TABLE width="60%" cellpadding="0" cellspacing="0" border="0"><TBODY><TR><TD class="code-outline"><PRE class="displaycode">long <STRONG>strncpy_from_user</STRONG>( char *dst, const char __user *src, long count );
+<STRONG>strlen_user</STRONG>( str );
+</PRE></TD></TR></TBODY></TABLE><BR>
+            <P>These functions provide the basics for memory movement between the kernel and
+        user-space. Some additional functions exist (such as those that reduce the amount
+        of checking performed). You can find these functions in uaccess.h.</P>
+            <DIV class="ibm-alternate-rule"><HR></DIV><P class="ibm-ind-link ibm-back-to-top"><A href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#ibm-pcon" class="ibm-anchor-up-link">Back to top</A></P><P><A name="N10241"><SPAN class="atitle">Using the system call</SPAN></A></P>
+            <P>Now that kernel is updated with a few new system calls, let's look at what's
+        necessary to use them from a user-space application. There are two ways that you
+        can use new kernel system calls. The first is a convenience method (not something
+        that you'd probably want to do in production code), and the second is the
+        traditional method that requires a bit more work.</P>
+
+            <P>With the first method, you call your new functions as identified by their index
+        through the <CODE>syscall</CODE> function. With the
+        <CODE>syscall</CODE> function, you can call a system call by
+        specifying its call index and a set of arguments. For example, the short
+        application shown in Listing 5 calls your
+        <CODE>sys_getjiffies</CODE> using its index.</P>
+            <BR><A name="list5"><B>Listing 5. Using syscall to invoke a system call</B></A><BR><TABLE width="60%" cellpadding="0" cellspacing="0" border="0"><TBODY><TR><TD class="code-outline"><PRE class="displaycode">                
+#include &lt;linux/unistd.h&gt;
+#include &lt;sys/syscall.h&gt;
+
+#define __NR_getjiffies		320
+
+int main()
+{
+  long jiffies;
+
+  jiffies = <STRONG>syscall</STRONG>( __NR_getjiffies );
+
+  printf( "Current jiffies is %lx\n", jiffies );
+
+  return 0;
+}
+</PRE></TD></TR></TBODY></TABLE><BR>
+            <P>As you can see, the <CODE>syscall</CODE> function includes as its
+        first argument the index of the system call table to use. Had there been any
+        arguments to pass, these would be provided after the call index. Most system calls
+        include a <CODE>SYS_</CODE> symbolic constant to specify their
+        mapping to the <CODE>__NR_</CODE> indexes. For example, you invoke
+        the index <CODE>__NR_getpid</CODE> with
+        <CODE>syscall</CODE> as:</P>
+            <TABLE width="60%" cellpadding="0" cellspacing="0" border="0"><TBODY><TR><TD class="code-outline"><PRE class="displaycode">                <STRONG>syscall</STRONG>( SYS_getpid )
+</PRE></TD></TR></TBODY></TABLE><BR>
+            <P>The <CODE>syscall</CODE> function is architecture specific but uses
+        a mechanism to transfer control to the kernel. The argument is based on a mapping
+        of <CODE>__NR</CODE> indexes to <CODE>SYS_</CODE>
+        symbols provided by /usr/include/bits/syscall.h (defined when the libc is built).
+        Never reference this file directly; instead use /usr/include/sys/syscall.h.</P>
+
+            <P>The traditional method requires that you create function calls that match those
+        in the kernel in terms of system call index (so that you're calling the right
+        kernel service) and that the arguments match. Linux provides a set of macros to
+        provide this capability. The <CODE>_syscallN</CODE> macros are
+        defined in /usr/include/linux/unistd.h and have the following format:</P>
+            <TABLE width="60%" cellpadding="0" cellspacing="0" border="0"><TBODY><TR><TD class="code-outline"><PRE class="displaycode">                <STRONG>_syscall0</STRONG>( ret-type, func-name )
+<STRONG>_syscall1</STRONG>( ret-type, func-name, arg1-type, arg1-name )
+<STRONG>_syscall2</STRONG>( ret-type, func-name, arg1-type, arg1-name, arg2-type, arg2-name )
+</PRE></TD></TR></TBODY></TABLE><BR>
+            <DIV class="ibm-container ibm-alt-header dw-container-sidebar"><A name="sidebar3"></A><H2>User-space and __NR constants</H2><DIV class="ibm-container-body">
+                
+                <P>Note that in Listing 6 I've provided the <CODE>__NR</CODE>
+          symbolic constants. You can find these in /usr/include/asm/unistd.h (for
+          standard system calls).</P>
+            </DIV></DIV>
+            <P>The <CODE>_syscall</CODE> macros are defined up to six arguments
+        deep (although only three are shown here).</P>
+            <P>Now, here's how you use the <CODE>_syscall</CODE> macros to make
+        your new system calls visible to the user-space. Listing 6 shows an application
+        that uses each of your system calls as defined by the
+        <CODE>_syscall</CODE> macros.</P>
+            <BR><A name="list6"><B>Listing 6. Using the _syscall macro for user-space
+		application development</B></A><BR><TABLE width="60%" cellpadding="0" cellspacing="0" border="0"><TBODY><TR><TD class="code-outline"><PRE class="displaycode">                
+#include &lt;stdio.h&gt;
+#include &lt;linux/unistd.h&gt;
+#include &lt;sys/syscall.h&gt;
+
+#define <STRONG>__NR_getjiffies</STRONG>		320
+#define <STRONG>__NR_diffjiffies</STRONG>	321
+#define <STRONG>__NR_pdiffjiffies</STRONG>	322
+
+_syscall0( long, <STRONG>getjiffies</STRONG> );
+_syscall1( long, <STRONG>diffjiffies</STRONG>, long, ujiffies );
+_syscall2( long, <STRONG>pdiffjiffies</STRONG>, long, ujiffies, long*, presult );
+
+int main()
+{
+  long jifs, result;
+  int err;
+
+  jifs = <STRONG>getjiffies</STRONG>();
+
+  printf( "difference is %lx\n", <STRONG>diffjiffies</STRONG>(jifs) );
+
+  err = <STRONG>pdiffjiffies</STRONG>( jifs, &amp;result );
+
+  if (!err) {
+    printf( "difference is %lx\n", result );
+  } else {
+    printf( "error\n" );
+  }
+
+  return 0;
+}
+</PRE></TD></TR></TBODY></TABLE><BR>
+            <P>Note that the <CODE>__NR</CODE> indexes are necessary in this
+        application because the <CODE>_syscall</CODE> macro uses the
+        <CODE>func-name</CODE> to construct the
+        <CODE>__NR</CODE> index (<CODE>getjiffies</CODE>
+        -&gt; <CODE>__NR_getjiffies</CODE>). But the result is that you
+        can call your kernel functions using their names, just like any other system call.</P>
+            <DIV class="ibm-alternate-rule"><HR></DIV><P class="ibm-ind-link ibm-back-to-top"><A href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#ibm-pcon" class="ibm-anchor-up-link">Back to top</A></P><P><A name="N1030B"><SPAN class="atitle">Alternatives for user/kernel interactions</SPAN></A></P>
+            <P>System calls are an efficient way of requesting services in the kernel. The
+        biggest problem with them is that it's a standardized interface. It would be
+        difficult to have your new system call added to the kernel, so any additions are
+        likely served through other means. If you have no intent of mainlining your system
+        calls into the public Linux kernel, then system calls are a convenient and
+        efficient way to make kernel services available to user-space.</P>
+            <P>Another way to make your services visible to user-space is through the /proc file
+        system. The /proc file system is a virtual file system for which you can surface a
+        directory and files to the user, and then provide an interface in the kernel to
+        your new services through a file system interface (read, write, and so on).</P>
+            <DIV class="ibm-alternate-rule"><HR></DIV><P class="ibm-ind-link ibm-back-to-top"><A href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#ibm-pcon" class="ibm-anchor-up-link">Back to top</A></P><P><A name="N10317"><SPAN class="atitle">Tracing system calls with strace</SPAN></A></P>
+
+            <P>The Linux kernel provides a useful way to trace the system calls that a process
+        invokes (as well as those signals that the process receives). The utility is
+        called <CODE>strace</CODE> and is executed from the command line,
+        using the application you want to trace as its argument. For example, if you
+        wanted to know which system calls were invoked during the context of the
+        <CODE>date</CODE> command, type the following command:</P>
+            <TABLE width="60%" cellpadding="0" cellspacing="0" border="0"><TBODY><TR><TD class="code-outline"><PRE class="displaycode">strace date
+</PRE></TD></TR></TBODY></TABLE><BR>
+
+            <P>The result is a rather large dump showing the various system calls that are
+        performed in the context of a <CODE>date</CODE> command call. You'll
+        see the loading of shared libraries, mapping of memory, and -- at the end of the
+        trace -- the emitting of the date information to standard-out:</P>
+            <TABLE width="60%" cellpadding="0" cellspacing="0" border="0"><TBODY><TR><TD class="code-outline"><PRE class="displaycode">...
+write(1, "Fri Feb  9 23:06:41 MST 2007\n", 29Fri Feb  9 23:06:41 MST 2007) = 29
+munmap(0xb747a000, 4096)	= 0
+exit_group(0)			= ?
+$ 
+</PRE></TD></TR></TBODY></TABLE><BR>
+
+            <P>This tracing is accomplished in the kernel when the current system call request
+        has a special field set called <CODE>syscall_trace</CODE>, which
+        causes the function <CODE>do_syscall_trace</CODE> to be invoked. You
+        can also find the tracing calls as part of the system call request in
+        ./linux/arch/i386/kernel/entry.S (see
+        <CODE>syscall_trace_entry</CODE>).</P>
+            <DIV class="ibm-alternate-rule"><HR></DIV><P class="ibm-ind-link ibm-back-to-top"><A href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#ibm-pcon" class="ibm-anchor-up-link">Back to top</A></P><P><A name="N10348"><SPAN class="atitle">Going further</SPAN></A></P>
+            
+
+            <P>System calls are an efficient way of traversing between user-space and the kernel
+        to request services in the kernel-space. But they are also tightly controlled, and
+        it's much easier simply to add a new /proc file system entry to provide the
+        user/kernel interactions. When speed is important, however, system calls are an
+        ideal way to squeeze the greatest performance out of your application. See <A href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#resources">Resources</A> to dig even further into the SCI.</P>
+        <!-- CMA ID: 203493 --> <!-- Site ID: 1 --><!--XSLT stylesheet used to transform this file: dw-document-html-6.0.xsl-->
+<BR>
+<P><A name="resources"><SPAN class="atitle">Resources</SPAN></A></P><P><B>Learn</B></P><UL><LI> In "<A href="http://www.ibm.com/developerworks/linux/library/l-proc.html">Access the
+          Linux kernel using the /proc filesystem</A>" (developerWorks, March 2006), learn
+        how to develop kernel code that uses the /proc file system for user-space/kernel
+        communication. <BR><BR></LI><LI> Read "<A href="http://manugarg.googlepages.com/systemcallinlinux2_6.html">Sysenter Based
+          System Call Mechanism in Linux 2.6</A>" from Manugarg to get a detailed look at
+        the system call gate between the user-space application and the kernel. This paper
+        focuses on the transition mechanisms provided in the 2.6 kernel.<BR><BR></LI><LI>This paper details the <A href="http://www.win.tue.nl/~aeb/linux/lk/lk-4.html">assembly language
+        linkages</A> between the user-space and the kernel. <BR><BR></LI><LI> The <A href="http://en.wikipedia.org/wiki/GNU_C_Library">GNU
+          <CODE>C</CODE> Library</A> (glibc) is the standard library for GNU
+        <CODE>C</CODE>. You'll find the glibc for Linux and also for
+        numerous other operating systems. The GNU <CODE>C</CODE> Library
+        follows numerous standards, including the ISO C 99, POSIX, and UNIX98. You can
+        find more information about it at the 
+        <A href="http://www.gnu.org/software/libc/">GNU Project</A>. <BR><BR></LI><LI> The <A href="http://www.die.net/doc/linux/man/man2/syscalls.2.html">Linux syscalls man
+          page</A> gives a complete list of system calls available in Linux. <BR><BR></LI><LI> Wikipedia provides an <A href="http://en.wikipedia.org/wiki/System_calls">interesting perspective on
+          system calls</A>, including history and typical implementations. <BR><BR></LI><LI> While a bit dated, a <A href="http://www.gelato.unsw.edu.au/~dsw/public-files/kernel-docs/kernel-api/index.html">Kernel application program interface (API)</A> is provided that documents many
+        of the kernel functions available for general (in-kernel) use. This includes the
+        user-space memory-management functions as well as many others. <BR><BR></LI><LI> In the <A href="http://www.ibm.com/developerworks/linux/">developerWorks Linux zone</A>,
+        find more resources for Linux developers. <BR><BR></LI><LI> Stay current with <A href="http://www.ibm.com/developerworks/offers/techbriefings/?S_TACT=105AGX03&S_CMP=art">developerWorks technical events and Webcasts</A>. <BR><BR></LI></UL><P><B>Get products and technologies</B></P><UL><LI>
+                <A href="http://www.ibm.com/developerworks/offers/sek/?S_TACT=105AGX03&S_CMP=art">Order the SEK for Linux</A>, a two-DVD set containing the latest IBM trial
+        software for Linux from DB2®, Lotus®, Rational®, Tivoli®,
+        and WebSphere®. <BR><BR></LI><LI> With <A href="http://www.ibm.com/developerworks/downloads/?S_TACT=105AGX03&S_CMP=art">IBM trial software</A>, available for download directly from developerWorks,
+        build your next development project on Linux. <BR><BR></LI></UL><P><B>Discuss</B></P><UL><LI> Check out <A href="http://www.ibm.com/developerworks/blogs/">developerWorks blogs</A> and get
+        involved in the <A href="http://www.ibm.com/developerworks/community">developerWorks community</A>. <BR><BR></LI></UL>
+<P><A name="author"><SPAN class="atitle">About the author</SPAN></A></P><DIV class="ibm-container ibm-portrait-module ibm-alternate-two"><DIV class="ibm-container-body"><IMG src="./Kernel command using Linux system calls_files/p-mjones.jpg" width="64" height="80" alt="M. Tim Jones"><P><A name="author1"></A>M. Tim Jones is an embedded software architect and the author of <I>GNU/Linux Application Programming</I>, <I>AI Application Programming</I>, and <I>BSD Sockets Programming from a Multilanguage Perspective</I>. His engineering background ranges from the development of kernels for geosynchronous spacecraft to embedded systems architecture and networking protocols development. Tim is a Consultant Engineer for Emulex Corp. in Longmont, Colorado.</P></DIV></DIV>
+<!-- MAIN_COLUMN_CONTENT_END -->
+
+<!-- INLINE_COMMENTS_START -->
+<P class="ibm-no-print"><SPAN class="atitle"><A name="icomments">Comments</A></SPAN></P>
+<DIV id="dw-icomments-container" class="ibm-no-print">
+<DIV class="ibm-alternate-rule"><HR></DIV>
+<DIV class="ibm-alternate-rule"><HR></DIV>
+<!-- Comment_Script -->
+<A id="comments" href="http://www.ibm.com/developerworks/linux/library/l-system-calls/comments"></A>
+<SCRIPT language="JavaScript" src="./Kernel command using Linux system calls_files/insertcomment.js" type="text/javascript">//</SCRIPT>
+<DIV id="threadShow"><DIV id="cmtTog" style=""><P><SPAN id="numCmts">0</SPAN>&nbsp;comments <SPAN class="dw-bar">|</SPAN> <A class="loginLk" style="display: none; " href="http://www.ibm.com/developerworks/dwwi/DWAuthRouter?m=loginpage&lang=&d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Flinux%2Flibrary%2Fl-system-calls%2F%23icomments">Sign in</A><A id="addCmtLk" class="dw-icomment-link">Add comment</A><A class="dw-icomment-report" href="http://www.ibm.com/developerworks/forums/forum.jspa?forumID=1317">Report inappropriate content</A></P><DIV class="ibm-alternate-rule"><HR></DIV><DIV id="commentForm" style="display: none; "><DIV class="ibm-container"><H2>Add a comment</H2><DIV class="ibm-container-body"><P>The field indicated with an asterisk (<SPAN class="ibm-required">*</SPAN>) is required to complete this transaction.</P><SPAN id="infoCmt"></SPAN><DIV class="ibm-rule"><HR></DIV><FORM method="post" action="" class="ibm-column-form" enctype="multipart/form-data" focus="name" name="form"><P><LABEL for="newCmt">Comment:<SPAN class="ibm-required">*</SPAN></LABEL><BR><TEXTAREA name="newCmt" id="newCmt" cols="120" rows="4"></TEXTAREA></P><DIV class="ibm-alternate-rule"><HR></DIV><P class="ibm-buttons-row"><INPUT value="Post" type="button" name="postCmt" class="ibm-btn-arrow-sec" id="postCmt"><SPAN class="ibm-sep">&nbsp;</SPAN><INPUT value="Clear comment" type="button" name="clearCmt" class="ibm-btn-cancel-sec" id="clearCmt"><SPAN class="ibm-sep">&nbsp;</SPAN><INPUT value="Cancel" type="button" name="cancelCmt" class="ibm-btn-cancel-sec" id="cancelCmt"></P></FORM></DIV></DIV></DIV><DIV id="cmtSect"><DIV class="comment"><DIV class="dw-icomment-container"><TABLE class="dw-icomment-body" cellpadding="0" cellspacing="0" width="100%"><TBODY><TR><TD><P>Be the first to add a comment</P></TD></TR></TBODY></TABLE></DIV></DIV></DIV><DIV id="paging"><P><A id="lastCmts" class="dw-icomment-link" style="display: none; ">Show 5 most recent comments</A><SPAN id="cmtDivider" style="display: none; "> <SPAN class="dw-bar">|</SPAN> </SPAN><A id="nextCmts" class="dw-icomment-link" style="display: none; ">Show next 5 comments</A><SPAN id="cmtDivider2" style="display: none; "> <SPAN class="dw-bar">|</SPAN> </SPAN><A id="viewAllCmts" class="dw-icomment-link" style="display: none; ">Show all comments</A></P></DIV><P><A class="loginLk" style="display: none; " href="http://www.ibm.com/developerworks/dwwi/DWAuthRouter?m=loginpage&lang=&d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Flinux%2Flibrary%2Fl-system-calls%2F%23icomments">Sign in</A><A id="addCmtLk2" href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#icomments">Add comment</A></P><DIV class="ibm-alternate-rule"><HR></DIV><DIV class="ibm-alternate-rule"><HR></DIV></DIV></DIV>
+<SCRIPT language="JavaScript" type="text/javascript">
+// <![CDATA[
+ jQuery('threadShow').insertComment('95%',5,'nCmts','icomments');
+// ]]>
+</SCRIPT>
+</DIV>
+<!-- INLINE_COMMENTS_END -->
+
+<P class="ibm-ind-link ibm-back-to-top"><A class="ibm-anchor-up-link" href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#ibm-pcon">Back to top</A></P>
+<P><A href="http://www.ibm.com/developerworks/ibm/trademarks/">Trademarks</A> &nbsp;|&nbsp; <A href="https://www.ibm.com/developerworks/mydeveloperworks/terms/">My developerWorks terms and conditions</A></P>
+
+<!-- Overlays -->
+<!-- Zone/Leaf_Interest_Overlay_Start -->
+<DIV class="ibm-common-overlay ibm-no-print" id="dwmyinterestadd">
+<DIV class="ibm-head"><P><A class="ibm-common-overlay-close" href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#close">Close [x]</A></P></DIV>
+<DIV class="ibm-body">
+<DIV class="ibm-main">
+<A class="ibm-access" name="dwmyinterestaddhelp">Help: Update or add to My dW interests</A>   
+<DIV class="ibm-title"><H1>What's this?</H1></DIV>
+<DIV class="ibm-container ibm-alternate">
+<P>This little timesaver lets you update your My developerWorks profile with just one click!  The general subject of this content (AIX and UNIX, Information Management, Lotus, Rational, Tivoli, WebSphere, Java, Linux, Open source, SOA and Web services, Web development, or XML) will be added to the interests section of your profile, if it's not there already.  You only need to be logged in to My developerWorks.</P>
+<P>And what's the point of adding your interests to your profile?  That's how you find other users with the same interests as yours, and see what they're reading and contributing to the community.  Your interests also help us recommend relevant developerWorks content to you.</P>
+<P><A href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/home.do?lang=en">View your My developerWorks profile</A></P>
+<P class="ibm-access"><A href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#interestShow">Return from help</A></P>
+</DIV> 
+</DIV>
+</DIV>
+<DIV class="ibm-footer"></DIV>
+</DIV>
+
+<DIV class="ibm-common-overlay ibm-no-print" id="dwmyinterestremove">
+<DIV class="ibm-head"><P><A class="ibm-common-overlay-close" href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#close">Close [x]</A></P></DIV>
+<DIV class="ibm-body">
+<DIV class="ibm-main">
+<A class="ibm-access" name="dwmyinterestremovehelp">Help: Remove from My dW interests</A> 
+<DIV class="ibm-title"><H1>What's this?</H1></DIV>
+<DIV class="ibm-container ibm-alternate">
+<P>Removing this interest does not alter your profile, but rather removes this piece of content from a list of all content for which you've indicated interest.  In a future enhancement to My developerWorks, you'll be able to see a record of that content.</P>
+<P><A href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/home.do?lang=en">View your My developerWorks profile</A></P>
+<P class="ibm-access"><A href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#interestShow">Return from help</A></P>
+</DIV> 
+</DIV>
+</DIV>
+<DIV class="ibm-footer"></DIV>
+</DIV>
+<!-- Zone/Leaf_Interest_Overlay_End --></DIV>
+<!-- MAIN_COLUMN_CONTAINER_END -->
+
+<!-- Rating_Meta_BEGIN -->
+<!--Rating_Meta_BEGIN--><DIV class="metavalue">static.content.url=http://www.ibm.com/developerworks/js/artrating/</DIV><DIV class="metavalue">SITE_ID=1</DIV><DIV class="metavalue">Zone=Linux</DIV><DIV class="metavalue">ArticleID=203493</DIV><DIV class="metavalue">ArticleTitle=Kernel command using Linux system calls</DIV><DIV class="metavalue">publish-date=03212007</DIV><DIV class="metavalue">author1-email=mtj@mtjones.com</DIV><DIV class="metavalue">author1-email-cc=tomyoung@us.ibm.com</DIV><SCRIPT language="javascript" type="text/javascript">document.write('<div class="metavalue">url='+location.href+'</div>');</SCRIPT><DIV class="metavalue">url=http://www.ibm.com/developerworks/linux/library/l-system-calls/</DIV><!--Rating_Meta_END-->
+<!-- Rating_Meta_END -->
+
+</DIV>
+<!-- MAIN_COLUMN_END-->
+
+<!-- RIGHT_COLUMN_BEGIN -->
+<DIV id="ibm-content-sidebar">
+
+<!-- RIGHT_COLUMN_CONTENT_BEGIN --> 
+<DIV class="ibm-container"><H2>Table of contents</H2><DIV class="ibm-container-body"><IMG alt="" height="1" width="1" src="./Kernel command using Linux system calls_files/c.gif"><UL class="ibm-bullet-list"><LI><A class="ibm-feature-link" href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#N10060">The SCI</A></LI><LI><A class="ibm-feature-link" href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#N100BD">Adding a Linux system call</A></LI><LI><A class="ibm-feature-link" href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#N10241">Using the system call</A></LI><LI><A class="ibm-feature-link" href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#N1030B">Alternatives for user/kernel interactions</A></LI><LI><A class="ibm-feature-link" href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#N10317">Tracing system calls with strace</A></LI><LI><A class="ibm-feature-link" href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#N10348">Going further</A></LI><LI><A class="ibm-feature-link" href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#resources">Resources</A></LI><LI><A class="ibm-feature-link" href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#author">About the author</A></LI><LI><A class="ibm-feature-link" href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#icomments">Comments</A></LI></UL></DIV></DIV>
+<!--XSLT stylesheet used to transform this content: s-danube.xsl--><DIV class="ibm-container"><H2>Local resources</H2><DIV class="ibm-container-body"><IMG src="./Kernel command using Linux system calls_files/spot-danube.jpg" alt="" border="0" height="58" width="188"><UL class="ibm-bullet-list"><LI><A href="http://www.ibm.com/partnerworld/iic/shanghai.htm?S_TACT=105AGY81&S_CMP=danube_cn_as" class="ibm-feature-link">IBM Innovation Center - 中国: 上海</A></LI><LI><A href="http://www.ibm.com/developerworks/cn/?S_TACT=105AGY81&S_CMP=danube_cn_as" class="ibm-feature-link">developerWorks 中国</A></LI><LI><A href="http://www.ibm.com/developerworks/cn/downloads/?S_TACT=105AGY81&S_CMP=danube_cn_as" class="ibm-feature-link">软件下载资源中心</A></LI><LI><A href="http://www.ibm.com/developerworks/cn/offers/techbriefings/?S_TACT=105AGY81&S_CMP=danube_cn_as" class="ibm-feature-link">dW Live! 技术讲座</A></LI><LI><A href="http://www.ibm.com/developerworks/cn/training/?S_TACT=105AGY81&S_CMP=danube_cn_as" class="ibm-feature-link">精品教程</A></LI></UL></DIV></DIV>
+<!--XSLT stylesheet used to transform this content: s-community.xsl--><DIV class="ibm-container"><H2>My developerWorks community</H2><DIV class="ibm-container-body"><P>Interact, share, and communicate with developers worldwide.</P><DIV class="ibm-rule"><HR></DIV><UL class="ibm-bullet-list"><LI><A href="https://www.ibm.com/developerworks/mydeveloperworks/homepage/web/getuserpref?ca=dma-" class="ibm-feature-link">My Home</A></LI><LI><A href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/home.do?lang=en&ca=dma-" class="ibm-feature-link">Profiles</A></LI><LI><A href="https://www.ibm.com/developerworks/mydeveloperworks/groups/service/html/allcommunities?ca=dma-" class="ibm-feature-link">Groups</A></LI><LI><A href="https://www.ibm.com/developerworks/mydeveloperworks/blogs/?ca=dma-" class="ibm-feature-link">Blogs</A></LI><LI><A href="https://www.ibm.com/developerworks/mydeveloperworks/bookmarks/?ca=dma-" class="ibm-feature-link">Bookmarks</A></LI><LI><A href="https://www.ibm.com/developerworks/mydeveloperworks/activities/service/html/mainpage?ca=dma-" class="ibm-feature-link">Activities</A></LI><LI><A href="http://www.ibm.com/developerworks/spaces/?ca=dma-" class="ibm-feature-link">Spaces</A></LI><LI><A href="http://www.ibm.com/developerworks/forums/index.html?ca=dma-" class="ibm-feature-link">Forums</A></LI><LI><A href="http://www.ibm.com/developerworks/wikis/dashboard.action?ca=dma-" class="ibm-feature-link">Wikis</A></LI><LI><A href="http://www.ibm.com/developerworks/podcast/?ca=dma-" class="ibm-feature-link">Podcasts</A></LI><LI><A href="http://www.ibm.com/developerworks/exchange/dw_index.jspa?ca=dma-" class="ibm-feature-link">Exchange</A></LI></UL><DIV class="ibm-rule"><HR></DIV><P class="ibm-ind-link"><A href="https://www.ibm.com/developerworks/mydeveloperworks/?ca=dma-" class="ibm-forward-link">My developerWorks overview</A></P></DIV></DIV>
+<!-- Tagging_Start -->
+<DIV id="dw-tag-cloud-container" class="ibm-container"><H2>Tags</H2>
+<DIV id="dw-tag-help"><A class="dwauthor" rel="#tagtip" id="dwtagtip"><IMG alt="Help" height="16" width="16" align="top" src="./Kernel command using Linux system calls_files/help_icon.gif"></A></DIV>
+<DIV id="tagtip" class="dwauthor-onload-state ibm-no-print" style="display: none; ">Use the <STRONG>search field</STRONG> to find all types of content in My developerWorks with that tag.<P>Use the <STRONG>slider bar</STRONG> to see more or fewer tags.</P><P><STRONG>Popular tags</STRONG> shows the top tags for this particular content zone (for example, Java technology, Linux, WebSphere).</P><P><STRONG>My tags</STRONG> shows your tags for this particular content zone (for example, Java technology, Linux, WebSphere).</P></DIV>
+<DIV class="ibm-access">Use the search field to find all types of content in My developerWorks with that tag.  <EM>Popular tags</EM> shows the top tags for this particular content zone (for example, Java technology, Linux, WebSphere).  <EM>My tags</EM> shows your tags for this particular content zone (for example, Java technology, Linux, WebSphere).</DIV>
+<DIV class="ibm-container-body">
+<DIV class="dw-tag-search"><FORM action="http://www.ibm.com/developerworks/mydeveloperworks/bookmarks/html?lang=en" method="get" id="actualtagform" onsubmit="popupform(this, &#39;join&#39;)">
+<P><LABEL for="tagfield"><STRONG>Search all tags</STRONG></LABEL><INPUT id="tagfield" name="tag" type="text" maxlength="20" size="17">&nbsp;<INPUT src="./Kernel command using Linux system calls_files/short-btn.gif" type="image" class="ibm-btn-view" alt="submit search" title="submit search" value="Search"></P></FORM></DIV>
+<DIV class="ibm-rule"><HR></DIV>
+<DIV id="dw-tag-select">
+<DIV id="dw-tag-select-popular"><P><STRONG>Popular article tags</STRONG>&nbsp;|&nbsp;<BR><A id="a-my" href="javascript:;">My article tags</A><A href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#dw-tag-access" class="ibm-access">Skip to tags list</A></P></DIV>
+<DIV id="dw-tag-select-my" class="dw-hidetag"><P><A id="a-popular" href="javascript:;">Popular article tags</A>&nbsp;|&nbsp;<BR><STRONG>My article tags</STRONG></P><A href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#dw-tag-access" class="ibm-access">Skip to tags list</A></DIV><DIV id="dw-tag-access" class="ibm-access"><H2>Popular tags</H2><UL>
+					
+				<LI class="f1-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=admin&lang=en')">admin</A>&nbsp;
+				</LI>
+					
+				<LI class="f2-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=aix&lang=en')">aix</A>&nbsp;
+				</LI>
+					
+				<LI class="f3-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=amazon&lang=en')">amazon</A>&nbsp;
+				</LI>
+					
+				<LI class="f4-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=anacron&lang=en')">anacron</A>&nbsp;
+				</LI>
+					
+				<LI class="f5-21">
+					
+					<A title="5" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=anatomy&lang=en')">anatomy</A>&nbsp;
+				</LI>
+					
+				<LI class="f6-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=apache&lang=en')">apache</A>&nbsp;
+				</LI>
+					
+				<LI class="f7-51">
+					
+					<A title="16" class="lotusF3 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=articles&lang=en')">articles</A>&nbsp;
+				</LI>
+					
+				<LI class="f8-21">
+					
+					<A title="5" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=aws&lang=en')">aws</A>&nbsp;
+				</LI>
+					
+				<LI class="f9-15">
+					
+					<A title="4" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=bash&lang=en')">bash</A>&nbsp;
+				</LI>
+					
+				<LI class="f10-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=beagleboard&lang=en')">beagleboard</A>&nbsp;
+				</LI>
+					
+				<LI class="f11-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=boot&lang=en')">boot</A>&nbsp;
+				</LI>
+					
+				<LI class="f12-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=certification&lang=en')">certification</A>&nbsp;
+				</LI>
+					
+				<LI class="f13-29">
+					
+					<A title="7" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=cloud&lang=en')">cloud</A>&nbsp;
+				</LI>
+					
+				<LI class="f14-25">
+					
+					<A title="6" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=cloud_computing&lang=en')">cloud_computing</A>&nbsp;
+				</LI>
+					
+				<LI class="f15-15">
+					
+					<A title="4" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=cloudcomputing&lang=en')">cloudcomputing</A>&nbsp;
+				</LI>
+					
+				<LI class="f16-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=computing&lang=en')">computing</A>&nbsp;
+				</LI>
+					
+				<LI class="f17-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=cpu&lang=en')">cpu</A>&nbsp;
+				</LI>
+					
+				<LI class="f18-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=cpufreq&lang=en')">cpufreq</A>&nbsp;
+				</LI>
+					
+				<LI class="f19-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=developerworks&lang=en')">developerworks</A>&nbsp;
+				</LI>
+					
+				<LI class="f20-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=embedded&lang=en')">embedded</A>&nbsp;
+				</LI>
+					
+				<LI class="f21-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=energy&lang=en')">energy</A>&nbsp;
+				</LI>
+					
+				<LI class="f22-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=environment&lang=en')">environment</A>&nbsp;
+				</LI>
+					
+				<LI class="f23-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=exofs&lang=en')">exofs</A>&nbsp;
+				</LI>
+					
+				<LI class="f24-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=file&lang=en')">file</A>&nbsp;
+				</LI>
+					
+				<LI class="f25-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=file_system&lang=en')">file_system</A>&nbsp;
+				</LI>
+					
+				<LI class="f26-21">
+					
+					<A title="5" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=filesystem&lang=en')">filesystem</A>&nbsp;
+				</LI>
+					
+				<LI class="f27-15">
+					
+					<A title="4" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=git&lang=en')">git</A>&nbsp;
+				</LI>
+					
+				<LI class="f28-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=governors&lang=en')">governors</A>&nbsp;
+				</LI>
+					
+				<LI class="f29-48">
+					
+					<A title="14" class="lotusF3 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=green&lang=en')">green</A>&nbsp;
+				</LI>
+					
+				<LI class="f30-43">
+					
+					<A title="12" class="lotusF3 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=green_it&lang=en')">green_it</A>&nbsp;
+				</LI>
+					
+				<LI class="f31-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=green_solutions&lang=en')">green_solutions</A>&nbsp;
+				</LI>
+					
+				<LI class="f32-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=hardware&lang=en')">hardware</A>&nbsp;
+				</LI>
+					
+				<LI class="f33-21">
+					
+					<A title="5" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=ian_shields&lang=en')">ian_shields</A>&nbsp;
+				</LI>
+					
+				<LI class="f34-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=inside&lang=en')">inside</A>&nbsp;
+				</LI>
+					
+				<LI class="f35-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=it&lang=en')">it</A>&nbsp;
+				</LI>
+					
+				<LI class="f36-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=jeffrey_osier_mixon&lang=en')">jeffrey_osier_mixon</A>&nbsp;
+				</LI>
+					
+				<LI class="f37-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=jenifer_hopper&lang=en')">jenifer_hopper</A>&nbsp;
+				</LI>
+					
+				<LI class="f38-41">
+					
+					<A title="11" class="lotusF3 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=kernel&lang=en')">kernel</A>&nbsp;
+				</LI>
+					
+				<LI class="f39-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=kernel_modules&lang=en')">kernel_modules</A>&nbsp;
+				</LI>
+					
+				<LI class="f40-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=kernel_programming&lang=en')">kernel_programming</A>&nbsp;
+				</LI>
+					
+				<LI class="f41-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=ksh&lang=en')">ksh</A>&nbsp;
+				</LI>
+					
+				<LI class="f42-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=lamp&lang=en')">lamp</A>&nbsp;
+				</LI>
+					
+				<LI class="f43-15">
+					
+					<A title="4" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=learn_linux&lang=en')">learn_linux</A>&nbsp;
+				</LI>
+					
+				<LI class="f44-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=learn_linux_101&lang=en')">learn_linux_101</A>&nbsp;
+				</LI>
+					
+				<LI class="f45-100">
+					
+					<A title="91" class="lotusF5 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=linux&lang=en')">linux</A>&nbsp;
+				</LI>
+					
+				<LI class="f46-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=linux_certification&lang=en')">linux_certification</A>&nbsp;
+				</LI>
+					
+				<LI class="f47-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=linux_sys_admin&lang=en')">linux_sys_admin</A>&nbsp;
+				</LI>
+					
+				<LI class="f48-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=loadable&lang=en')">loadable</A>&nbsp;
+				</LI>
+					
+				<LI class="f49-15">
+					
+					<A title="4" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=lpi&lang=en')">lpi</A>&nbsp;
+				</LI>
+					
+				<LI class="f50-25">
+					
+					<A title="6" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=m_tim_jones&lang=en')">m_tim_jones</A>&nbsp;
+				</LI>
+					
+				<LI class="f51-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=management&lang=en')">management</A>&nbsp;
+				</LI>
+					
+				<LI class="f52-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=modules&lang=en')">modules</A>&nbsp;
+				</LI>
+					
+				<LI class="f53-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=nilfs&lang=en')">nilfs</A>&nbsp;
+				</LI>
+					
+				<LI class="f54-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=of&lang=en')">of</A>&nbsp;
+				</LI>
+					
+				<LI class="f55-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=open&lang=en')">open</A>&nbsp;
+				</LI>
+					
+				<LI class="f56-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=ose&lang=en')">ose</A>&nbsp;
+				</LI>
+					
+				<LI class="f57-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=ovf&lang=en')">ovf</A>&nbsp;
+				</LI>
+					
+				<LI class="f58-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=pearl&lang=en')">pearl</A>&nbsp;
+				</LI>
+					
+				<LI class="f59-21">
+					
+					<A title="5" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=performance&lang=en')">performance</A>&nbsp;
+				</LI>
+					
+				<LI class="f60-21">
+					
+					<A title="5" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=perl&lang=en')">perl</A>&nbsp;
+				</LI>
+					
+				<LI class="f61-15">
+					
+					<A title="4" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=planet&lang=en')">planet</A>&nbsp;
+				</LI>
+					
+				<LI class="f62-25">
+					
+					<A title="6" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=power&lang=en')">power</A>&nbsp;
+				</LI>
+					
+				<LI class="f63-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=power_consumption&lang=en')">power_consumption</A>&nbsp;
+				</LI>
+					
+				<LI class="f64-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=power_management&lang=en')">power_management</A>&nbsp;
+				</LI>
+					
+				<LI class="f65-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=process&lang=en')">process</A>&nbsp;
+				</LI>
+					
+				<LI class="f66-15">
+					
+					<A title="4" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=s3&lang=en')">s3</A>&nbsp;
+				</LI>
+					
+				<LI class="f67-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=shell&lang=en')">shell</A>&nbsp;
+				</LI>
+					
+				<LI class="f68-15">
+					
+					<A title="4" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=simpledb&lang=en')">simpledb</A>&nbsp;
+				</LI>
+					
+				<LI class="f69-15">
+					
+					<A title="4" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=smarter&lang=en')">smarter</A>&nbsp;
+				</LI>
+					
+				<LI class="f70-38">
+					
+					<A title="10" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=smarter_planet&lang=en')">smarter_planet</A>&nbsp;
+				</LI>
+					
+				<LI class="f71-15">
+					
+					<A title="4" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=subversion&lang=en')">subversion</A>&nbsp;
+				</LI>
+					
+				<LI class="f72-36">
+					
+					<A title="9" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=sysadmin&lang=en')">sysadmin</A>&nbsp;
+				</LI>
+					
+				<LI class="f73-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=system_x&lang=en')">system_x</A>&nbsp;
+				</LI>
+					
+				<LI class="f74-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=the&lang=en')">the</A>&nbsp;
+				</LI>
+					
+				<LI class="f75-21">
+					
+					<A title="5" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=tim_jones&lang=en')">tim_jones</A>&nbsp;
+				</LI>
+					
+				<LI class="f76-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=tuning&lang=en')">tuning</A>&nbsp;
+				</LI>
+					
+				<LI class="f77-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=ubuntu&lang=en')">ubuntu</A>&nbsp;
+				</LI>
+					
+				<LI class="f78-15">
+					
+					<A title="4" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=unix&lang=en')">unix</A>&nbsp;
+				</LI>
+					
+				<LI class="f79-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=version_control&lang=en')">version_control</A>&nbsp;
+				</LI>
+					
+				<LI class="f80-36">
+					
+					<A title="9" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=virtualization&lang=en')">virtualization</A>&nbsp;
+				</LI>
+					
+			</UL><P>End of Popular tags</P><H2>My tags</H2><DIV id="dw-tag-access-my" class="ibm-access"><CENTER>To access My Tags, please <A href="http://www.ibm.com/developerworks/dwwi/DWAuthRouter?m=auth&d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Flinux%2Flibrary%2Fl-system-calls%2F">sign in</A><P>Read Popular tags</P></CENTER><BR></DIV><P>End of My tags</P></DIV>
+<DIV id="dw-tag-cloud">
+	<DIV id="dogearTagCloud">
+		<DIV id="content-slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><A href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 0%; "></A></DIV>
+		<DIV id="ui-slider-scale"><P><SPAN class="content-slider-more">More</SPAN><SPAN class="content-slider-less">Less</SPAN></P></DIV>
+	    <DIV id="cloud-container">
+			<UL>
+					
+				<LI class="f1-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=admin&lang=en')">admin</A>&nbsp;
+				</LI>
+					
+				<LI class="f2-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=aix&lang=en')">aix</A>&nbsp;
+				</LI>
+					
+				<LI class="f3-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=amazon&lang=en')">amazon</A>&nbsp;
+				</LI>
+					
+				<LI class="f4-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=anacron&lang=en')">anacron</A>&nbsp;
+				</LI>
+					
+				<LI class="f5-21">
+					
+					<A title="5" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=anatomy&lang=en')">anatomy</A>&nbsp;
+				</LI>
+					
+				<LI class="f6-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=apache&lang=en')">apache</A>&nbsp;
+				</LI>
+					
+				<LI class="f7-51">
+					
+					<A title="16" class="lotusF3 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=articles&lang=en')">articles</A>&nbsp;
+				</LI>
+					
+				<LI class="f8-21">
+					
+					<A title="5" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=aws&lang=en')">aws</A>&nbsp;
+				</LI>
+					
+				<LI class="f9-15">
+					
+					<A title="4" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=bash&lang=en')">bash</A>&nbsp;
+				</LI>
+					
+				<LI class="f10-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=beagleboard&lang=en')">beagleboard</A>&nbsp;
+				</LI>
+					
+				<LI class="f11-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=boot&lang=en')">boot</A>&nbsp;
+				</LI>
+					
+				<LI class="f12-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=certification&lang=en')">certification</A>&nbsp;
+				</LI>
+					
+				<LI class="f13-29">
+					
+					<A title="7" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=cloud&lang=en')">cloud</A>&nbsp;
+				</LI>
+					
+				<LI class="f14-25">
+					
+					<A title="6" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=cloud_computing&lang=en')">cloud_computing</A>&nbsp;
+				</LI>
+					
+				<LI class="f15-15">
+					
+					<A title="4" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=cloudcomputing&lang=en')">cloudcomputing</A>&nbsp;
+				</LI>
+					
+				<LI class="f16-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=computing&lang=en')">computing</A>&nbsp;
+				</LI>
+					
+				<LI class="f17-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=cpu&lang=en')">cpu</A>&nbsp;
+				</LI>
+					
+				<LI class="f18-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=cpufreq&lang=en')">cpufreq</A>&nbsp;
+				</LI>
+					
+				<LI class="f19-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=developerworks&lang=en')">developerworks</A>&nbsp;
+				</LI>
+					
+				<LI class="f20-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=embedded&lang=en')">embedded</A>&nbsp;
+				</LI>
+					
+				<LI class="f21-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=energy&lang=en')">energy</A>&nbsp;
+				</LI>
+					
+				<LI class="f22-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=environment&lang=en')">environment</A>&nbsp;
+				</LI>
+					
+				<LI class="f23-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=exofs&lang=en')">exofs</A>&nbsp;
+				</LI>
+					
+				<LI class="f24-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=file&lang=en')">file</A>&nbsp;
+				</LI>
+					
+				<LI class="f25-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=file_system&lang=en')">file_system</A>&nbsp;
+				</LI>
+					
+				<LI class="f26-21">
+					
+					<A title="5" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=filesystem&lang=en')">filesystem</A>&nbsp;
+				</LI>
+					
+				<LI class="f27-15">
+					
+					<A title="4" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=git&lang=en')">git</A>&nbsp;
+				</LI>
+					
+				<LI class="f28-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=governors&lang=en')">governors</A>&nbsp;
+				</LI>
+					
+				<LI class="f29-48">
+					
+					<A title="14" class="lotusF3 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=green&lang=en')">green</A>&nbsp;
+				</LI>
+					
+				<LI class="f30-43">
+					
+					<A title="12" class="lotusF3 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=green_it&lang=en')">green_it</A>&nbsp;
+				</LI>
+					
+				<LI class="f31-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=green_solutions&lang=en')">green_solutions</A>&nbsp;
+				</LI>
+					
+				<LI class="f32-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=hardware&lang=en')">hardware</A>&nbsp;
+				</LI>
+					
+				<LI class="f33-21">
+					
+					<A title="5" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=ian_shields&lang=en')">ian_shields</A>&nbsp;
+				</LI>
+					
+				<LI class="f34-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=inside&lang=en')">inside</A>&nbsp;
+				</LI>
+					
+				<LI class="f35-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=it&lang=en')">it</A>&nbsp;
+				</LI>
+					
+				<LI class="f36-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=jeffrey_osier_mixon&lang=en')">jeffrey_osier_mixon</A>&nbsp;
+				</LI>
+					
+				<LI class="f37-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=jenifer_hopper&lang=en')">jenifer_hopper</A>&nbsp;
+				</LI>
+					
+				<LI class="f38-41">
+					
+					<A title="11" class="lotusF3 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=kernel&lang=en')">kernel</A>&nbsp;
+				</LI>
+					
+				<LI class="f39-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=kernel_modules&lang=en')">kernel_modules</A>&nbsp;
+				</LI>
+					
+				<LI class="f40-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=kernel_programming&lang=en')">kernel_programming</A>&nbsp;
+				</LI>
+					
+				<LI class="f41-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=ksh&lang=en')">ksh</A>&nbsp;
+				</LI>
+					
+				<LI class="f42-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=lamp&lang=en')">lamp</A>&nbsp;
+				</LI>
+					
+				<LI class="f43-15">
+					
+					<A title="4" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=learn_linux&lang=en')">learn_linux</A>&nbsp;
+				</LI>
+					
+				<LI class="f44-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=learn_linux_101&lang=en')">learn_linux_101</A>&nbsp;
+				</LI>
+					
+				<LI class="f45-100">
+					
+					<A title="91" class="lotusF5 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=linux&lang=en')">linux</A>&nbsp;
+				</LI>
+					
+				<LI class="f46-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=linux_certification&lang=en')">linux_certification</A>&nbsp;
+				</LI>
+					
+				<LI class="f47-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=linux_sys_admin&lang=en')">linux_sys_admin</A>&nbsp;
+				</LI>
+					
+				<LI class="f48-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=loadable&lang=en')">loadable</A>&nbsp;
+				</LI>
+					
+				<LI class="f49-15">
+					
+					<A title="4" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=lpi&lang=en')">lpi</A>&nbsp;
+				</LI>
+					
+				<LI class="f50-25">
+					
+					<A title="6" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=m_tim_jones&lang=en')">m_tim_jones</A>&nbsp;
+				</LI>
+					
+				<LI class="f51-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=management&lang=en')">management</A>&nbsp;
+				</LI>
+					
+				<LI class="f52-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=modules&lang=en')">modules</A>&nbsp;
+				</LI>
+					
+				<LI class="f53-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=nilfs&lang=en')">nilfs</A>&nbsp;
+				</LI>
+					
+				<LI class="f54-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=of&lang=en')">of</A>&nbsp;
+				</LI>
+					
+				<LI class="f55-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=open&lang=en')">open</A>&nbsp;
+				</LI>
+					
+				<LI class="f56-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=ose&lang=en')">ose</A>&nbsp;
+				</LI>
+					
+				<LI class="f57-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=ovf&lang=en')">ovf</A>&nbsp;
+				</LI>
+					
+				<LI class="f58-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=pearl&lang=en')">pearl</A>&nbsp;
+				</LI>
+					
+				<LI class="f59-21">
+					
+					<A title="5" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=performance&lang=en')">performance</A>&nbsp;
+				</LI>
+					
+				<LI class="f60-21">
+					
+					<A title="5" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=perl&lang=en')">perl</A>&nbsp;
+				</LI>
+					
+				<LI class="f61-15">
+					
+					<A title="4" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=planet&lang=en')">planet</A>&nbsp;
+				</LI>
+					
+				<LI class="f62-25">
+					
+					<A title="6" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=power&lang=en')">power</A>&nbsp;
+				</LI>
+					
+				<LI class="f63-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=power_consumption&lang=en')">power_consumption</A>&nbsp;
+				</LI>
+					
+				<LI class="f64-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=power_management&lang=en')">power_management</A>&nbsp;
+				</LI>
+					
+				<LI class="f65-1">
+					
+					<A title="2" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=process&lang=en')">process</A>&nbsp;
+				</LI>
+					
+				<LI class="f66-15">
+					
+					<A title="4" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=s3&lang=en')">s3</A>&nbsp;
+				</LI>
+					
+				<LI class="f67-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=shell&lang=en')">shell</A>&nbsp;
+				</LI>
+					
+				<LI class="f68-15">
+					
+					<A title="4" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=simpledb&lang=en')">simpledb</A>&nbsp;
+				</LI>
+					
+				<LI class="f69-15">
+					
+					<A title="4" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=smarter&lang=en')">smarter</A>&nbsp;
+				</LI>
+					
+				<LI class="f70-38">
+					
+					<A title="10" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=smarter_planet&lang=en')">smarter_planet</A>&nbsp;
+				</LI>
+					
+				<LI class="f71-15">
+					
+					<A title="4" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=subversion&lang=en')">subversion</A>&nbsp;
+				</LI>
+					
+				<LI class="f72-36">
+					
+					<A title="9" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=sysadmin&lang=en')">sysadmin</A>&nbsp;
+				</LI>
+					
+				<LI class="f73-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=system_x&lang=en')">system_x</A>&nbsp;
+				</LI>
+					
+				<LI class="f74-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=the&lang=en')">the</A>&nbsp;
+				</LI>
+					
+				<LI class="f75-21">
+					
+					<A title="5" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=tim_jones&lang=en')">tim_jones</A>&nbsp;
+				</LI>
+					
+				<LI class="f76-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=tuning&lang=en')">tuning</A>&nbsp;
+				</LI>
+					
+				<LI class="f77-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=ubuntu&lang=en')">ubuntu</A>&nbsp;
+				</LI>
+					
+				<LI class="f78-15">
+					
+					<A title="4" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=unix&lang=en')">unix</A>&nbsp;
+				</LI>
+					
+				<LI class="f79-9">
+					
+					<A title="3" class="lotusF1 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=version_control&lang=en')">version_control</A>&nbsp;
+				</LI>
+					
+				<LI class="f80-36">
+					
+					<A title="9" class="lotusF2 my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=virtualization&lang=en')">virtualization</A>&nbsp;
+				</LI>
+					
+			</UL>
+		</DIV>
+		<DIV class="ibm-rule"><HR></DIV><P>View as <STRONG>cloud</STRONG>&nbsp;| <A id="alist" class="lotusAction" href="javascript:;">list</A></P>
+		</DIV> 
+
+		
+			<DIV class="lotusChunk dw-hidetag" id="dogearTagList">
+			<DIV id="list-container">
+				<UL class="lotusList lotusEditable lotusTags lotusMeta">
+				
+			
+
+			
+				<LI>				
+					<A title="3" class="lotusLeft my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=admin&lang=en')">admin</A>
+					3
+				</LI>
+			
+			
+
+			
+				<LI>				
+					<A title="2" class="lotusLeft my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=aix&lang=en')">aix</A>
+					2
+				</LI>
+			
+			
+
+			
+				<LI>				
+					<A title="2" class="lotusLeft my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=amazon&lang=en')">amazon</A>
+					2
+				</LI>
+			
+			
+
+			
+				<LI>				
+					<A title="2" class="lotusLeft my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=anacron&lang=en')">anacron</A>
+					2
+				</LI>
+			
+			
+
+			
+				<LI>				
+					<A title="5" class="lotusLeft my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=anatomy&lang=en')">anatomy</A>
+					5
+				</LI>
+			
+			
+
+			
+				<LI>				
+					<A title="2" class="lotusLeft my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=apache&lang=en')">apache</A>
+					2
+				</LI>
+			
+			
+
+			
+				<LI>				
+					<A title="16" class="lotusLeft my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=articles&lang=en')">articles</A>
+					16
+				</LI>
+			
+			
+
+			
+				<LI>				
+					<A title="5" class="lotusLeft my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=aws&lang=en')">aws</A>
+					5
+				</LI>
+			
+			
+
+			
+				<LI>				
+					<A title="4" class="lotusLeft my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=bash&lang=en')">bash</A>
+					4
+				</LI>
+			
+			
+
+			
+				<LI>				
+					<A title="2" class="lotusLeft my" href="javascript:launchTagWindow('/developerworks/mydeveloperworks/bookmarks/html?tag=beagleboard&lang=en')">beagleboard</A>
+					2
+				</LI>
+			
+				
+			</UL>
+			</DIV>		
+			<DIV class="ibm-rule"><HR></DIV><P>View as <A id="acloud" class="lotusAction" href="javascript:;">cloud</A>&nbsp;| <STRONG>list</STRONG></P>
+			</DIV></DIV>  
+</DIV>   
+</DIV>
+</DIV>
+<!-- Tagging_End -->
+<!-- Dig_Deeper -->
+<DIV class="ibm-container"><H2>Dig deeper into Linux on developerWorks</H2><DIV class="ibm-container-body"><UL class="ibm-link-list"><LI class="ibm-first"><A href="http://www.ibm.com/developerworks/linux/" class="ibm-forward-link">Overview</A></LI><LI><A href="http://www.ibm.com/developerworks/linux/newto/" class="ibm-forward-link">New to Linux</A></LI><LI><A href="http://www.ibm.com/developerworks/views/linux/downloads.jsp" class="ibm-forward-link">Downloads and products</A></LI><LI><A href="http://www.ibm.com/developerworks/views/linux/projects.jsp" class="ibm-forward-link">Open source projects</A></LI><LI><A href="http://www.ibm.com/developerworks/views/linux/library.jsp" class="ibm-forward-link">Technical library (articles, tutorials, training, and more)</A></LI><LI><A href="http://www.ibm.com/developerworks/forums/dw_lforums.jsp" class="ibm-forward-link">Forums</A></LI><LI><A href="http://www.ibm.com/developerworks/views/linux/events.jsp" class="ibm-forward-link">Events</A></LI></UL></DIV></DIV>
+<!-- High_Visibility_Offer -->
+<!--XSLT stylesheet used to transform this content: s-highvisibilityoffer.xsl--><DIV class="ibm-container"><H2>My developerWorks</H2><DIV class="ibm-container-body"><IMG width="188" height="70" border="0" alt="Now even better" src="./Kernel command using Linux system calls_files/hiviz-mydw-new.jpg"><P class="ibm-ind-link"><A href="http://www.ibm.com/developerworks/mydeveloperworks/connect?ca=dth-mydw&S_TACT=105AGY03&S_CMP=HIVIS&ca=dti-hivismydwupdate" class="ibm-forward-link">Try the new My developerWorks today!</A></P></DIV></DIV>
+<!-- Special_Offers -->
+<DIV class="ibm-container"><H2>Special offers</H2><DIV class="ibm-container-body"><P class="dw-special-offers"><A href="http://www.ibm.com/developerworks/downloads/r/rdz/learn.html?S_TACT=105AGX03&S_CMP=TILE&ca=dti-tileratsyszdwn&ca=dth-r"><IMG src="./Kernel command using Linux system calls_files/tile_v16_ratdevforsysz.gif" width="158" height="50" border="0" alt="Trial download Rational Developer for System z"></A></P><P class="dw-special-offers"><A href="http://www.ibmpressbooks.com/bookstore/product.asp?isbn=0137004893&S_TACT=105AGX03&S_CMP=TILE&ca=dti-ibmpresssocial"><IMG src="./Kernel command using Linux system calls_files/tile_v16_socialnetworking.gif" width="158" height="50" border="0" alt="Social networking for Enterprises 35% off: IBM4898"></A></P><P class="dw-special-offers"><A href="http://www.ibm.com/developerworks/websphere/library/techarticles/0910_jain/0910_jain.html?S_CMP=TILE&ca=dti-tilejbossmigrate&ca=dth-w"><IMG src="./Kernel command using Linux system calls_files/tile_v16_migrate2.gif" width="158" height="50" border="0" alt="Easy migration from JBoss to WAS CE"></A></P><DIV class="ibm-rule"><HR></DIV><P class="ibm-ind-link"><A href="http://www.ibm.com/developerworks/views/global/offers.jsp" class="ibm-forward-link">More offers</A></P></DIV></DIV>
+<!-- RIGHT_COLUMN_CONTENT_END -->
+
+</DIV>
+<!-- RIGHT_COLUMN_END -->
+
+<!-- CONTENT_BODY_END -->
+</DIV>
+
+</DIV>
+<!-- CONTENT_END -->
+
+ <!-- END_IBM-PCON -->
+</DIV>
+
+<!-- FOOTER_BEGIN -->
+<DIV id="ibm-page-tools">
+<!-- IBM page tools container -->
+</DIV>
+<DIV id="ibm-footer">
+<UL>
+<LI class="ibm-first"><A href="http://www.ibm.com/ibm/">About IBM</A></LI>
+<LI><A href="http://www.ibm.com/privacy/">Privacy</A></LI>
+<LI><A href="http://www.ibm.com/contact/">Contact</A></LI>
+<LI><A href="http://www.ibm.com/legal/">Terms of use</A></LI>
+<LI><A href="http://www.ibm.com/ibm/syndication/us/en/?cm_re=footer-_-ibmfeeds-_-top_level">IBM Feeds</A></LI><A href="http://www.ibm.com/ibm/syndication/us/en/?cm_re=footer-_-ibmfeeds-_-top_level"></A></UL>
+</DIV><DIV id="ibm-social-tools"><UL><LI><A class="ibm-share-print" title="Print this page" href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#" rel="print"></A></LI><LI><A class="ibm-share-email" title="E-mail this page" href="http://www.ibm.com/developerworks/linux/library/l-system-calls/#" rel="email"></A></LI><LI><A class="ibm-share-digg" title="Digg" href="http://digg.com/submit?phase=2&url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Flinux%2Flibrary%2Fl-system-calls%2F&title=Kernel%20command%20using%20Linux%20system%20calls" rel="digg"></A></LI><LI><A class="ibm-share-facebook" title="Facebook" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Flinux%2Flibrary%2Fl-system-calls%2F&t=Kernel%20command%20using%20Linux%20system%20calls" rel="facebook"></A></LI><LI><A class="ibm-share-twitter" title="Twitter" href="http://twitter.com/home?status=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Flinux%2Flibrary%2Fl-system-calls%2F%20-%20Kernel%20command%20using%20Linux%20system%20calls" rel="twitter"></A></LI><LI><A class="ibm-share-delicious" title="Delicious" href="http://delicious.com/post?url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Flinux%2Flibrary%2Fl-system-calls%2F&title=Kernel%20command%20using%20Linux%20system%20calls" rel="delicious"></A></LI><LI><A class="ibm-share-linkedin" title="Linked In" href="http://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Flinux%2Flibrary%2Fl-system-calls%2F&title=Kernel%20command%20using%20Linux%20system%20calls" rel="linkedin"></A></LI></UL></DIV>
+<!-- FOOTER_END -->
+
+ <!-- END_IBM-TOP -->
+<DIV id="ibm-overlay-top"></DIV></DIV>
+ 
+ <!-- SCRIPTS_INCLUDE_BEGIN -->
+<!-- JQuery start -->
+<SCRIPT type="text/javascript" language="JavaScript" src="./Kernel command using Linux system calls_files/jquery.dimensions-1.2.js"></SCRIPT>
+<SCRIPT type="text/javascript" language="JavaScript" src="./Kernel command using Linux system calls_files/jquery.hoverIntent.minified.js"></SCRIPT>
+<SCRIPT type="text/javascript" language="JavaScript" src="./Kernel command using Linux system calls_files/jquery.cluetip.js"></SCRIPT>
+<SCRIPT type="text/javascript" language="JavaScript" src="./Kernel command using Linux system calls_files/ui.core-1.7.1.js"></SCRIPT>
+<SCRIPT type="text/javascript" language="JavaScript" src="./Kernel command using Linux system calls_files/ui.slider-1.7.1.js"></SCRIPT>
+<SCRIPT type="text/javascript" language="JavaScript" src="./Kernel command using Linux system calls_files/dwjquerytags.js"></SCRIPT>
+<SCRIPT type="text/javascript" language="JavaScript">
+	jQuery.noConflict();     
+	// Put all your code in your document ready area
+	jQuery(document).ready(function(jQuery) {
+	// Do jQuery stuff using jQuery 
+	jQuery('a.dwauthor').cluetip({
+		local: true,
+		showTitle: false,
+		positionBy: 'bottomTop',
+		sticky: true,	
+		mouseOutClose: true,
+		closeText: '<img src="//www.ibm.com/developerworks/js/jquery/cluetip98/i/x.gif" alt="Close" />',
+		arrows: false,
+		dropShadow: true,
+		cluetipClass: 'dwbasic'
+		});   	
+	});
+ </SCRIPT>
+ <!-- JQuery end -->
+ <!-- Overlay js -->
+<SCRIPT language="JavaScript" src="./Kernel command using Linux system calls_files/overlay.js" type="text/javascript"></SCRIPT>
+<!-- My dW Interest article -->
+<SCRIPT language="JavaScript" src="./Kernel command using Linux system calls_files/showinterest.js" type="text/javascript">//</SCRIPT>
+<SCRIPT language="JavaScript" type="text/javascript">
+        // <![CDATA[
+			var contentId = '';
+			var contentAreas = '';
+			var caArr = [];
+			contentId = '203493';
+			contentAreas = 'linux';
+			if(contentAreas != ''){caArr = contentAreas.split(',');}
+			var loginLink = 'https://www.ibm.com/developerworks/dwwi/DWAuthRouter?m=loginpage&d=' + encodeURIComponent(window.location);jQuery('interestShow').showInterest(contentId,'dw-article',{'int_tops':[263,67,87],'int_prods':[], 'int_prod_fam':[],'int_cont_area':caArr},
+'<div id="dw-interest-anon"><a id="intAnonBtn" class="ibm-external-link" href="">Update My dW interests</a> (<a class="dw-interest" href="' + loginLink + '">Log in</a> | <a class="dw-interest" href="#overlay" onclick="ibmCommon.Overlays.show(\'dwmyinterestadd\', this);return false;">What\'s this?</a>) <a class="ibm-access" href="#dwmyinterestaddhelp">Skip to help for Update My dW interests</a></div>',
+'<div id="dw-interest-add"><a id="intSelectBtn" class="ibm-external-link" href="">Add to My dW interests</a> (<a class="dw-interest" href="#overlay" onclick="ibmCommon.Overlays.show(\'dwmyinterestadd\', this);return false;">What\'s this?</a>) <a class="ibm-access" href="#dwmyinterestaddhelp">Skip to help for Add to My dW interests</a></div>',
+'<div id="dw-interest-remove">Added to My dW interests (<a class="dw-interest" href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/html/myProfileView.do?lang=en">Edit</a>)</div>'
+);
+// ]]>
+</SCRIPT>
+<!-- SCRIPTS_INCLUDE_END -->
+
+<DIV id="ibm-metrics">
+<SCRIPT src="./Kernel command using Linux system calls_files/stats.js" type="text/javascript">//</SCRIPT><SCRIPT src="./Kernel command using Linux system calls_files/cookie-id.js" language="javascript1.1" type="text/javascript"></SCRIPT>
+</DIV>
+
+
+<DIV id="cluetip-waitimage" style="position: absolute; z-index: 95; display: none; "></DIV><DIV id="cluetip" style="display: none; position: absolute; z-index: 96; "><DIV style="z-index: 95; opacity: 0.1; top: 1px; left: 1px; position: absolute; background-color: rgb(0, 0, 0); "></DIV><DIV style="z-index: 94; opacity: 0.1; top: 2px; left: 2px; position: absolute; background-color: rgb(0, 0, 0); "></DIV><DIV style="z-index: 93; opacity: 0.1; top: 3px; left: 3px; position: absolute; background-color: rgb(0, 0, 0); "></DIV><DIV style="z-index: 92; opacity: 0.1; top: 4px; left: 4px; position: absolute; background-color: rgb(0, 0, 0); "></DIV><DIV style="z-index: 91; opacity: 0.1; top: 5px; left: 5px; position: absolute; background-color: rgb(0, 0, 0); "></DIV><DIV style="z-index: 90; opacity: 0.1; top: 6px; left: 6px; position: absolute; background-color: rgb(0, 0, 0); "></DIV><DIV id="cluetip-outer" style="position: relative; z-index: 97; "><H3 id="cluetip-title"></H3><DIV id="cluetip-inner"></DIV></DIV><DIV id="cluetip-extra"></DIV><DIV id="cluetip-arrows" class="cluetip-arrows" style="z-index: 97; "></DIV></DIV></BODY></HTML>

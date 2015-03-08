@@ -1,0 +1,179 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin
+END
+findglobals
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/findglobals
+END
+notabs
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/notabs
+END
+runtests
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/runtests
+END
+nolonglines
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/nolonglines
+END
+findphp
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/findphp
+END
+package.xml
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/package.xml
+END
+checkimports
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/checkimports
+END
+open_tag
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/open_tag
+END
+fixperms
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/fixperms
+END
+webtest.php
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/webtest.php
+END
+docblocks
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/docblocks
+END
+nobadbraces
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/nobadbraces
+END
+packagexml.py
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/packagexml.py
+END
+longlines.pl
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/longlines.pl
+END
+brace_style.pl
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/brace_style.pl
+END
+checkimport
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/checkimport
+END
+otb_test.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/otb_test.php
+END
+texttest.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/texttest.php
+END
+adminutil.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/adminutil.php
+END
+makedoc.sh
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/makedoc.sh
+END
+package2.xml
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/package2.xml
+END
+prepare-release
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/prepare-release
+END
+docblocks.pl
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/docblocks.pl
+END
+xmlconfig.py
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/xmlconfig.py
+END
+darcs-ignore
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/darcs-ignore
+END
+nobadcase
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/nobadcase
+END
+phpaliases.py
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/phpaliases.py
+END
+mathlib
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/mathlib
+END
+library-name
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/admin/library-name
+END

@@ -1,0 +1,52 @@
+<eyeTetravex>
+	<highscores_regular>
+		<size>
+			<value>3</value>
+			<highscore>
+				<user>Legend</user>
+				<date>2009-08-25 14:25</date>
+				<maxNumber>9</maxNumber>
+				<time>00:40</time>
+				<moves>9</moves>
+				<internal_id>93922d34ebee76f77f7b95ed7377fb75</internal_id>
+				<rank>1</rank>
+			</highscore>
+			<highscore>
+				<user>Legend</user>
+				<date>2009-08-25 14:24</date>
+				<maxNumber>9</maxNumber>
+				<time>00:48</time>
+				<moves>9</moves>
+				<internal_id>182f7e6d6e282bcc827385c6f36f2883</internal_id>
+				<rank>2</rank>
+			</highscore>
+			<highscore>
+				<user>Legend</user>
+				<date>2009-08-25 14:23</date>
+				<maxNumber>9</maxNumber>
+				<time>01:05</time>
+				<moves>21</moves>
+				<internal_id>863cad6cf65708f2c6bd31245d48b09d</internal_id>
+				<rank>3</rank>
+			</highscore>
+			<highscore>
+				<user>Legend</user>
+				<date>2009-08-25 14:22</date>
+				<maxNumber>9</maxNumber>
+				<time>01:41</time>
+				<moves>26</moves>
+				<internal_id>e5c4ef7f04b2f9b1a42c187c7e95e977</internal_id>
+				<rank>4</rank>
+			</highscore>
+			<highscore>
+				<user>alex</user>
+				<date>2009-09-07 15:18</date>
+				<maxNumber>9</maxNumber>
+				<time>01:55</time>
+				<moves>28</moves>
+				<internal_id>b6b1459f4e89b1ff2de175ecfdd025ca</internal_id>
+				<rank>5</rank>
+			</highscore>
+		</size>
+	</highscores_regular>
+</eyeTetravex>

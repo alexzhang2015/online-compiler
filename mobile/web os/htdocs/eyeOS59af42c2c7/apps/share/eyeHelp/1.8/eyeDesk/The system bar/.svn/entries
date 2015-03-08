@@ -1,0 +1,111 @@
+10
+
+dir
+62
+http://alexcompiler.googlecode.com/svn/trunk/mobile/web%20os/htdocs/eyeOS59af42c2c7/apps/share/eyeHelp/1.8/eyeDesk/The%20system%20bar
+http://alexcompiler.googlecode.com/svn
+
+
+
+2010-03-29T09:39:41.421380Z
+22
+zch051383471952
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+9a817906-efbc-11de-b206-85b67c77eac7
+
+About eyeOS
+dir
+
+index.eyeHelp
+file
+
+
+
+
+2013-07-24T11:26:03.536453Z
+d2fad6e04c10a597b9ab88772186d5a3
+2010-03-29T09:39:41.421380Z
+22
+zch051383471952
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+278
+
+System preferences
+dir
+
+Applications
+dir
+
+Close session
+dir
+
+info.xml
+file
+
+
+
+
+2013-07-24T11:26:03.546452Z
+45e77934f4699afdced88254fdc0e444
+2010-03-29T09:39:41.421380Z
+22
+zch051383471952
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+23
+
+Launch App
+dir
+

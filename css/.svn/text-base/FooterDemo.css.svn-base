@@ -1,0 +1,61 @@
+html, body, #contents {
+	min-height: 100%;
+	width: 100%;
+	height: 100%;
+}
+
+/*
+ * The "height" above is a hack for IE5+/Win.  Below we adjust
+ * it using the child selector to hide from IE5+/Win
+ */
+
+html>body, html>body #contents {
+	height: auto;
+}
+
+/*
+ * Without this, Moz1.0 adds a vertical scrollbar
+ */
+
+body {
+	margin: 0;
+	font-family: Arial, sans-serif;
+}
+
+#contents {
+	position: absolute;
+	top: 0;
+    left: 0;
+/*  Use the following to center this at 50% width, or this for 750px: width: 700px, margin-left: -350px: */
+/*
+	left: 50%;
+    width: 50%;
+    margin-left: -25%;
+*/
+}
+
+#footer {
+	position: absolute;
+	bottom: 0;
+	background-color: #ccffcc;
+	width: 70%; /* See note below */
+	text-align: center;
+	padding: 0 15%;
+}
+
+/* SBMH -- see http://css-discuss.incutio.com/?page=BoxModelHack 
+ * Stupid hack lets IE see 100%, others see 70%. 
+ */
+#footer {
+    \width: 100%;
+    w\idth: 70%;
+}
+
+#main {
+	margin-bottom: 5em;
+	height: auto;
+	padding: .5em;
+}
+
+                    
+                    

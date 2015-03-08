@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0052)http://linux.about.com/library/cmd/blcmdl2_times.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>times - Linux Command - Unix Command</title>
+<meta name="keywords" content="linux command times unix command times">
+<meta name="description" content="Linux / Unix Command Library: times. Learn about its synopsis, description, options, and examples.">
+<!--GIHEDSTRT-->
+<meta charset="ISO-8859-1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="ROBOTS" content="NOODP">
+<meta name="pd" content="Wednesday, 16-Jun-2010 11:52:04 GMT">
+<link rel="shortcut icon" href="http://0.tqn.com/f/a08.ico">
+<link rel="apple-touch-icon" href="http://0.tqn.com/f/lg/i129.png">
+<link rel="search" type="application/opensearchdescription+xml" href="http://0.tqn.com/4/o/os.xml" title="About.com">
+<script>var ziRfw=0;zobt=" Linux Ads";zOBT=" Ads";function zIpSS(u){zpu(0,u,280,375,"ssWin")}function zIlb(l,t,f){zT(l,'18/1Pp/wX')}</script>
+<link rel="stylesheet" href="http://0.tqn.com/0g/dc/s52.css" media="all"><!--[if lt IE 9]><link rel="stylesheet" href="http://0.tqn.com/8g/dc/ie.css" type="text/css" media="all"><![endif]--><!--[if lt IE 8]><link rel="stylesheet" href="http://0.tqn.com/8g/dc/rdie.css" type="text/css" media="all"><![endif]-->
+<meta http-equiv="pics-Label" content="(pics-1.1 &quot;http://www.icra.org/pics/vocabularyv03/&quot; l gen true for &quot;http://linux.about.com&quot; r (n 0 s 0 v 0 l 0 oa 0 ob 0 oc 0 od 0 oe 0 of 0 og 0 oh 0 c 0) gen true for &quot;http://linux.about.com&quot; r (n 0 s 0 v 0 l 0 oa 0 ob 0 oc 0 od 0 oe 0 of 0 og 0 oh 0 c 0))">
+
+<script>zWASL=1;zGRH=1</script>
+<style>#tt39 #articlebody .gB a.t,#tt39 #articlebody .gB a.t:hover,#tt39 #articlebody .gB a.u,#tt39 #articlebody .gB a.u:hover,#widgets .gB a.t,#widgets .gB a.t:hover,#abc .gB a.t, #abc .gB a.t:hover,#abm .gB a.t, #abm .gB a.t:hover,#abc .gB a.u,#abc .gB a.u:hover,#abm .gB a.u,#abm .gB a.u:hover,#widgets .gB a.u,#widgets .gB a.u:hover{text-decoration:underline}</style><style>#wide #gB3{clear:left;margin-right:0;}</style>
+
+<style>#tt33.igt #abt .ssnav, #tt33.igt #sspre .ssnav {padding: 0;}#tt33.igt #abt .ssnav .pagination, #tt33.igt #sspre .ssnav .pagination {padding: 0;width: 70px;margin: 0 auto;}#tt26 #abt h1#pk {font: 18px Arial;}</style>
+
+</head>
+
+
+<body id="tt0" class="gt5">
+
+<script language="JavaScript">
+<!--
+zGOW=0;xd=0;zap="";zAth='9193';zAthG='9193';zTt='0';zir='';zBTS=1;zBT=0;zSt='';zGz='g'
+ch='compute';gs='linux';xg="Linux";zcs=''
+zFDT='1'
+zFST='0'
+zOr='B433NP0J20SA1U9E';zTbO=zRQO=1;zp0=zp1=zp2=zp3=zfs=0;zDc=1;
+zSm=zSu=zhc=zpb=zgs=zdn='';zFS='B432B3B10B4021B30110B00302';zFD='B432B3B1B381B2M10B4021B3022B20110B00504'
+zDO=zis=1;zpid=zi=zRf=ztp=zpo=0;zdx=20;zfx=100;zJs=13;
+zi=1;zz=';336280=2-1-1299;72890=2-1-1299;336155=2-1-12-1;93048=2-1-12-1;30050=2-1-12-1';zx='3-1-1399';zde=15;zdp=1440;zds=1440;zfp=0;zfs=66;zfd=100;zdd=20;zaX=new Array(11, new Array(100,504,8198,1,'336,210'),7, new Array(100,284,8196,9,'336,290'));zDc=1;;zDO=1;;zhc='';;zGTH=1;
+zGo=0;zG=17;zTac=2;zDot=0;
+zObT="Linux";zRad=5;var tp=" primedia_"+(zBT?"":"non_")+"site_targeting";if(!this.zGCID)zGCID=tp
+else zGCID+=tp;
+if(zBT>0){zOBR=1}
+//-->
+</script>
+<script language="JavaScript" src="./times - Linux Command - Unix Command_files/cj017x14t421p9.js"></script>
+<script>function zob(p){if(!this.zOfs)return;var a=zOfs,t,i=0,l=a.length;if(l){w('<div id="oF"><b>'+(this.zobt?zobt:xg+' Ads')+'</b><ul>');while((i<l)&&i<zRad){t=a[i++].line1;w('<li><a href="/z/js/o'+(p?p:'')+'.htm?k='+zUriS(t.toLowerCase())+(this.zobr?zobr:'')+'&d='+zUriS(t)+'&r='+zUriS(zWl)+'" target="_'+(this.zOBNW?'new'+zr(9999):'top')+'">'+t+'</a></li>');}w('</ul></div>')}}function rb600(){if(gEI('bb'))gEI('bb').height=600}</script><script>zDO=0</script>
+<script language="JavaScript" src="./times - Linux Command - Unix Command_files/show_ads.js"></script><noscript>&lt;meta http-equiv=refresh content="0;url=http://www.about.com/snf.htm?u=http://linux.about.com/library/cmd/blcmdl2_times.htm%3Frd%3D1"&gt;</noscript>
+
+<script>z930=zpreC(930,48);if(thin){z930=0};z160=zpreC(160,600);z336=zpreC(336,280);z728=zpreC(728,90);z155=zpreC(336,155);zItw=160</script>
+<div id="abw">
+<div id="abh">
+<ol class="ct"><li class="h"><a href="http://www.about.com/" zt="18/1Yd/Zz">Home</a></li><li><a href="http://www.about.com/compute/" zt="18/1Yd/Zz">Computing &amp; Technology</a></li><li><a href="http://linux.about.com/" zt="18/1Yd/Zz">Linux</a></li></ol>
+<div id="adL"><script>if(z930==0 && z728>0){adunit('','',uy,ch,gs,728,90,'1','lb',1)}</script>
+<iframe id="lb" name="lb" src="./times - Linux Command - Unix Command_files/blcmdl2_times.htm" marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no" height="90" width="728" border="0"></iframe>
+
+</div>
+<div class="ma"><div class="lg"><a href="http://www.about.com/" zt="18/1Yb/Zv"><img src="./times - Linux Command - Unix Command_files/a148.png" alt="About.com"></a></div><h2><a href="http://linux.about.com/" zt="18/1Yc/Zx" title="Linux">Linux</a></h2></div>
+<form class="gs" method="get" action="http://linux.about.com/sitesearch.htm" target="_top"><fieldset><input id="sv" name="q" value="" validate="required" alert="Please enter something to search for!"><input type="hidden" name="SUName" value="linux"><button class="btn" type="submit">Search</button></fieldset></form>
+<ul id="up"><li class="h"><a href="http://linux.about.com/" zt="18/1ZZ/aZ"><span>Linux</span></a></li><li><a href="http://linux.about.com/od/linux101/u/userpathI.htm" zt="18/1ZZ/11o">Get Started</a></li><li><a href="http://linux.about.com/od/linux101/u/userpathII.htm" zt="18/1ZZ/11q">Explore Linux</a></li><li><a href="http://linux.about.com/od/linux101/u/userpathIII.htm" zt="18/1ZZ/11r">Become a Guru</a></li><script>if(typeof zp != 'undefined'){if(zp[8].d){if(zp[8].d==974 && zp[8].u==3){zp[8].u=8;zp[8].w=121;zp[8].h=23}if(zp[8].d==974 && zp[8].u==7){zp[8].u=9;zp[8].w=196;zp[8].h=23}if(zp[8].d==1005){zp[8].u=2;zp[8].w=149;zp[8].h=23}if(zp[8].d==1027){zp[8].u=2;zp[8].w=156;zp[8].h=23}w('<li id="st">');Dsp(zp[8],'ip');w('</li>')}}</script></ul>
+<ul id="pa"><li id="ea"><a href="http://linux.about.com/gi/pages/shareurl.htm?PG=http%3a%2f%2flinux%2eabout%2ecom%2flibrary%2fcmd%2fblcmdl2%5ftimes%2ehtm&zItl=" zt="18/1Z0/[3">Share</a></li><li id="pra"><script>w(x2+zWl+'?p=1" zT="18/1[N" rel="nofollow">Print</a>')</script><a href="http://linux.about.com/library/cmd/blcmdl2_times.htm?p=1" zt="18/1[N" rel="nofollow">Print</a>
+</li></ul>
+</div>
+<script type="text/javascript">if(z930>0){adunit('','',uy,ch,gs,930,48,'1','s',1)}</script><div class="tr"><h4>Filed In:</h4><ol><li><a href="http://linux.about.com/" zt="18/1Ys/d2">Linux</a></li></ol></div><div id="abm" class="clear"><div id="abc">
+<div id="articlebody">
+<!--gc-->
+<basefont face="verdana, geneva, helvetica" size="2"> 
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tbody><tr> 
+    <td><font face="verdana" size="4" color="cc0000"><b> Linux / Unix Command: <font face="verdana" size="4" color="cc0000"><b><i><font face="verdana" size="4" color="cc0000">times</font></i></b></font></b></font></td>
+  </tr>
+  <tr>
+    <td bgcolor="cc0000"><img src="./times - Linux Command - Unix Command_files/saved_resource" height="1" width="1" border="0"></td>
+  </tr>
+  <tr> 
+    <td><img src="./times - Linux Command - Unix Command_files/saved_resource" height="10" width="1"> 
+      <a href="http://linux.about.com/library/cmd/blcmdl.htm"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Command 
+      Library </font></a> </td>
+  </tr>
+</tbody></table>
+
+<h2>NAME</h2>
+
+times - get process times
+<a name="lbAC">&nbsp;</a>
+<h2>SYNOPSIS</h2>
+
+<b>#include &lt;<a href="file://usr/include/sys/times.h">sys/times.h</a>&gt;</b>
+
+<p>
+<b>clock_t times(struct tms *</b><i>buf</i><b>);</b>
+
+<a name="lbAD">&nbsp;</a>
+</p><h2>DESCRIPTION</h2>
+
+The
+<b>times</b>()
+
+function stores the current process times in the
+<b>struct tms</b>
+
+that
+<i>buf</i>
+
+points to.
+The
+<i>struct tms</i>
+
+is as defined in
+<i>&lt;<a href="file://usr/include/sys/times.h">sys/times.h</a>&gt;</i>:
+
+<p>
+</p><pre>struct tms {
+<dl compact=""><dt></dt><dd>clock_t tms_utime;  /* user time */
+clock_t tms_stime;  /* system time */
+clock_t tms_cutime; /* user time of children */
+clock_t tms_cstime; /* system time of children */
+</dd></dl>
+};
+</pre>
+
+<p>
+
+The
+<i>tms_utime</i>
+
+field contains the CPU time spent executing instructions
+of the calling process.
+The
+<i>tms_stime</i>
+
+field contains the CPU time spent in the system while
+executing tasks on behalf of the calling process.
+The
+<i>tms_cutime</i>
+
+field contains the sum of the
+<i>tms_utime</i>
+
+and
+<i>tms_cutime</i>
+
+values for all waited-for terminated children.
+The
+<i>tms_cstime</i>
+
+field contains the sum of the
+<i>tms_stime</i>
+
+and
+<i>tms_cstime</i>
+
+values for all waited-for terminated children.
+</p><p>
+
+Times for terminated children (and their descendants)
+is added in at the moment
+<b><a href="http://linux.about.com/library/cmd/blcmdl2_wait.htm">wait</a></b>(2)
+
+or
+<b><a href="http://linux.about.com/library/cmd/blcmdl2_waitpid.htm">waitpid</a></b>(2)
+
+returns their process ID. In particular, times of grandchildren
+that the children did not wait for are never seen.
+</p><p>
+
+All times reported are in clock ticks.
+<a name="lbAE">&nbsp;</a>
+</p><h2>RETURN VALUE</h2>
+
+The function
+<b>times</b>
+
+returns the number of clock ticks that have elapsed since
+an arbitrary point in the past. For Linux this point is
+the moment the system was booted.
+This return value may overflow the possible range of type clock_t.
+On error, (clock_t) -1 is returned, and
+<i>errno</i>
+
+is set appropriately.
+<a name="lbAF">&nbsp;</a>
+<h2>SEE ALSO</h2>
+
+<b><a href="http://linux.about.com/library/cmd/blcmdl1_time.htm">time</a></b>(1),
+
+<b><a href="http://linux.about.com/library/cmd/blcmdl2_getrusage.htm">getrusage</a></b>(2),
+
+<b><a href="http://linux.about.com/library/cmd/blcmdl2_wait.htm">wait</a></b>(2),
+
+<b><a href="http://linux.about.com/library/cmd/blcmdl3_clock.htm">clock</a></b>(3),
+
+<b><a href="http://linux.about.com/library/cmd/blcmdl3_sysconf.htm">sysconf</a></b>(3)
+
+<p>
+
+</p><hr>
+
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>Important:</b> 
+  Use the <i>man</i> command (<i>% man</i>) to see how a command is used on your 
+  particular computer. </font> 
+</p><p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><a href="http://linux.about.com/library/cmd/blcmdl.htm"><b>&gt;&gt; 
+  Linux/Unix Command Library</b></a></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><a href="http://linux.about.com/library/cmd/blcmd.htm"><b>&gt;&gt; 
+  Shell Command Library</b></a></font></p>
+<!--/gc-->
+</div>
+
+<div id="coda"><div id="resources">
+<div id="rel"><h5>Related Articles</h5><ul><li><a href="http://linux.about.com/library/cmd/blcmdl3_clock.htm" zt="18/1YL/Zn">clock - Linux Command - Unix Command</a></li><li><a href="http://linux.about.com/library/cmd/blcmdl3_mktime.htm" zt="18/1YL/Zn">mktime - Linux Command - Unix Command</a></li><li><a href="http://linux.about.com/library/cmd/blcmdl3_gmtime.htm" zt="18/1YL/Zn">gmtime - Linux Command - Unix Command</a></li><li><a href="http://linux.about.com/library/cmd/blcmdl3_ctime.htm" zt="18/1YL/Zn">ctime - Linux Command - Unix Command</a></li><li><a href="http://linux.about.com/library/cmd/blcmdl3_asctime.htm" zt="18/1YL/Zn">asctime - Linux Command - Unix Command</a></li></ul></div></div><div id="gi"><div class="cr"><div class="img"><a href="http://linux.about.com/bio/Juergen-Haas-9193.htm" zt="18/1YK"><img src="./times - Linux Command - Unix Command_files/9193.jpg" alt="Juergen Haas"></a></div><div class="est">Guide since 2003</div><p><a href="http://linux.about.com/bio/Juergen-Haas-9193.htm" zt="18/1YO">Juergen Haas</a><br>Linux&nbsp;Guide</p><ul><li><a href="http://linux.about.com/gi/pages/stay.htm" zt="18/1YS"><b>Sign up</b> for My Newsletter</a></li></ul><ul class="so"><li><a href="http://linux.about.com/b/" zt="18/1YM">Headlines</a></li><li><a href="http://forums.about.com/n/pfx/forum.aspx?nav=messages&webtag=ab-linux" zt="18/1YN">Forum</a></li></ul></div></div></div>
+</div>
+<div id="aba">
+  
+    <div id="com"><form class="nl" name="subscription" action="http://clk.about.com/" method="get" alert="Please enter a valid email address."><label for="nTxt">Free Linux Newsletter!</label><input type="hidden" name="zi" value="18/1a9"><input type="hidden" name="surl" value="http://linux.about.com/gi/pages/mmail.htm"><input type="hidden" name="eurl" value="http://linux.about.com/gi/pages/mmail.htm"><input type="hidden" name="cmd_linux" value="+:gs::linux"><input type="hidden" name="gs" value="1"><input type="hidden" name="sdn" value="linux"><input type="hidden" name="tt" value="0"><input type="hidden" name="bts" value="1"><span><input id="nTxt" type="email" name="email" placeholder="Enter email address" validate="email"></span><button type="submit" name="newsub">Sign Up</button></form><p><a href="http://forums.about.com/n/pfx/forum.aspx?nav=messages&webtag=ab-linux" zt="18/1Z1"><b>Discuss</b> in my forum</a></p></div>
+  
+  <script>zSB(3,3)</script>
+  
+  <script type="text/javascript">if(z336>0){function rb600(){if(gEI('bb'))gEI('bb').height=600}w('<div id="adB"><p>Advertisement</p>');adunit('','','about.com',ch,gs,336,280,'1','bb',3);w('</div>')}if(z155>0){w('<div id="adP"><p>Advertisement</p>');adunit('','','about.com',ch,gs,336,155,'1','ps',4);w('</div>')}</script><div id="adB"><p>Advertisement</p>
+
+<iframe id="bb" name="bb" src="./times - Linux Command - Unix Command_files/blcmdl2_times(1).htm" marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no" height="280" width="336" border="0"></iframe>
+
+</div>
+
+  
+  
+  <script>zob();</script>
+  
+  
+  
+
+  
+    
+      
+        <script>if(zp[7].d){Dsp(zp[7],'ip')}</script>
+<iframe id="ip0" name="ip0" src="./times - Linux Command - Unix Command_files/9.htm" marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no" height="290" width="336" border="0"></iframe>
+
+
+          
+    
+    
+    <script type="text/javascript">if(zp[11].d){Dsp(zp[11],'ip')}</script>
+<iframe id="ip0" name="ip0" src="./times - Linux Command - Unix Command_files/1.htm" marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no" height="210" width="336" border="0"></iframe>
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+<script>zSbL=3;zSB(2);zSbL=0</script>
+</div>
+<div id="abf">      <div id="browse" class="pane clear">
+      <h3>Explore Linux</h3>
+      <div id="bc1">
+      	<h4>Must Reads</h4>
+      	<ul><li><a href="http://linux.about.com/od/linux101/a/desktop.htm" zt="18/1fG/1">Linux Desktop 101</a></li><li><a href="http://linux.about.com/cs/glossaries/a/aglossary.htm" zt="18/1fG/2">Linux Glossary</a></li><li><a href="http://linux.about.com/od/commands/l/blcmd.htm" zt="18/1fG/3">Linux Commands</a></li><li><a href="http://linux.about.com/od/commands/l/blcmds.htm" zt="18/1fG/4">Shell Commands</a></li><li><a href="http://linux.about.com/od/softgame/" zt="18/1fG/5">Linux Games</a></li>
+</ul>
+      	<h4>Most Popular</h4>
+      	<ul><li><a href="http://linux.about.com/od/commands/l/blcmdl1_ftp.htm" zt="18/yV/O3">ftp - Linux Command - Unix Command</a></li><li><a href="http://linux.about.com/od/commands/l/blcmdl1_find.htm" zt="18/yV/O3">find - Linux Command - Unix Command</a></li><li><a href="http://linux.about.com/od/commands/l/blcmdl1_zip.htm" zt="18/yV/O3">zip - Linux Command - Unix Command</a></li><li><a href="http://linux.about.com/od/commands/l/blcmdl1_top.htm" zt="18/yV/O3">top - Linux Command - Unix Command</a></li><li><a href="http://linux.about.com/od/commands/l/blcmdl1_unzip.htm" zt="18/yV/O3">unzip - Linux Command - Unix Command</a></li>
+</ul>
+      </div>
+      <div id="bc2">
+      	
+      		
+      		  <form class="nl" name="subscription" action="http://clk.about.com/" method="get" alert="Please enter a valid email address."><label for="nTxt">Free Linux Newsletter!</label><input type="hidden" name="zi" value="18/1a9"><input type="hidden" name="surl" value="http://linux.about.com/gi/pages/mmail.htm"><input type="hidden" name="eurl" value="http://linux.about.com/gi/pages/mmail.htm"><input type="hidden" name="cmd_linux" value="+:gs::linux"><input type="hidden" name="gs" value="1"><input type="hidden" name="sdn" value="linux"><input type="hidden" name="tt" value="0"><input type="hidden" name="bts" value="1"><span><input id="nTxt" type="email" name="email" placeholder="Enter email address" validate="email"></span><button type="submit" name="newsub">Sign Up</button></form>
+      		
+      	
+      	<h4>By Category</h4>
+      	<div id="bcl"><ul class="col1"><li><a href="http://linux.about.com/od/linux101/Linux_101.htm" zt="18/1hZ/1">Linux 101</a></li><li><a href="http://linux.about.com/od/glossary/Linux_and_Computing_Glossaries.htm" zt="18/1hZ/2">Glossaries</a></li><li><a href="http://linux.about.com/od/howtos/Linux_HowTos.htm" zt="18/1hZ/3">Linux HowTos</a></li><li><a href="http://linux.about.com/od/commands/Linux_Commands_and_Shell_Commands.htm" zt="18/1hZ/4">Linux / Shell Commands</a></li><li><a href="http://linux.about.com/od/dist/Linux_Distributions_Index.htm" zt="18/1hZ/5">Linux Distributions</a></li><li><a href="http://linux.about.com/od/linuxdocumentation/Linux_Documentation.htm" zt="18/1hZ/6">Linux Documentation</a></li></ul><ul class="col2"><li><a href="http://linux.about.com/od/embedded/Embedded_Linux.htm" zt="18/1hZ/7">Embedded Linux</a></li><li><a href="http://linux.about.com/od/soft/Linux_Software_Applications_Index.htm" zt="18/1hZ/8">Linux Software</a></li><li><a href="http://linux.about.com/od/opensource/Open_Source_Issues.htm" zt="18/1hZ/9">Open Source Issues</a></li><li><a href="http://linux.about.com/od/news/Linux_and_Technology_News.htm" zt="18/1hZ/10">Linux / Tech News</a></li><li><a href="http://linux.about.com/od/linuxonlinecourses/Linux_Online_Courses.htm" zt="18/1hZ/11">Linux Online Courses</a></li></ul></div>
+      </div>
+    </div>
+    <script>splitList(gEI('bcl'));</script>
+    <script>zau(256,'335px','230px','fp','http://z.about.com/6g/ip/284/27.htm?s=linux','','');</script>
+<iframe id="fp" name="fp" src="./times - Linux Command - Unix Command_files/27.htm" marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no" height="230px" width="335px" border="0"></iframe>
+
+
+  <div class="ma"><div class="lg"><a href="http://www.about.com/" zt="18/1Yb/Zv"><img src="./times - Linux Command - Unix Command_files/a148.png" alt="About.com"></a></div><h2><a href="http://linux.about.com/" zt="18/1Yc/Zx" title="Linux">Linux</a></h2></div><ol class="ct"><li class="h"><a href="http://www.about.com/" zt="18/1Yd/Zz">Home</a></li><li><a href="http://www.about.com/compute/" zt="18/1Yd/Zz">Computing &amp; Technology</a></li><li><a href="http://linux.about.com/" zt="18/1Yd/Zz">Linux</a></li></ol><div id="lks" class="hl"><ul><li class="f"><a href="http://linux.about.com/popular.htm" zt="18/1YY">Most Popular</a></li><li><a href="http://linux.about.com/updated.htm" zt="18/1]c">Latest Articles</a></li><li class="rss"><a href="http://linux.about.com/gi/pages/stay.htm#rs" zt="18/1YZ/Zt">RSS</a></li></ul></div></div><div id="abi" class="hl"><ul id="si"><li class="f"><a href="http://advertise.about.com/" zt="18/1YX/Zr" rel="nofollow">Advertising Info</a></li><li><a href="http://www.advertiseonabout.com/Who_We_Are/" zt="18/1YX/Zr" rel="nofollow">Our Story</a></li><li><a href="http://advertiseonabout.com/News_and_Press/" zt="18/1YX/Zr" rel="nofollow">News &amp; Events</a></li><li><a href="http://jobs.about.com/" zt="18/1YX/Zr" rel="nofollow">Work at About</a></li><li><a href="http://spiderbites.about.com/sitemap.htm" zt="18/1YX/Zr">SiteMap</a></li><li><a href="http://azlist.about.com/a.htm" zt="18/1]]">All Topics</a></li><li><a href="http://www.about.com/gi/pages/printrequests.html" zt="18/1YX/Zr" rel="nofollow">Reprints</a></li><li><a href="http://www.about.com/gi/pages/hc.htm" zt="18/1YX/Zr" rel="nofollow">Help</a></li></ul><ul id="li"><li class="f"><a href="http://beaguide.about.com/" zt="18/1YX/Zr" rel="nofollow">Write for About</a></li><li><a href="http://www.about.com/gi/pages/uagree.htm" zt="18/1YX/Zr" rel="nofollow">User Agreement</a></li><li><a href="http://www.about.com/gi/pages/ethics.htm" zt="18/1YX/Zr" rel="nofollow">Ethics Policy</a></li><li><a href="http://www.about.com/gi/pages/patent.htm" zt="18/1YX/Zr" rel="nofollow">Patent Info.</a></li><li><a href="http://www.about.com/gi/pages/mprivacy.htm" zt="18/1YX/Zr" rel="nofollow">Privacy Policy</a></li><li><a href="http://www.about.com/gi/pages/mprivacy.htm#adchoices" zt="18/1YX/Zr" rel="nofollow">Your Ad Choices</a></li></ul><div id="di"><p>©2011 About.com. All rights reserved. </p><p>A part of <a href="http://www.nytco.com/" zt="1/1JK">The New York Times Company</a>.</p></div></div>
+
+
+
+<script>zCi();validateForms();splitLists();</script>
+
+
+</div>
+<script>if(this.zKW&&gEI('sv'))gEI('sv').value=zE(zE(zKW,1),1).replace(new RegExp('\\+','g'),' ')</script>
+
+<script type="text/javascript"><!--
+adclose()
+//-->
+</script>
+
+<script type="text/javascript">var tcdacmd="dt;da";</script>
+<script type="text/javascript" src="./times - Linux Command - Unix Command_files/slf.js"></script>
+
+
+</body></html>

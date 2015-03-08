@@ -1,0 +1,925 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0040)http://www.linuxjournal.com/article/4048 -->
+<HTML xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" class="js"><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+  <TITLE>Linux System Calls</TITLE>
+  
+<META name="DC.Title" content="Linux System Calls">
+<META name="description" content="How to use the mechanism provided by the IA32 architecture for handling system calls.">
+<META name="keywords" content="SysAdmin,Ubuntu,Linux Journal,free,open source,software,technology">
+<META name="robots" content="index,follow">
+<LINK rel="shortcut icon" href="http://www.linuxjournal.com/sites/linuxjournal.com/themes/linuxjournal/favicon.ico" type="image/x-icon">
+  <STYLE type="text/css" media="all">@import "/modules/aggregator/aggregator.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/modules/book/book.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/modules/node/node.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/modules/poll/poll.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/modules/system/defaults.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/modules/system/system.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/modules/user/user.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/sites/linuxjournal.com/modules/cck/content.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/sites/linuxjournal.com/modules/date/date.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/sites/linuxjournal.com/modules/date/date_popup/themes/white.calendar.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/sites/linuxjournal.com/modules/date/date_popup/themes/timeentry.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/sites/linuxjournal.com/modules/cck/fieldgroup.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/sites/linuxjournal.com/modules/diggthis/diggthis.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/sites/linuxjournal.com/modules/fivestar/css/fivestar.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/files/linuxjournal.com/ufiles/fivestar/outline/outline.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/sites/linuxjournal.com/modules/print/css/printlinks.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/modules/comment/comment.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/sites/linuxjournal.com/themes/linuxjournal/style.css";</STYLE>
+  <LINK rel="stylesheet" type="text/css" href="./Linux System Calls_files/pygments.css">
+  <LINK rel="stylesheet" type="text/css" href="./Linux System Calls_files/magazine.css">
+  <LINK rel="stylesheet" type="text/css" href="./Linux System Calls_files/forum.css">
+
+  <!--[if IE 6]>
+    <link rel="stylesheet" type="text/css" href="/sites/linuxjournal.com/themes/linuxjournal/css/ie6.css" />
+  <![endif]-->
+  <!--[if IE 7]>
+    <link rel="stylesheet" type="text/css" href="/sites/linuxjournal.com/themes/linuxjournal/css/ie7.css" />
+  <![endif]--> 
+
+  <SCRIPT type="text/javascript" src="./Linux System Calls_files/jquery.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="./Linux System Calls_files/drupal.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="./Linux System Calls_files/date_timezone.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="./Linux System Calls_files/fivestar.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="./Linux System Calls_files/textarea.js"></SCRIPT>
+<SCRIPT type="text/javascript">Drupal.extend({ settings: { "fivestar": { "titleUser": "Your rating: ", "titleAverage": "Average: ", "feedbackSavingVote": "Saving your vote...", "feedbackVoteSaved": "Your vote has been saved.", "feedbackDeletingVote": "Deleting your vote...", "feedbackVoteDeleted": "Your vote has been deleted." } } });</SCRIPT>
+  <SCRIPT src="./Linux System Calls_files/ljcustom.js" type="text/javascript" charset="utf-8"></SCRIPT>
+  <SCRIPT src="./Linux System Calls_files/openads.js" type="text/javascript" charset="utf-8"></SCRIPT>
+
+<LINK rel="alternate" type="application/rss+xml" title="Linux Journal - The Original Magazine of the Linux Community" href="http://www.linuxjournal.com/node/feed">
+
+<LINK rel="alternate" type="application/rss+xml" title="News from Linux Journal - The Original Magazine of the Linux Community" href="http://www.linuxjournal.com/breaking_news/feed">
+<SCRIPT type="text/javascript" src="./Linux System Calls_files/spcjs.php"></SCRIPT><SCRIPT type="text/javascript" src="./Linux System Calls_files/spc.php"></SCRIPT><SCRIPT type="text/javascript" src="./Linux System Calls_files/fl.js"></SCRIPT>
+
+</HEAD><BODY class="not-logged-in ntype-xmlnode">
+  <SCRIPT src="./Linux System Calls_files/urchin.js" type="text/javascript"></SCRIPT>
+  <SCRIPT type="text/javascript">_uacct = "UA-1117794-1"; urchinTracker();</SCRIPT>
+
+<!-- PUT THIS TAG IN THE head SECTION -->
+<SCRIPT type="text/javascript" src="./Linux System Calls_files/google_service.js">
+</SCRIPT>
+<SCRIPT type="text/javascript">
+  GS_googleAddAdSenseService("ca-pub-3600556074671070");
+  GS_googleEnableAllServices();
+</SCRIPT><SCRIPT src="./Linux System Calls_files/google_ads.js"></SCRIPT>
+<SCRIPT type="text/javascript">
+  GA_googleAddSlot("ca-pub-3600556074671070", "Half_Banner336x90");
+  GA_googleAddSlot("ca-pub-3600556074671070", "Large_Rectangle336x280");
+  GA_googleAddSlot("ca-pub-3600556074671070", "Leaderboard728x90");
+  GA_googleAddSlot("ca-pub-3600556074671070", "MediumRectangle300x250");
+</SCRIPT>
+<SCRIPT type="text/javascript">
+  GA_googleFetchAds();
+</SCRIPT>
+<!-- END OF TAG FOR head SECTION -->
+
+<!-- Start Quantcast tag -->
+<SCRIPT type="text/javascript" src="./Linux System Calls_files/quant.js"></SCRIPT>
+<SCRIPT type="text/javascript">_qacct="p-a3K3N6enFe9wA";quantserve();</SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+<!-- End Quantcast tag -->
+
+
+  <DIV id="container">
+
+    <DIV id="innercontainer">
+
+      <!-- HEADER START ================================================== -->
+      <DIV id="header">
+        <H1><A href="http://www.linuxjournal.com/" title="Home"></A></H1>
+      
+        <DIV id="leaderboard-adblock" class="adblock leaderboard-adblock">
+<SCRIPT type="text/javascript"><!--// <![CDATA[
+    OA_show(58143);
+// ]]> --></SCRIPT><DIV id="ox_733c18b74bf2b20e81a0b1e9fda831f6" style="display: inline;"><EMBED type="application/x-shockwave-flash" src="http://c3.openx.org/f957d269b40cd239c2fd374e99316cb1.swf" width="728" height="90" style="undefined" id="Portland Group" name="Portland Group" quality="high" allowscriptaccess="always" flashvars="clickTARGET=_blank&amp;clickTAG=http%3A%2F%2Fd1.openx.org%2Fck.php%3Foaparams%3D2__bannerid%3D125871__zoneid%3D58143__cb%3Deadfdbf9eb__r_id%3De4d42ce19055200c3fa071349580038f__r_ts%3Dkv5h6c__oadest%3Dhttp%253A%252F%252Fwww.pgroup.com%252Fresources%252Faccel.htm%253Fclicksource%253Dlinuxjrnl"></DIV>
+<SCRIPT type="text/javascript"><!--// <![CDATA[
+var ox_swf = new FlashObject('http://c3.openx.org/f957d269b40cd239c2fd374e99316cb1.swf', 'Portland Group', '728', '90', '8');
+ox_swf.addVariable('clickTARGET', '_blank');
+ox_swf.addVariable('clickTAG', 'http%3A%2F%2Fd1.openx.org%2Fck.php%3Foaparams%3D2__bannerid%3D125871__zoneid%3D58143__cb%3Deadfdbf9eb__r_id%3De4d42ce19055200c3fa071349580038f__r_ts%3Dkv5h6c__oadest%3Dhttp%253A%252F%252Fwww.pgroup.com%252Fresources%252Faccel.htm%253Fclicksource%253Dlinuxjrnl');
+ox_swf.addParam('allowScriptAccess','always');
+ox_swf.write('ox_733c18b74bf2b20e81a0b1e9fda831f6');
+if (ox_swf.installedVer.versionIsValid(ox_swf.getAttribute('version'))) { document.write("<div id='beacon_eadfdbf9eb' style='position: absolute; left: 0px; top: 0px; visibility: hidden;'><img src='http://d1.openx.org/lg.php?bannerid=125871&amp;campaignid=50568&amp;zoneid=58143&amp;loc=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F4048&amp;referer=http%3A%2F%2Fwww.google.com%2Fsearch%3Fhl%3Den%26newwindow%3D1%26q%3Dlinux+syscalls%26aq%3Df%26oq%3D%26aqi%3Dg3&amp;cb=eadfdbf9eb&amp;r_id=e4d42ce19055200c3fa071349580038f&amp;r_ts=kv5h6c' width='0' height='0' alt='' style='width: 0px; height: 0px;' /></div>"); } else { document.write("<div id='beacon_eadfdbf9eb' style='position: absolute; left: 0px; top: 0px; visibility: hidden;'><img src='http://d1.openx.org/lg.php?bannerid=125871&amp;campaignid=50568&amp;zoneid=58143&amp;loc=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F4048&amp;referer=http%3A%2F%2Fwww.google.com%2Fsearch%3Fhl%3Den%26newwindow%3D1%26q%3Dlinux+syscalls%26aq%3Df%26oq%3D%26aqi%3Dg3&amp;fb=1&amp;cb=eadfdbf9eb&amp;r_id=e4d42ce19055200c3fa071349580038f&amp;r_ts=kv5h6c' width='0' height='0' alt='' style='width: 0px; height: 0px;' /></div>"); }
+// ]]> --></SCRIPT><DIV id="beacon_eadfdbf9eb" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><IMG src="./Linux System Calls_files/lg.php" width="0" height="0" alt="" style="width: 0px; height: 0px;"></DIV><NOSCRIPT></NOSCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</DIV>      
+        <DIV id="header_menubar">
+          
+<UL class="menu">
+<LI class="leaf"><A href="http://www.linuxjournal.com/">Home</A></LI>
+<LI class="expanded"><A href="http://www.linuxjournal.com/topics">Topics</A>
+<UL class="menu">
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/28">Audio/Video</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/18">Community</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/25">Education</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/27">Embedded</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/23">Hardware</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/19">HOWTOs</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/30">International</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/20">Reviews</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/31">Security</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/17">Software</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/21">SysAdmin</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/24">Webmaster</A></LI>
+
+</UL>
+</LI>
+<LI class="expanded"><A href="http://www.linuxjournal.com/xstatic/community">Community</A>
+<UL class="menu">
+<LI class="leaf"><A href="http://www.linuxjournal.com/xstatic/community/whatislinux">What Is Linux?</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/getlinux">How to Get Linux</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/supportedhardware">Supported Hardware</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/software">Software</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/gettinghelp">Getting Help</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/events">Industry Events</A></LI>
+
+</UL>
+</LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/forum">Forums</A></LI>
+<LI class="expanded"><A href="http://www.linuxjournal.com/magazine">Magazine</A>
+<UL class="menu">
+<LI class="leaf"><A href="http://www.linuxjournal.com/magazine">Read</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/subscriptions">Subscribe</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/renew">Renew</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/xstatic/subs/customer_service.html">Customer Service</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/archivecd">Archive CD</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/dlissue">Free Issue</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/aboutus/FAQ">FAQ</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/staff">Masthead</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/contact">Write a Letter</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/xstatic/author/index">Write for Us</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/advertising/">Advertise</A></LI>
+
+</UL>
+</LI>
+<LI class="expanded"><A href="http://lj.mybigcommerce.com/">Store</A>
+<UL class="menu">
+<LI class="leaf"><A href="http://www.linuxjournalstore.com/categories/Buttons-%26-Stickers/">Stickers</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournalstore.com/categories/T%252dShirts-%26-Apparel/">T-shirts</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournalstore.com/categories/Calendars/">Wall Calendars</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournalstore.com/categories/Archive-CD/">Archive CD</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournalstore.com/categories/Gift-Packs%7B47%7DCombo-Packs/">Gift Packs</A></LI>
+
+</UL>
+</LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/buyersguide">Buyer's Guide</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/archive_cd">Archive CD</A></LI>
+
+</UL>
+                      <A class="button" href="http://www.linuxjournal.com/user/login">Login</A>
+                    <!-- Google CSE Search Box Begins  -->
+<FORM action="http://www.linuxjournal.com/googlesearch" id="searchbox_014164207538395607518:w82fvojcgcu">
+  <INPUT type="hidden" name="cx" value="014164207538395607518:w82fvojcgcu">
+  <INPUT type="hidden" name="cof" value="FORID:11">
+  <INPUT type="text" name="as_q" size="25">
+  <INPUT type="submit" name="sa" value="Search">
+</FORM>
+<SCRIPT type="text/javascript" src="./Linux System Calls_files/brand"></SCRIPT>
+<!-- Google CSE Search Box Ends -->
+
+
+        </DIV>
+    
+                  <DIV id="header_breadcrumb"><A href="http://www.linuxjournal.com/">Home</A></DIV>
+              </DIV>
+      <!-- HEADER END ==================================================== -->
+
+
+
+      <!-- CONTENT START ================================================= -->
+      <DIV id="content">
+      
+        <!-- CONTENT LEFT -->
+        <DIV id="content_left">
+          
+          <!-- CONTENT HEADER -->
+                    <!-- END CONTENT HEADER -->
+      
+          <!-- CONTENT BODY -->
+          <DIV id="content_body">
+                      
+                    
+                    
+                                    <DIV class="node ntype-xmlnode " id="node-4048">
+  <DIV class="head">
+
+      <H3>Linux System Calls</H3>
+  
+        <H4>July 1st, 2000 by <A href="http://www.linuxjournal.com/user/800677" title="View user profile.">Moshe Bar</A><SPAN class="taxonomy"> in<UL class="links inline"><LI class="first last taxonomy_term_21"><A href="http://www.linuxjournal.com/taxonomy/term/21" rel="tag" title="" class="taxonomy_term_21">SysAdmin</A></LI>
+</UL></SPAN>    </H4>
+      </DIV>
+  
+  <DIV class="content">
+        How to use the mechanism provided by the IA32 architecture for handling system calls.    <DIV class="diggthis_button"><SCRIPT type="text/javascript">
+digg_url = 'http://www.linuxjournal.com/article/4048';
+digg_title = "Linux System Calls";
+digg_bodytext = "";
+
+digg_skin = 'standard';
+</SCRIPT>
+<SCRIPT src="./Linux System Calls_files/diggthis.js" type="text/javascript"></SCRIPT><IFRAME src="./Linux System Calls_files/diggthis.html" height="80" width="52" frameborder="0" scrolling="no"></IFRAME></DIV><FORM action="./Linux System Calls_files/Linux System Calls.html" accept-charset="UTF-8" method="post" id="fivestar-form-node-4048" class="fivestar-widget">
+<DIV><DIV class="fivestar-form-4048 clear-block"><INPUT type="hidden" name="content_type" id="edit-content-type-4048" value="node">
+<INPUT type="hidden" name="content_id" id="edit-content-id-4048" value="4048">
+<DIV class="fivestar-form-item  fivestar-combo-text fivestar-smart-stars fivestar-average-stars fivestar-labels-hover"><DIV class="form-item" id="edit-vote-0-wrapper">
+ <LABEL for="edit-vote-0">Average: </LABEL>
+ <INPUT type="hidden" name="vote_count" id="edit-vote-count-0" value="16">
+<INPUT type="hidden" name="vote_average" id="edit-vote-average-0" value="80">
+<INPUT type="hidden" name="auto_submit_path" id="edit-auto-submit-path-0" value="/fivestar/vote/node/4048" class="fivestar-path">
+<SELECT name="vote" class="form-select" id="edit-vote-0" style="display: none; "><OPTION value="-">Select rating</OPTION><OPTION value="0">Cancel rating</OPTION><OPTION value="20">Poor</OPTION><OPTION value="40">Okay</OPTION><OPTION value="60">Good</OPTION><OPTION value="80" selected="selected">Great</OPTION><OPTION value="100">Awesome</OPTION></SELECT><DIV class="fivestar-widget clear-block fivestar-widget-5"><DIV class="cancel"><A href="http://www.linuxjournal.com/article/4048#0" title="Cancel rating">Cancel rating</A></DIV><DIV class="star star-1 star-odd star-first on"><A href="http://www.linuxjournal.com/article/4048#20" title="Poor">Poor</A></DIV><DIV class="star star-2 star-even on"><A href="http://www.linuxjournal.com/article/4048#40" title="Okay">Okay</A></DIV><DIV class="star star-3 star-odd on"><A href="http://www.linuxjournal.com/article/4048#60" title="Good">Good</A></DIV><DIV class="star star-4 star-even on"><A href="http://www.linuxjournal.com/article/4048#80" title="Great">Great</A></DIV><DIV class="star star-5 star-odd star-last"><A href="http://www.linuxjournal.com/article/4048#100" title="Awesome">Awesome</A></DIV></DIV>
+ <DIV class="description"><DIV class="fivestar-summary fivestar-summary-combo fivestar-feedback-enabled"><SPAN class="user-rating">Your rating: <SPAN>None</SPAN></SPAN> <SPAN class="average-rating">Average: <SPAN>4</SPAN></SPAN> <SPAN class="total-votes">(<SPAN>16</SPAN> votes)</SPAN></DIV></DIV>
+</DIV>
+</DIV><INPUT type="hidden" name="destination" id="edit-destination-4048" value="node/4048">
+<INPUT type="submit" name="op" id="edit-fivestar-submit-4048" value="Rate" class="form-submit fivestar-submit" style="display: none; ">
+<INPUT type="hidden" name="form_id" id="edit-fivestar-form-node-4048" value="fivestar_form_node_4048">
+</DIV>
+</DIV></FORM>
+<DIV class="article" lang="en"><DIV class="simplesect" lang="en"><DIV class="titlepage"><A name="N0xa50890.0xb44ee0"></A></DIV><P>This article aims to give the reader,
+either a kernel novice or a seasoned programmer, a better
+understanding of the dynamics of system calls in Linux. Wherever
+code sections are mentioned, I refer to the 2.3.52 (soon to be 2.4)
+series of kernels unless otherwise noted.
+</P></DIV><DIV class="simplesect" lang="en"><DIV class="titlepage"><A name="N0xa50890.0xb44fe8"></A>The Linux Kernel in Brief</DIV><P>The most widespread CPU architecture is the IA32, a.k.a. x86,
+which is the architecture of the 386, 486, the Pentiums I, Pro, II
+and III, AMD's competing K6 and Athlon lines, plus CPUs from others
+such as VIA/Cyrix and Integrated Device Technologies. Because it is
+the most widespread, it will be taken as the illustrative example
+here. First, I will cover the mechanisms provided by the IA32 type
+of CPU for handling system calls, and then show how Linux uses
+those mechanisms. To review a few broad terms:</P><DIV class="itemizedlist"><UL type="disc"><LI><P>A <SPAN class="bold"><B>kernel</B></SPAN> is the
+operating system software running in protected mode and having
+access to the hardware's privileged registers. The kernel is not a
+separate process running on the system. It is the guts of the
+operating system, which controls the scheduling of processes to
+achieve multitasking, and provides a set of routines, constantly in
+memory, to which every user-space process has access.</P></LI><LI><P>Some operating systems employ a
+<SPAN class="bold"><B>microkernel architecture</B></SPAN>, wherein
+device drivers and other code are loaded and executed on demand and
+are not necessarily always in memory.</P></LI><LI><P>A <SPAN class="bold"><B>monolithic
+architecture</B></SPAN> is more common among UNIX implementations;
+it is the design employed by classic designs such as BSD.</P></LI></UL></DIV><P>The Linux kernel is mostly a monolithic kernel: i.e., all
+device drivers are part of the kernel proper. Unlike BSD, a Linux
+kernel's device drivers can be “loadable”, i.e., they can be
+loaded and unloaded from memory through user commands.
+</P><P>Basically, multitasking is accomplished in this way: the
+kernel switches control between processes rapidly, using the clock
+interrupt (and other means) to trigger a switch from one process to
+another. When a hardware device issues an interrupt, the interrupt
+handler is found within the kernel. When a process takes an action
+that requires it to wait for results, the kernel steps in and puts
+the process into an appropriate sleeping or waiting state and
+schedules another process in its place.</P><P>Besides multitasking, the kernel also contains the routines
+which implement the interface between user programs and hardware
+devices, virtual memory, file management and many other aspects of
+the system.</P><P>Kernel routines to achieve all of the above can be called
+from user-space code in a number of ways. One direct method to
+utilize the kernel is for a process to execute a system call. There
+are 116 system calls; documentation for these can be found in the
+man pages.</P></DIV><DIV class="simplesect" lang="en"><DIV class="titlepage"><A name="N0xa50890.0xb455c0"></A>System Calls and Event Classes on the
+IA32</DIV><P>A system call is a request by a running task to the kernel to
+provide some sort of service on its behalf. In general, the kernel
+services invoked by system calls comprise an abstraction layer
+between hardware and user-space programs, allowing a programmer to
+implement an operating environment without having to tailor his
+program(s) too specifically to one single brand or precise specific
+combination of system hardware components. System calls also serve
+this generalization function across programming languages; e.g.,
+the <SPAN class="bold"><B>read</B></SPAN> system call will read
+data from a file descriptor. To the programmer, this looks like
+another C function, but in actuality, the code for read is
+contained within the kernel.</P><P>The IA32 CPU recognizes two classes of events needing special
+processor attention: interrupts and exceptions. Both cause a forced
+context switch to a new procedure or task.</P></DIV><DIV class="simplesect" lang="en"><DIV class="titlepage"><A name="N0xa50890.0xb45778"></A>Interrupts</DIV><P>Interrupts can occur at unexpected times during the execution
+of a program and are used to respond to signals; they are signals
+that processor attention is needed from hardware. When a hardware
+device issues an interrupt, the interrupt handler is found within
+the kernel. Next month, we will discuss interrupts in more
+detail.</P><P>Two sources of interrupts are recognized by the IA32:
+maskable interrupts, for which vectors are determined by the
+hardware, and non-maskable interrupts (NMI Interrupts, or
+NMIs).</P></DIV><DIV class="simplesect" lang="en"><DIV class="titlepage"><A name="N0xa50890.0xb458d8"></A>Exceptions</DIV><P>Exceptions are either processor-detected or issued (thrown)
+from software. When a procedure or method encounters an abnormal
+condition (an exception condition) it can't handle, it may throw an
+exception. Exceptions of either type are caught by handler routines
+(<B>_exception handlers_</B>) positioned along the
+thread's procedure or method invocation stack. This may be the
+calling procedure or method, or if that doesn't include code to
+handle the exception condition, its calling procedure or method and
+so on. If one of the threads of your program throws an exception
+that isn't caught by any procedure (or method), then that thread
+will expire.</P><P>An exception tells a calling procedure that an abnormal
+(though not necessarily rare) condition has occurred, e.g., a
+method was invoked with an invalid argument. When you throw an
+exception, you are performing a kind of structured “go to” from
+the place in your program where the abnormal condition was detected
+to a place where it can be handled. Exception handlers should be
+stationed at program-module levels in accordance with how general a
+range of errors each is capable of handling in such a way that as
+few exception handlers as possible will cover as wide a variety of
+exceptions as are going to be encountered in field application of
+your programs.</P></DIV><DIV class="simplesect" lang="en"><DIV class="titlepage"><A name="N0xa50890.0xb45a90"></A>An Example of Exceptions as Objects from
+Java</DIV><P>In Java, exceptions are objects. In addition to throwing
+objects whose class is declared in java.lang, you can throw objects
+of your own design. To create your own class of throwable objects,
+you need to declare it as a subclass of some member of the
+<B>Throwable</B> family. In general, however, the
+throwable classes you define should extend class
+<B>Exception</B>--they should be “exceptions”.
+Usually, the class of the exception object indicates the type of
+abnormal condition encountered. For example, if a thrown exception
+object has class <B>illegalArgumentException</B>, that
+indicates someone passed an illegal argument to a method.</P><P>When you throw an exception, you instantiate and throw an
+object whose class, declared in java.lang, descends from
+<B>Throwable</B>, which has two direct subclasses:
+<B>Exception</B> and <B>Error</B>. Errors
+(members of the <B>Error</B> family) are usually thrown
+for more serious problems, such as
+<B>OutOfMemoryError</B>, that may not be easy to
+handle. Errors are usually thrown by the methods of the Java API or
+the Java Virtual Machine. In general, code you write should throw
+only exceptions, not errors.</P><P>The Java Virtual Machine uses the class of the exception
+object to decide which catch clause, if any, should be allowed to
+handle the exception. The catch clause can also get information on
+the abnormal condition by querying the exception object directly
+for information you embedded in it during instantiation (before
+throwing it). The Exception class allows you to specify a detailed
+message as a string that can be retrieved by invoking
+<SPAN class="bold"><B>getMessage</B></SPAN> on the exception
+object.</P></DIV><DIV class="simplesect" lang="en"><DIV class="titlepage"><A name="N0xa50890.0xb45f60"></A>Vectors</DIV><P>Each IA32 interrupt or exception has a number, which is
+referred to in the IA32 literature as its
+<SPAN class="emphasis"><EM>vector</EM></SPAN>. The NMI interrupt and the
+processor-detected exceptions have been assigned vectors in the
+range 0 through 31, inclusive. The vectors for maskable interrupts
+are determined by the hardware. External interrupt controllers put
+the vector on the bus during the interrupt-acknowledge cycle. Any
+vector in the range 32 through 255, inclusive, can be used for
+maskable interrupts or programmed exceptions.</P><P>The <SPAN class="bold"><B>startup_32</B></SPAN> code found in
+/usr/src/linux/boot/head.S starts everything off at boot time by
+calling <SPAN class="bold"><B>setup_idt</B></SPAN>. This routine
+sets up an IDT (Interrupt Descriptor Table) with 256 entries, each
+four bytes long, total 1024 bytes, offsets 0-255. It should be
+noted that the IDT contains vectors to both interrupt handlers and
+exception handlers, so “IDT” is something of a misnomer, but
+that's the way it is.</P><P>No interrupt entry points are actually loaded by startup_32,
+as that is done only after paging has been enabled and the kernel
+has been relocated to 0xC000000. At times, mostly during boot, the
+kernel must be loaded into certain addresses, because the
+underlying BIOS architecture demands it. After control is passed to
+the kernel exclusively, the Linux kernel can put itself wherever it
+wants. Usually this is very high up in memory, but below the 2GB
+limit.</P><P>When <SPAN class="bold"><B>start_kernel</B></SPAN> (found in
+/usr/src/linux/init/main.c) is called, it invokes
+<SPAN class="bold"><B>trap_init</B></SPAN> (found in
+/usr/src/linux/kernel/traps.c).
+<SPAN class="bold"><B>trap_init</B></SPAN> sets up the IDT via the
+macro <SPAN class="bold"><B>set_trap_gate</B></SPAN> (found in
+/usr/include/asm/system.h) and initializes the interrupt descriptor
+table as shown in the “Offset Descriptionis” table.</P></DIV><DIV class="simplesect" lang="en"><DIV class="titlepage"><A name="N0xa50890.0xb463d8"></A>Offset Descriptions</DIV><P><A href="http://www.linuxjournal.com/files/linuxjournal.com/linuxjournal/articles/040/4048/4048t1.html">Table 1</A></P><P>At this point, the interrupt vector for the system calls is
+not set up. It is initialized by
+<SPAN class="bold"><B>sched_init</B></SPAN> (found in
+/usr/src/linux/kernel/sched.c). To set interrupt 0x80 to be a
+vector to the <SPAN class="bold"><B>_system_call</B></SPAN> entry
+point, call:</P><PRE class="programlisting">set_system_gate (0x80, &amp;system_call)
+</PRE><P>The priority of simultaneously seen interrupts and exceptions
+is shown in the sidebar “Runtime Priority of Interrupts”.
+</P><P><A href="http://www.linuxjournal.com/files/linuxjournal.com/linuxjournal/articles/040/4048/4048s1.html">Runtime Priority of
+Interrupts</A></P></DIV><DIV class="simplesect" lang="en"><DIV class="titlepage"><A name="N0xa50890.0xb3d0f0"></A>The System Call Interface</DIV><P>The Linux system call interface is vectored through a stub in
+libc (often glibc) and is exclusively “register-parametered”,
+i.e., the stack is not used for parameter passing. Each call within
+the libc library is generally a syscall<SPAN class="emphasis"><EM>X</EM></SPAN>
+macro, where <SPAN class="emphasis"><EM>X</EM></SPAN> is the number of parameters
+used by the actual routine. Under Linux, the execution of a system
+call is invoked by a maskable interrupt or exception class transfer
+(e.g., “throwing” an exception object), caused by the instruction
+in 0x80. Vector 0x80 is used to transfer control to the kernel.
+This interrupt vector is initialized during system startup, along
+with other important vectors such as the system clock vector. On
+the assembly level (in user space), it looks like Listing 1.
+Nowadays, this code is contained in the glibc2.1 library. 0x80 is
+hardcoded into both Linux and glibc, to be the system call number
+which transfers control to the kernel. At bootup, the kernel has
+set up the IDT vector 0x80 to be a “call gate” (see
+arch/i386/kernel/traps.c:trap_init):</P><P><A href="http://www.linuxjournal.com/files/linuxjournal.com/linuxjournal/articles/040/4048/4048l1.html">Listing 1</A></P><PRE class="programlisting">set_system_gate(SYSCALL_VECTOR,&amp;system_call)
+</PRE><P>The vector layout is defined in include/asm-i386/hw_irq.h.
+</P><P>Not until the int <B>$0x80</B> is executed does
+the call transfer to the kernel entry point _system_call. This
+entry point is the same for all system calls. It is responsible for
+saving all registers, checking to make sure a valid system call was
+invoked, then ultimately transferring control to the actual system
+call code via the offsets in the
+<B>_sys_call_table</B>. It is also responsible for
+calling <SPAN class="bold"><B>_ret_from_sys_call</B></SPAN> when
+the system call has been completed, but before returning to user
+space.</P><P>Actual code for the system_call entry point can be found in
+/usr/src/linux/kernel/sys_call.S and the code for many of the
+system calls can be found in /usr/src/linux/kernel/sys.c. Code for
+the rest is distributed throughout the source files. Some system
+calls, like <SPAN class="bold"><B>fork</B></SPAN>, have their own
+source file (e.g., kernel/fork.c).</P><P>The next instruction the CPU executes after the int
+<B>$0x80</B> is the <B>pushl %eax</B> in
+<SPAN class="bold"><B>entry.S:system_call</B></SPAN>. There, we
+first save all user-space registers, then we range-check
+<B>%eax</B> and call
+<B>sys_call_table[%eax]</B>, which is the actual system
+call.</P><P>Since the system call interface is exclusively
+register-parametered, six parameters at most can be used with a
+single system call. <B>%eax</B> is the syscall number;
+<B>%ebx</B>, <B>%ecx</B>,
+<B>%edx</B>, <B>%esi</B>,
+<B>%edi</B> and <B>%ebp</B> are the six
+generic registers used as param0-5; and <B>%esp</B>
+cannot be used because it's overwritten by the kernel when it
+enters ring 0 (i.e., kernel mode).</P><P>In case more parameters are needed, some structure can be
+placed wherever you want within your address space and pointed to
+from a register (not the instruction pointer, nor the stack
+pointer; the kernel-space functions use the stack for parameters
+and local variables). This case is extremely rare, though; most
+system calls have either no parameters or only one.</P><P>Once the system call returns, we check one or more status
+flags in the process structure; the exact number will depend on the
+system call. <SPAN class="bold"><B>creat</B></SPAN> might leave a
+dozen flags (existing, created, locked, etc.), whereas a
+<SPAN class="bold"><B>sync</B></SPAN> might return only one.</P><P>If no work is pending, we restore user-space registers and
+return to user space via <B>iret</B>. The next
+instruction after the <B>iret</B> is the user-space
+<B>popl %ebx</B> instruction shown in Listing 1.</P></DIV><DIV class="simplesect" lang="en"><DIV class="titlepage"><A name="N0xa50890.0xb3de00"></A>More Complex System Calls</DIV><P>Some system calls are more complex then others because of
+variable-length argument lists. Examples of a complex system call
+include <SPAN class="bold"><B>open</B></SPAN> and
+<SPAN class="bold"><B>ioctl</B></SPAN>. However, even complex
+system calls must use the same entry point; they just have more
+overhead for parameter setup. Each syscall macro expands to an
+assembly routine which sets up the calling stack frame and calls
+_system_call through an interrupt, via the instruction int $0x80.
+For example, the setuid system call is coded as</P><PRE class="programlisting">_syscall1(int,setuid,uid_t,uid)
+</PRE><P>which expands to the assembly code shown in Listing 2.
+</P><P><A href="http://www.linuxjournal.com/files/linuxjournal.com/linuxjournal/articles/040/4048/4048l2.html">Listing 2</A></P></DIV><DIV class="simplesect" lang="en"><DIV class="titlepage"><A name="N0xa50890.0xb3e118"></A>The User-Space System Call Code Library</DIV><P>The user-space call code library can be found in
+/usr/src/libc/syscall. The hard-coding of the parameter layout and
+actual system call numbers is not a problem, because system calls
+are never really changed; they are only “introduced” and
+“obsoleted”. An obsoleted system call is marked with the
+<B>old_</B> prefix in the system call table for
+entry.S, and reference to it is removed from the next glibc. Once
+no application uses that system call anymore, its slot is marked
+“unused” and is potentially reusable for a newly introduced
+system call.</P></DIV><DIV class="simplesect" lang="en"><DIV class="titlepage"><A name="N0xa50890.0xb3e278"></A>Tracing System Calls</DIV><P>If a user wishes to trace a program, it is equally important
+to know what happens during system calls. Thus, the trace of a
+program usually includes a trace through the system calls as well.
+This is done through <B>SIGSTOP</B> and
+<B>SIGCHLD</B> ping-ponging between parent (tracing
+process) and child (traced process). When a traced process is
+executed, every system call is preceded by a
+<SPAN class="bold"><B>sys_ptrace</B></SPAN> call. This makes the
+traced process send a SIGCHILD to the tracing process each time a
+system call is made. The traced process immediately enters the
+<B>TASK_STOPPED</B> state (a flag is set in the
+task_struct structure). The tracing process can then examine the
+entire address space of the traced process through the use of
+<SPAN class="bold"><B>_ptrace</B></SPAN>, which is a multi-purpose
+system call. The tracing process sends a SIGSTOP to allow execution
+again.</P></DIV><DIV class="simplesect" lang="en"><DIV class="titlepage"><A name="N0xa50890.0xb3e538"></A>How to Add Your Own System Calls</DIV><P>Adding your own system calls is actually quite easy. Follow
+this list of steps to do so. Remember, if you do not make these
+system calls available on all the machines you want your program to
+run on, the result will be non-portable code.</P><DIV class="itemizedlist"><UL type="disc"><LI><P>Create a directory under the /usr/src/linux/
+directory to hold your code.</P></LI><LI><P>Put any include files in /usr/include/sys/ and
+/usr/include/linux/.</P></LI><LI><P>Add the relocatable module produced by the link of
+your new kernel code to the <B>ARCHIVES</B> and the
+subdirectory to the <B>SUBDIRS</B> lines of the
+top-level Makefile. See fs/Makefile, target fs.o for an
+example.</P></LI><LI><P>Add a <B>#define
+__NR_<I><TT>xx</TT></I></B> to unistd.h to assign
+a call number for your system call, where <SPAN class="emphasis"><EM>xx</EM></SPAN>,
+the index, is something descriptive relating to your system call.
+It will be used to set up the vector through sys_call_table to
+invoke your code.</P></LI><LI><P>Add an entry point for your system call to the
+sys_call_table in sys.h. It should match the index
+(<SPAN class="emphasis"><EM>xx</EM></SPAN>) you assigned in the previous step.</P></LI><LI><P>The NR_syscalls variable will be recalculated
+automatically.</P></LI><LI><P>Modify any kernel code in kernel/fs/mm/, etc. to
+take into account the environment needed to support your new
+code.</P></LI><LI><P>Run <B>make</B> from the top source
+code directory level to produce the new kernel incorporating your
+new code.</P></LI></UL></DIV><P>At this point, you must either add a syscall to your
+libraries, or use the proper
+<SPAN class="bold"><B>_syscalln</B></SPAN> macro in your user
+program in order for your programs to access the new system call.
+The <SPAN class="emphasis"><EM>386DX Microprocessor Programmer's Reference
+Manual</EM></SPAN> is a helpful reference, as is James Turley's
+<SPAN class="emphasis"><EM>Advanced 80386 Programming Techniques</EM></SPAN>.
+</P></DIV><DIV class="simplesect" lang="en"><DIV class="titlepage"><A name="N0xa50890.0xb3efe0"></A>Linux/IA32 Kernel System Calls</DIV><P>A list of Linux/IA32 kernel system calls can be found, with
+the listings, in the archive file
+<A href="ftp://ftp.ssc.com/pub/lj/listings/issue75/4048.tgz">ftp.ssc.com/pub/lj/listings/issue75/4048.tgz</A>.
+Note: these are not libc “user-space system calls”, but real
+kernel system calls provided by the Linux kernel. Information
+source is GNU libc project,
+<A href="http://www.gnu.org/">http://www.gnu.org/</A>.</P></DIV></DIV>
+<DIV class="authorblurb"><P>
+       email: <A href="mailto:moshe@moelabs.com">moshe@moelabs.com</A>
+       </P><P>
+      <SPAN class="bold"><B>Moshe Bar</B></SPAN>
+      (moshe@moelabs.com) is an
+      Israeli system administrator and OS researcher who started learning
+      UNIX on a PDP-11 with AT&amp;T UNIX Release 6 back in 1981. He
+      holds an M.Sc. in computer science. His new book Linux
+      Kernel Internals will be published this year. You may visit Moshe's
+      web site at
+      <A href="http://www.moelabs.com/">http://www.moelabs.com/</A>.</P></DIV>
+
+
+__________________________
+<BR>    <DIV id="block-block-55" class="block block-block"> 
+    <DIV class="content">
+    <STYLE>
+hr {border: solid 1px #ccc}
+.small {font-size: .8em}
+</STYLE><P>
+</P><HR><P></P>
+<P><A href="http://www.linuxjournal.com/2free"><STRONG>Special Magazine Offer -- Free Gift with Subscription</STRONG></A><BR>
+Receive a free digital copy of <CITE>Linux Journal</CITE>'s System Administration Special Edition as well as instant online access to current and past issues. <A href="http://www.linuxjournal.com/2free">CLICK HERE for offer</A></P>
+<P><CITE>Linux Journal</CITE>: delivering readers the advice and inspiration they need to get the most out of their Linux systems since 1994.</P>
+  </DIV>  
+</DIV>
+
+  </DIV>
+ 
+    <DIV class="links"><UL class="links inline"><LI class="first print_html"><A href="http://www.linuxjournal.com/print/4048" title="Display a printer-friendly version of this page." class="print-page print_html" rel="nofollow">Printer-friendly version</A></LI>
+<LI class="service_links_delicious"><A href="http://del.icio.us/post?url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F4048&title=Linux+System+Calls" title="Bookmark this post on del.icio.us." rel="nofollow" class="service_links_delicious"><IMG src="./Linux System Calls_files/delicious.png" alt="Delicious"> Delicious</A></LI>
+<LI class="service_links_digg"><A href="http://digg.com/submit?phase=2&url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F4048&title=Linux+System+Calls" title="Digg this post on digg.com." rel="nofollow" class="service_links_digg"><IMG src="./Linux System Calls_files/digg.png" alt="Digg"> Digg</A></LI>
+<LI class="service_links_stumbleupon"><A href="http://www.stumbleupon.com/submit?url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F4048&title=Linux+System+Calls" title="Thumb this up at StumbleUpon." rel="nofollow" class="service_links_stumbleupon"><IMG src="./Linux System Calls_files/stumbleit.png" alt="StumbleUpon"> StumbleUpon</A></LI>
+<LI class="service_links_reddit"><A href="http://reddit.com/submit?url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F4048&title=Linux+System+Calls" title="Submit this post on reddit.com." rel="nofollow" class="service_links_reddit"><IMG src="./Linux System Calls_files/reddit.png" alt="Reddit"> Reddit</A></LI>
+<LI class="service_links_facebook"><A href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F4048&t=Linux+System+Calls" title="Share on Facebook." rel="nofollow" class="service_links_facebook"><IMG src="./Linux System Calls_files/facebook.png" alt="Facebook"> Facebook</A></LI>
+<LI class="last tweet"><A href="http://twitter.com/home?status=From+LinuxJournal.com%3A+Linux+System+Calls+www.is.gd/1ifBf" class="tweet tweet" rel="nofollow" target="_blank"><IMG src="./Linux System Calls_files/icon.png" alt="Post to Twitter" title="Post to Twitter"> Post to Twitter</A></LI>
+</UL></DIV>
+    </DIV>
+   <DIV class="contentad">
+<!-- medium rectangle -->
+<SCRIPT type="text/javascript"><!--// <![CDATA[
+    OA_show(58147);
+// ]]> --></SCRIPT><SPAN><SCRIPT type="text/javascript"><!--// <![CDATA[
+/* openads=http://d1.openx.org bannerid=125148 zoneid=58147 source= r_id=9641efec928aa06bfb94cac73187f346 r_ts=kv5h6c */
+// ]]> --></SCRIPT><SCRIPT type="text/javascript"><!--
+google_ad_client = "pub-3600556074671070";
+/* 300x250, created 7/30/09 */
+google_ad_slot = "0663527410";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</SCRIPT>
+<SCRIPT type="text/javascript" src="./Linux System Calls_files/show_ads.js">
+</SCRIPT><SCRIPT src="./Linux System Calls_files/test_domain.js"></SCRIPT><SCRIPT>google_protectAndRun("ads_core.google_render_ad", google_handleError, google_render_ad);</SCRIPT><IFRAME name="google_ads_frame" width="300" height="250" frameborder="0" src="./Linux System Calls_files/ads(1).html" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no"></IFRAME><SCRIPT type="text/javascript" src="./Linux System Calls_files/ag.php"></SCRIPT></SPAN><DIV id="beacon_8686e2941c" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><IMG src="./Linux System Calls_files/lg(1).php" width="0" height="0" alt="" style="width: 0px; height: 0px;"></DIV>
+<NOSCRIPT></NOSCRIPT>
+<!-- end medium rectangle -->
+  </DIV>
+  <DIV id="comments"><FORM action="./Linux System Calls_files/Linux System Calls.html" accept-charset="UTF-8" method="post" id="comment-controls">
+<DIV>  <DIV class="box">
+    <H2 class="title">Comment viewing options</H2>    <DIV class="content"><DIV class="container-inline"><INPUT type="hidden" name="form_id" id="edit-comment-controls" value="comment_controls">
+<DIV class="form-item" id="edit-mode-wrapper">
+ <SELECT name="mode" class="form-select" id="edit-mode"><OPTION value="1">Flat list - collapsed</OPTION><OPTION value="2">Flat list - expanded</OPTION><OPTION value="3">Threaded list - collapsed</OPTION><OPTION value="4" selected="selected">Threaded list - expanded</OPTION></SELECT>
+</DIV>
+<DIV class="form-item" id="edit-order-wrapper">
+ <SELECT name="order" class="form-select" id="edit-order"><OPTION value="1" selected="selected">Date - newest first</OPTION><OPTION value="2">Date - oldest first</OPTION></SELECT>
+</DIV>
+<DIV class="form-item" id="edit-comments-per-page-wrapper">
+ <SELECT name="comments_per_page" class="form-select" id="edit-comments-per-page"><OPTION value="10">10 comments per page</OPTION><OPTION value="30">30 comments per page</OPTION><OPTION value="50" selected="selected">50 comments per page</OPTION><OPTION value="70">70 comments per page</OPTION><OPTION value="90">90 comments per page</OPTION><OPTION value="150">150 comments per page</OPTION><OPTION value="200">200 comments per page</OPTION><OPTION value="250">250 comments per page</OPTION><OPTION value="300">300 comments per page</OPTION></SELECT>
+</DIV>
+<INPUT type="submit" name="op" id="edit-submit" value="Save settings" class="form-submit">
+</DIV><DIV class="description">Select your preferred way to display the comments and click "Save settings" to activate your changes.</DIV></DIV>
+ </DIV>
+
+
+</DIV></FORM>
+<A id="comment-346483"></A>
+<DIV class="comment odd">
+  <DIV class="head">
+        <SPAN class="avatar"><DIV class="picture"><IMG src="./Linux System Calls_files/babytux.png" alt="Anonymous&#39;s picture" title="Anonymous&#39;s picture"></DIV></SPAN>
+    <H3><A href="http://www.linuxjournal.com/article/4048#comment-346483" class="active">system call</A></H3>
+    <H4>On December 17th, 2009 Anonymous (not verified) says:</H4>
+  </DIV>
+  <DIV class="content">
+    <P>Hi,</P>
+<P>Just wanted to know if I want to printk the parameters used in a systemcall how do I go about it? To do so I am trying to access the %eax, %ebx and the other registers used to store the parameters and printk the parameters but not sure how to go about it. I am writing a loadable kernel module to do so. Any idea how to do it?</P>
+<P>Thanks in Advance</P>
+  </DIV>
+  <DIV class="links">
+    <UL class="links"><LI class="first last comment_reply"><A href="http://www.linuxjournal.com/comment/reply/4048/346483" class="comment_reply">reply</A></LI>
+</UL>  </DIV>
+</DIV>
+<A id="comment-336779"></A>
+<DIV class="comment even">
+  <DIV class="head">
+        <SPAN class="avatar"><DIV class="picture"><IMG src="./Linux System Calls_files/babytux.png" alt="Anonymous&#39;s picture" title="Anonymous&#39;s picture"></DIV></SPAN>
+    <H3><A href="http://www.linuxjournal.com/article/4048#comment-336779" class="active">fork() implementation</A></H3>
+    <H4>On May 6th, 2009 Anonymous (not verified) says:</H4>
+  </DIV>
+  <DIV class="content">
+    <P>can anyone tell me where assembly routines implementing sysytem call can be found.</P>
+  </DIV>
+  <DIV class="links">
+    <UL class="links"><LI class="first last comment_reply"><A href="http://www.linuxjournal.com/comment/reply/4048/336779" class="comment_reply">reply</A></LI>
+</UL>  </DIV>
+</DIV>
+<A id="comment-129081"></A>
+<DIV class="comment odd">
+  <DIV class="head">
+        <SPAN class="avatar"><DIV class="picture"><IMG src="./Linux System Calls_files/babytux.png" alt="Anonymous&#39;s picture" title="Anonymous&#39;s picture"></DIV></SPAN>
+    <H3><A href="http://www.linuxjournal.com/article/4048#comment-129081" class="active">Very good article overall.</A></H3>
+    <H4>On February 11th, 2006 Anonymous (not verified) says:</H4>
+  </DIV>
+  <DIV class="content">
+    <P>Very good article overall. But I don't know what software exceptions have to do with interruptions and hardware exceptions; I am pretty sure they are totally unrelated. I think it would be better to focus in hardware exceptions, like arithmetic ones, whose handlers are placed in the vector table.</P>
+  </DIV>
+  <DIV class="links">
+    <UL class="links"><LI class="first last comment_reply"><A href="http://www.linuxjournal.com/comment/reply/4048/129081" class="comment_reply">reply</A></LI>
+</UL>  </DIV>
+</DIV>
+<A id="comment-37076"></A>
+<DIV class="comment even">
+  <DIV class="head">
+        <SPAN class="avatar"><DIV class="picture"><IMG src="./Linux System Calls_files/babytux.png" alt="Anonymous&#39;s picture" title="Anonymous&#39;s picture"></DIV></SPAN>
+    <H3><A href="http://www.linuxjournal.com/article/4048#comment-37076" class="active">Much of the content in this a</A></H3>
+    <H4>On April 28th, 2005 Anonymous (not verified) says:</H4>
+  </DIV>
+  <DIV class="content">
+    <P>Much of the content in this article was taken directly from "How System Calls Work on Linux/i86" by Michael K. Johnson and Stanley Scalsky which is located at this URL:</P>
+<P>http://www.tldp.org/LDP/khg/HyperNews/get/syscall/syscall86.html</P>
+<P>Copyright (C) 1993, 1996 Michael K. Johnson, johnsonm@redhat.com.<BR>
+Copyright (C) 1993 Stanley Scalsky</P>
+<P>No mention of credit was given by Moshe Bar to the original authors.  At the very least this is plagiarism and a blatant copyright violation.</P>
+  </DIV>
+  <DIV class="links">
+    <UL class="links"><LI class="first last comment_reply"><A href="http://www.linuxjournal.com/comment/reply/4048/37076" class="comment_reply">reply</A></LI>
+</UL>  </DIV>
+</DIV>
+<DIV class="indented"><A id="comment-334626"></A>
+<DIV class="comment odd">
+  <DIV class="head">
+        <SPAN class="avatar"><DIV class="picture"><IMG src="./Linux System Calls_files/babytux.png" alt="Carsten&#39;s picture" title="Carsten&#39;s picture"></DIV></SPAN>
+    <H3><A href="http://www.linuxjournal.com/article/4048#comment-334626" class="active">You must not have read the original article, or did you?</A></H3>
+    <H4>On March 17th, 2009 Carsten (not verified) says:</H4>
+  </DIV>
+  <DIV class="content">
+    <P>The two articles are not in the least identical and the article you refer to is not in the least as exhaustive as this article. I would say that Moshe did a good job here at both taking available information by the kernel hackers and, second, providing even more indepth information on how it is actually done.</P>
+  </DIV>
+  <DIV class="links">
+    <UL class="links"><LI class="first last comment_reply"><A href="http://www.linuxjournal.com/comment/reply/4048/334626" class="comment_reply">reply</A></LI>
+</UL>  </DIV>
+</DIV>
+<A id="comment-320269"></A>
+<DIV class="comment even">
+  <DIV class="head">
+        <SPAN class="avatar"><DIV class="picture"><IMG src="./Linux System Calls_files/babytux.png" alt="Anonymous&#39;s picture" title="Anonymous&#39;s picture"></DIV></SPAN>
+    <H3><A href="http://www.linuxjournal.com/article/4048#comment-320269" class="active">who cares....</A></H3>
+    <H4>On March 22nd, 2008 Anonymous (not verified) says:</H4>
+  </DIV>
+  <DIV class="content">
+    <P>who cares....</P>
+  </DIV>
+  <DIV class="links">
+    <UL class="links"><LI class="first last comment_reply"><A href="http://www.linuxjournal.com/comment/reply/4048/320269" class="comment_reply">reply</A></LI>
+</UL>  </DIV>
+</DIV>
+</DIV>  <DIV class="box">
+    <H2 class="title">Post new comment</H2>    <DIV class="content"><FORM action="http://www.linuxjournal.com/comment/reply/4048" accept-charset="UTF-8" method="post" id="comment-form">
+<DIV><DIV><DIV class="comment_help">Please note that comments may not appear immediately, so there is no need to repost your comment.</DIV><DIV class="form-item" id="edit-name-wrapper">
+ <LABEL for="edit-name">Your name: </LABEL>
+ <INPUT type="text" maxlength="60" name="name" id="edit-name" size="30" value="Anonymous" class="form-text">
+</DIV>
+<DIV class="form-item" id="edit-mail-wrapper">
+ <LABEL for="edit-mail">E-mail: </LABEL>
+ <INPUT type="text" maxlength="64" name="mail" id="edit-mail" size="30" value="" class="form-text">
+ <DIV class="description">The content of this field is kept private and will not be shown publicly.</DIV>
+</DIV>
+<DIV class="form-item" id="edit-homepage-wrapper">
+ <LABEL for="edit-homepage">Homepage: </LABEL>
+ <INPUT type="text" maxlength="255" name="homepage" id="edit-homepage" size="30" value="" class="form-text">
+</DIV>
+<DIV class="form-item" id="edit-subject-wrapper">
+ <LABEL for="edit-subject">Subject: </LABEL>
+ <INPUT type="text" maxlength="64" name="subject" id="edit-subject" size="60" value="" class="form-text">
+</DIV>
+<DIV class="form-item" id="edit-comment-wrapper">
+ <LABEL for="edit-comment">Comment: <SPAN class="form-required" title="This field is required.">*</SPAN></LABEL>
+ <DIV class="resizable-textarea"><SPAN><TEXTAREA cols="60" rows="15" name="comment" id="edit-comment" class="form-textarea resizable required processed"></TEXTAREA><DIV class="grippie" style="margin-right: -6px; "></DIV></SPAN></DIV>
+</DIV>
+<UL class="tips"><LI>Allowed HTML tags: &lt;a&gt; &lt;em&gt; &lt;strong&gt; &lt;cite&gt; &lt;code&gt; &lt;pre&gt; &lt;ul&gt; &lt;ol&gt; &lt;li&gt; &lt;dl&gt; &lt;dt&gt; &lt;dd&gt; &lt;i&gt; &lt;b&gt;</LI><LI>Lines and paragraphs break automatically.</LI></UL><P><A href="http://www.linuxjournal.com/filter/tips">More information about formatting options</A></P><INPUT type="hidden" name="form_id" id="edit-comment-form" value="comment_form">
+<INPUT type="submit" name="op" id="edit-preview" value="Preview comment" class="form-submit">
+</DIV>
+</DIV></FORM>
+</DIV>
+ </DIV>
+
+</DIV>                      </DIV>
+      
+          <DIV class="clear"></DIV>
+          <!-- END CONTENT BODY -->
+          
+        </DIV>
+        <!-- END CONTENT LEFT -->
+        
+        <!-- CONTENT RIGHT -->
+        <DIV id="content_right">
+          <DIV id="subscribe">
+            <H3>Subscribe now!</H3>
+            
+<UL class="menu">
+<LI class="leaf"><A href="http://www.linuxjournal.com/subscriptions" title="Subscribe">Subscribe</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/renew" title="Renew your subscription">Renew</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/dlissue">Free Issue</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/xstatic/subs/customer_service.html">Customer service</A></LI>
+
+</UL>
+          </DIV>
+          
+          <DIV id="block-block-44" class="block block-block"> 
+    <DIV class="content">
+    <SCRIPT type="text/javascript"><!--// <![CDATA[
+    OA_show(58146);
+// ]]> --></SCRIPT><SCRIPT type="text/javascript">
+OXM_ad = {"website":"5269c2d6-ad46-45b3-ab8b-b07b7a65d779",
+"size":"336x280",
+"floor":"5",
+"beacon":"<div id='beacon_ec0553c21e' style='position: absolute; left: 0px; top: 0px; visibility: hidden;'><img src='http:\/\/d1.openx.org\/lg.php?bannerid=209889&amp;campaignid=50320&amp;zoneid=58146&amp;loc=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F4048&amp;referer=http%3A%2F%2Fwww.google.com%2Fsearch%3Fhl%3Den%26newwindow%3D1%26q%3Dlinux+syscalls%26aq%3Df%26oq%3D%26aqi%3Dg3&amp;cb=ec0553c21e&amp;r_id=90f46d7b918340a00df89715ac563fbb&amp;r_ts=kv5h6c&amp;bannerid=-1' width='0' height='0' alt='' style='width: 0px; height: 0px;' \/><\/div>",
+"fallback":"<a href='http:\/\/d1.openx.org\/ck.php?oaparams=2__bannerid=209889__zoneid=58146__cb=ec0553c21e__r_id=90f46d7b918340a00df89715ac563fbb__r_ts=kv5h6c__oadest=http%3A%2F%2Fwww.linuxjournalstore.com%2Fproducts%2F101-Tech-Tips-DVD.html' target='_blank'><img src='http:\/\/c3.openx.org\/b3db5e297554322a6479af2b6019b222.jpg' width='336' height='280' alt='101 Tech Tip Videos DVD Now Available' title='101 Tech Tip Videos DVD Now Available' border='0' \/><\/a><div id='beacon_ec0553c21e' style='position: absolute; left: 0px; top: 0px; visibility: hidden;'><img src='http:\/\/d1.openx.org\/lg.php?bannerid=209889&amp;campaignid=50320&amp;zoneid=58146&amp;loc=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F4048&amp;referer=http%3A%2F%2Fwww.google.com%2Fsearch%3Fhl%3Den%26newwindow%3D1%26q%3Dlinux+syscalls%26aq%3Df%26oq%3D%26aqi%3Dg3&amp;cb=ec0553c21e&amp;r_id=90f46d7b918340a00df89715ac563fbb&amp;r_ts=kv5h6c' width='0' height='0' alt='' style='width: 0px; height: 0px;' \/><\/div>"};
+</SCRIPT>
+<SCRIPT type="text/javascript" src="./Linux System Calls_files/jstag"></SCRIPT><SCRIPT type="text/javascript" src="./Linux System Calls_files/json"></SCRIPT><A href="http://d1.openx.org/ck.php?oaparams=2__bannerid=209889__zoneid=58146__cb=ec0553c21e__r_id=90f46d7b918340a00df89715ac563fbb__r_ts=kv5h6c__oadest=http%3A%2F%2Fwww.linuxjournalstore.com%2Fproducts%2F101-Tech-Tips-DVD.html" target="_blank"><IMG src="./Linux System Calls_files/b3db5e297554322a6479af2b6019b222.jpg" width="336" height="280" alt="101 Tech Tip Videos DVD Now Available" title="101 Tech Tip Videos DVD Now Available" border="0"></A><DIV id="beacon_ec0553c21e" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><IMG src="./Linux System Calls_files/lg(2).php" width="0" height="0" alt="" style="width: 0px; height: 0px;"></DIV><SCRIPT type="text/javascript" src="./Linux System Calls_files/quant.js"></SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+<NOSCRIPT></NOSCRIPT>  </DIV>  
+</DIV>
+<DIV id="block-views-latest_stories" class="block block-views"> 
+      <H3>The Latest</H3>
+    <DIV class="content">
+    <DIV class="view view-latest-stories"><DIV class="view-content view-content-latest-stories"><TABLE>
+ <THEAD><TR><TH class="view-cell-header view-field-node-title"><TH class="view-cell-header view-field-node-created"> </TR></THEAD>
+<TBODY>
+ <TR class="odd"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/content/mozilla-panning-imminent-fennec-release">Mozilla Planning Imminent Fennec Release</A></TD><TD class="view-field view-field-node-created">Dec-23-09</TD> </TR>
+ <TR class="even"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/content/custom-transitioning-backgrounds-kde4">Custom Transitioning Backgrounds in KDE4</A></TD><TD class="view-field view-field-node-created">Dec-23-09</TD> </TR>
+ <TR class="odd"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/content/does-distro-matter">Does the distro matter?</A></TD><TD class="view-field view-field-node-created">Dec-22-09</TD> </TR>
+ <TR class="even"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/content/fedora-10-supported-no-more">Fedora 10 Is - Supported - No More</A></TD><TD class="view-field view-field-node-created">Dec-22-09</TD> </TR>
+ <TR class="odd"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/content/openlogic-moves-help-prevent-license-lawsuits">OpenLogic Moves To Help Prevent License Lawsuits</A></TD><TD class="view-field view-field-node-created">Dec-21-09</TD> </TR>
+ <TR class="even"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/content/success-googles-android-threat-free-software">Is the Success of Google's Android a Threat to Free Software?</A></TD><TD class="view-field view-field-node-created">Dec-21-09</TD> </TR>
+</TBODY>
+</TABLE>
+</DIV><DIV class="more-link"><A href="http://www.linuxjournal.com/latest">more</A></DIV></DIV>
+  </DIV>  
+</DIV>
+<DIV id="block-block-58" class="block block-block"> 
+      <H3>Newsletter</H3>
+    <DIV class="content">
+    Each week <CITE>Linux Journal</CITE> editors will tell you what's hot in the world of Linux. You will receive late breaking news, technical tips and tricks, and links to in-depth stories featured on <A href="http://www.linuxjournal.com/">www.linuxjournal.com</A>.
+
+<!-- BEGIN: Constant Contact Stylish Email Newsletter Form -->
+<DIV align="left">
+<DIV style="width:336px; background-color: #ffffff;">
+<FORM name="ccoptin" action="http://visitor.constantcontact.com/d.jsp" target="_blank" method="post" style="margin-bottom:3;">
+<FONT style="font-weight: bold; font-family:Helvetica, Arial, Verdana, sans-serif; font-size:14px; color:#2f4f4f;">Sign up for our Email Newsletter</FONT>
+<INPUT type="text" name="ea" size="35" value="" style="font-family:Helvetica, Arial, Verdana, sans-serif; font-size:10px; border:1px solid #999999;">
+<INPUT type="submit" name="go" value="GO" class="submit" style="font-family:Helvetica, Arial, Verdana, sans-serif; font-size:10px;">
+<INPUT type="hidden" name="m" value="1102084405266">
+<INPUT type="hidden" name="p" value="oi">
+</FORM>
+</DIV>
+</DIV>
+<!-- END: Constant Contact Stylish Email Newsletter Form -->  </DIV>  
+</DIV>
+<DIV id="block-views-linux_minute" class="block block-views"> 
+      <H3>Tech Tip Videos</H3>
+    <DIV class="content">
+    <DIV class="view view-linux-minute"><DIV class="view-content view-content-linux-minute"><DIV class="item-list"><UL><LI><DIV class="view-item view-item-linux-minute"><DIV class="view-field view-data-node-data-field-embed-video-field-embed-video-embed"><A href="http://www.linuxjournal.com/video/rotating-backgrounds-drapes"><IMG src="http://a.images.blip.tv/Linuxjournal-RotatingBackgroundsWithDrapes213.jpg" width="120" height="90" alt="See video" title="See video"></A></DIV><DIV class="view-field view-data-node-title"><A href="http://www.linuxjournal.com/video/rotating-backgrounds-drapes">Rotating Backgrounds with Drapes</A></DIV><DIV class="view-field view-data-node-created">Dec-08-09</DIV></DIV>
+</LI><LI><DIV class="view-item view-item-linux-minute"><DIV class="view-field view-data-node-data-field-embed-video-field-embed-video-embed"><A href="http://www.linuxjournal.com/video/add-custom-buttons-thunderbird"><IMG src="http://a.images.blip.tv/Linuxjournal-CustomThunderbirdButtons876.jpg" width="120" height="90" alt="See video" title="See video"></A></DIV><DIV class="view-field view-data-node-title"><A href="http://www.linuxjournal.com/video/add-custom-buttons-thunderbird">Add Custom Buttons To Thunderbird</A></DIV><DIV class="view-field view-data-node-created">Dec-02-09</DIV></DIV>
+</LI><LI><DIV class="view-item view-item-linux-minute"><DIV class="view-field view-data-node-data-field-embed-video-field-embed-video-embed"><A href="http://www.linuxjournal.com/video/verify-your-download-iso-images-burning-them"><IMG src="http://a.images.blip.tv/Linuxjournal-VerifyYourISOImagesBeforeBurningThem427.jpg" width="120" height="90" alt="See video" title="See video"></A></DIV><DIV class="view-field view-data-node-title"><A href="http://www.linuxjournal.com/video/verify-your-download-iso-images-burning-them">Verify Your Downloaded ISO Images Before Burning Them</A></DIV><DIV class="view-field view-data-node-created">Nov-24-09</DIV></DIV>
+</LI><LI><DIV class="view-item view-item-linux-minute"><DIV class="view-field view-data-node-data-field-embed-video-field-embed-video-embed"><A href="http://www.linuxjournal.com/video/irc-chats-pidgin"><IMG src="http://a.images.blip.tv/Linuxjournal-IRCChatsWithPidgin267.jpg" width="120" height="90" alt="See video" title="See video"></A></DIV><DIV class="view-field view-data-node-title"><A href="http://www.linuxjournal.com/video/irc-chats-pidgin">IRC Chats with Pidgin!</A></DIV><DIV class="view-field view-data-node-created">Nov-19-09</DIV></DIV>
+</LI></UL></DIV></DIV><DIV class="view-footer view-footer-linux-minute"><STYLE>
+p.videofoot {text-align: right; padding-bottom:0; margin-bottom:0; clear: both; padding-top: 20px;}
+</STYLE><P class="videofoot"><A href="http://www.linuxjournal.com/video">See more <CITE>Linux Journal</CITE> Videos</A></P>
+</DIV>
+</DIV>
+  </DIV>  
+</DIV>
+<DIV id="block-views-popular_recent" class="block block-views"> 
+      <H3>Recently Popular</H3>
+    <DIV class="content">
+    <DIV class="view view-popular-recent"><DIV class="view-content view-content-popular-recent"><TABLE>
+ <THEAD><TR><TH class="view-cell-header view-field-node-title"><TH class="view-cell-header view-field-votingapi-cache-vote-percent-average-value"> </TR></THEAD>
+<TBODY>
+ <TR class="odd"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/content/does-distro-matter">Does the distro matter?</A></TD><TD class="view-field view-field-votingapi-cache-vote-percent-average-value"><DIV class="fivestar-widget-static fivestar-widget-static-5 clear-block"><DIV class="star star-1 star-odd star-first"><SPAN class="on">4.583335</SPAN></DIV><DIV class="star star-2 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-3 star-odd"><SPAN class="on"></SPAN></DIV><DIV class="star star-4 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-5 star-odd star-last"><SPAN class="on" style="width: 58.3335%"></SPAN></DIV></DIV></TD> </TR>
+ <TR class="even"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/article/4622">Boot with GRUB</A></TD><TD class="view-field view-field-votingapi-cache-vote-percent-average-value"><DIV class="fivestar-widget-static fivestar-widget-static-5 clear-block"><DIV class="star star-1 star-odd star-first"><SPAN class="on">4.419355</SPAN></DIV><DIV class="star star-2 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-3 star-odd"><SPAN class="on"></SPAN></DIV><DIV class="star star-4 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-5 star-odd star-last"><SPAN class="on" style="width: 41.9355%"></SPAN></DIV></DIV></TD> </TR>
+ <TR class="odd"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/content/custom-transitioning-backgrounds-kde4">Custom Transitioning Backgrounds in KDE4</A></TD><TD class="view-field view-field-votingapi-cache-vote-percent-average-value"><DIV class="fivestar-widget-static fivestar-widget-static-5 clear-block"><DIV class="star star-1 star-odd star-first"><SPAN class="on">5</SPAN></DIV><DIV class="star star-2 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-3 star-odd"><SPAN class="on"></SPAN></DIV><DIV class="star star-4 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-5 star-odd star-last"><SPAN class="on"></SPAN></DIV></DIV></TD> </TR>
+ <TR class="even"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/article/9266">Chapter 16: Ubuntu and Your iPod</A></TD><TD class="view-field view-field-votingapi-cache-vote-percent-average-value"><DIV class="fivestar-widget-static fivestar-widget-static-5 clear-block"><DIV class="star star-1 star-odd star-first"><SPAN class="on">4.52564</SPAN></DIV><DIV class="star star-2 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-3 star-odd"><SPAN class="on"></SPAN></DIV><DIV class="star star-4 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-5 star-odd star-last"><SPAN class="on" style="width: 52.564%"></SPAN></DIV></DIV></TD> </TR>
+ <TR class="odd"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/article/3882">Why Python?</A></TD><TD class="view-field view-field-votingapi-cache-vote-percent-average-value"><DIV class="fivestar-widget-static fivestar-widget-static-5 clear-block"><DIV class="star star-1 star-odd star-first"><SPAN class="on">4.51789</SPAN></DIV><DIV class="star star-2 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-3 star-odd"><SPAN class="on"></SPAN></DIV><DIV class="star star-4 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-5 star-odd star-last"><SPAN class="on" style="width: 51.789%"></SPAN></DIV></DIV></TD> </TR>
+ <TR class="even"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/article/3946">Python Programming for Beginners</A></TD><TD class="view-field view-field-votingapi-cache-vote-percent-average-value"><DIV class="fivestar-widget-static fivestar-widget-static-5 clear-block"><DIV class="star star-1 star-odd star-first"><SPAN class="on">4.203705</SPAN></DIV><DIV class="star star-2 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-3 star-odd"><SPAN class="on"></SPAN></DIV><DIV class="star star-4 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-5 star-odd star-last"><SPAN class="on" style="width: 20.3705%"></SPAN></DIV></DIV></TD> </TR>
+</TBODY>
+</TABLE>
+</DIV><DIV class="more-link"><A href="http://www.linuxjournal.com/popular/latest">more</A></DIV></DIV>
+  </DIV>  
+</DIV>
+<DIV id="block-block-51" class="block block-block"> 
+      <H3>From the Magazine</H3>
+    <DIV class="content">
+    
+<DIV id="latestissue">
+  
+  
+  <DIV class="content">
+    <A href="http://www.linuxjournal.com/issue/189"><IMG src="./Linux System Calls_files/cover189.small.jpg"></A>
+    <H4><A href="http://www.linuxjournal.com/issue/189">January 2010,&nbsp;#189</A></H4>
+<P class="big">
+You say potato, I say potahto, you say ham, I say amateur...
+you see where I'm going with this?
+Ok, maybe not, Amateur Radio, that's where and that's
+what this month's issue focus is.
+What you might ask is the connection between Amateur Radio and Linux?
+Well Linux may be the only O/S out there with an AX.25 packet radio
+protocol driver, and it's had it since forever.
+So blow the dust off your license and start reading.
+</P>
+<BR>
+<P class="small">
+If Ham's not your favorite food, don't despair there
+are plenty of other articles in this month's issue including,
+but not limited to, Firewall Builder, Cucumber, Vimperator,
+port knocking with knockd, building appliances with Linux and Xen,
+and using Twitter from the command line.
+</P>
+
+
+    
+       <P><A href="http://www.linuxjournal.com/issue/189">Read this issue</A></P>
+
+  
+
+
+
+
+
+  </DIV>
+    
+</DIV>  </DIV>  
+</DIV>
+<DIV id="block-block-45" class="block block-block"> 
+    <DIV class="content">
+    <DIV id="smallbox-adblock" class="adblock smallbox-adblock">
+<SCRIPT type="text/javascript"><!--// <![CDATA[
+    OA_show(58149);
+// ]]> --></SCRIPT><A href="http://d1.openx.org/ck.php?oaparams=2__bannerid=216042__zoneid=58149__OXLCA=1__cb=cc10377965__r_id=8ac40a90c3e290667ef786abd6800b17__r_ts=kv5h6c__oadest=http%3A%2F%2Fen.oreilly.com%2Fwhere2010%2F" target="_blank"><IMG src="./Linux System Calls_files/b09e75c935c817d6f54e8f5d72fbdbff.gif" width="336" height="90" alt="" title="" border="0"></A><DIV id="beacon_cc10377965" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><IMG src="./Linux System Calls_files/lg(3).php" width="0" height="0" alt="" style="width: 0px; height: 0px;"></DIV>
+<NOSCRIPT></NOSCRIPT>
+</DIV>
+
+
+  </DIV>  
+</DIV>
+<DIV id="block-block-49" class="block block-block"> 
+    <DIV class="content">
+    <P><IMG src="./Linux System Calls_files/flickr.png"><A href="http://www.flickr.com/groups/linuxjournal/pool/" target="_blank">Contribute to the <CITE>Linux Journal</CITE> Flickr Pool</A><BR>
+<IMG src="./Linux System Calls_files/twitter.png"><A href="http://twitter.com/linuxjournal" target="_blank">Follow <CITE>Linux Journal</CITE> on Twitter</A><BR>
+<IMG src="./Linux System Calls_files/feed.png"><A href="http://www.linuxjournal.com/rss_feeds" target="_blank">Add <CITE>Linux Journal</CITE> to your RSS reader</A><BR>
+<IMG src="./Linux System Calls_files/facebook(1).png"><A href="http://www.facebook.com/pages/Houston-TX/Linux-Journal/10098036614?ref=s" target="_blank">Meet other readers on Facebook</A><BR>
+<IMG src="./Linux System Calls_files/wii.jpg"><A href="http://www.linuxjournal.com/content/meet-mii">Get <CITE>Linux Journal</CITE> Miis</A></P>
+  </DIV>  
+</DIV>
+<DIV id="block-block-59" class="block block-block"> 
+    <DIV class="content">
+    <SCRIPT type="text/javascript"><!--
+google_ad_client = "pub-3600556074671070";
+google_ad_width = 300;
+google_ad_height = 250;
+google_ad_format = "300x250_as";
+google_ad_type = "text_image";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "ffffff";
+google_color_link = "cc0000";
+google_color_url = "555555";
+google_color_text = "000000";
+//--></SCRIPT><SCRIPT type="text/javascript" src="./Linux System Calls_files/show_ads.js">
+</SCRIPT><SCRIPT>google_protectAndRun("ads_core.google_render_ad", google_handleError, google_render_ad);</SCRIPT><IFRAME name="google_ads_frame" width="300" height="250" frameborder="0" src="./Linux System Calls_files/ads.html" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no"></IFRAME>  </DIV>  
+</DIV>
+        </DIV>
+        <!-- END CONTENT RIGHT -->
+      
+       <DIV class="clear"></DIV>
+      </DIV>
+      <!-- CONTENT END =================================================== -->
+
+
+
+      <!-- FOOTER START ================================================== -->
+      <DIV id="footer">
+        
+<UL class="menu">
+<LI class="leaf"><A href="http://www.linuxjournal.com/subscriptions" title="Subscribe">Subscribe</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/advertising" title="Advertise with us!">Advertise</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/xstatic/aboutus" title="Contact us">Contact us</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/content/privacy-statement">Privacy statement</A></LI>
+<LI class="leaf"><A href="mailto:webmaster@linuxjournal.com">Report problems</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/rss_feeds">RSS Feeds</A></LI>
+
+</UL>
+        <P class="copyright">Copyright © 1994 - 2009 <A href="http://www.linuxjournal.com/"><CITE>Linux Journal</CITE></A>. All rights reserved.</P>
+                <P class="message">
+</P>
+        
+              </DIV>
+      <!-- FOOTER END ==================================================== -->
+
+          </DIV>
+  </DIV>
+
+
+</BODY></HTML>

@@ -1,0 +1,24 @@
+# depslib dependency file v1.0
+1263359825 source:/var/www/compiler/compile.cpp
+	<iostream>
+	<unistd.h>
+	<stdlib.h>
+	<fstream>
+	<string>
+	<sys/wait.h>
+	<cstring>
+	<ctime>
+	<sys/time.h>
+	<signal.h>
+	<boost/lexical_cast.hpp>
+	"handlewrong.h"
+
+1262514010 source:/var/www/compiler/handlewrong.cpp
+	"handlewrong.h"
+	<cstring>
+
+1262514017 /var/www/compiler/handlewrong.h
+	<iostream>
+	<fstream>
+	<string>
+

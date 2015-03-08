@@ -1,0 +1,53 @@
+/* Current issue */
+#currentissue {
+  /*background: url("../img/currentissue_bg.gif") repeat-x bottom left;*/
+  background: #f5f5f5;
+  width: 100%;
+  border-bottom: solid 5px #d3d3d3;
+}
+#currentissue a.read-more { margin-left: 20px;}
+#currentissue_head {
+  margin: 0;
+  padding: 5px -5px 5px 5px;
+  width: 100%;
+  background: #c00 /*url("../img/currentissue_titlebg.gif") repeat-x top left*/;
+}
+div.content #currentissue_head h3 {
+  margin: 0;
+  height: 54px;
+  line-height: 53px;
+  padding-left: 30px;
+  
+  color: #fff;
+  font-size: 18pt;
+  font-weight: normal;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.5);
+}
+#currentissue div { padding: 15px 30px; overflow: hidden; }
+#currentissue div a.cover {
+  display: block;
+  float: left;
+  width: 125px;
+  height: 198px;
+  padding-top: 10px;
+  background: url("../img/currentissue_coverbg.gif") no-repeat top left;
+}
+#currentissue div a.cover:hover { background-position: top right; }
+#currentissue div a.cover img {
+  display: block;
+  border: 0;
+}
+#currentissue div a.cover span { display: none; }
+#currentissue div p { margin: 0 0 0.5em 140px; }
+#currentissue div p.big {
+  font-size: 11pt;
+  line-height: 1.3em;
+}
+#currentissue div p.small {
+  color: #999;
+  border-top: 1px solid #eee;
+  padding-top: 0.5em;
+}
+div.caption {
+  font-weight: bold;
+}

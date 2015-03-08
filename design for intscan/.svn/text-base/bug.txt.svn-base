@@ -1,0 +1,55 @@
+                                    php-session-seems-to-be-lost-after-header-redirect-only-on-ie
+/submit.php --> /output/index.php £¬the session lost the vars.
+In FF, and chrome - works perfect. On IE it doesn't work. 
+
+///////////////////////////////////////////////////////////////////
+http://support.microsoft.com/default.aspx?scid=kb;EN-US;316112#top
+Session Variables Do Not Persist Between Requests After You Install Internet Explorer Security Patch MS01-055
+
+SYMPTOMS:
+After you install security patch MS01-055 for Microsoft Internet Explorer 5.5 or 6.0, you may encounter the following problems:
+Session variables are lost.
+Session state is not maintained between requests.
+Cookies are not set on the client system.
+Note These problems can also occur after you install a more recent patch that includes the fix that is provided in security patch MS01-055.
+
+CAUSE:
+Security patch MS01-055 prevents servers with improper name syntax from setting cookies names. Domains that use cookies must use only 
+alphanumeric characters ("-" or ".") in the domain name and the server name. 
+Internet Explorer blocks cookies from a server if the server name contains other characters, such as an underscore character ("_").
+Because ASP session state and session variables rely on cookies to function, ASP cannot maintain session state between 
+requests if cookies cannot be set on the client.This issue can also be caused by an incorrect name syntax in a host header.
+
+RESOLUTION:
+To work around this problem, use one of the following methods:
+Rename the domain name and the server name, and use only alphanumeric characters.
+Browse to the server by using the Internet Protocol (IP) address rather than the domain/server name.
+Note You may need to change the Microsoft Internet Information Server (IIS) configuration after you rename a server. 
+For more information, refer to the "References" section.
+//////////////////////////////////////////////////////////////////////
+
+That means the Session Variables lost problems is caused by the IE's design problems,for the domain i used 
+"alex_zhang.intscan.org" contains '_' ,So IE lost session variables.
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+Test case:
+session_test.php
+<?php
+session_start();
+if(isset($_SESSION['hello']))
+     $_SESSION['hello'] = $_SESSION['hello'] + 1;
+else
+    $_SESSION['hello'] = 1;
+
+echo $_SESSION['hello'];
+?>
+
+Upload the php file to the alex_zhang.intscan.org,
+IE: Remains 1  (F5 refresh the page)
+Chrome: 1->2->3->4  (F5 refresh the page)
+
+Copy the php file to the local wen server ,
+IE: 1->2->3->4 (F5 refresh the page)
+Chrome : 1->2->3->4 (F5 refresh the page)
+
+/////////////////////////////////////////////////////////////////////////////////////////////////

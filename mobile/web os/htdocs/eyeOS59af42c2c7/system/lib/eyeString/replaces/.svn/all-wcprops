@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/22/trunk/mobile/web%20os/htdocs/eyeOS59af42c2c7/system/lib/eyeString/replaces
+END
+mbstring_core.eyecode
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/!svn/ver/22/trunk/mobile/web%20os/htdocs/eyeOS59af42c2c7/system/lib/eyeString/replaces/mbstring_core.eyecode
+END
+utf8_functions.eyecode
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/!svn/ver/22/trunk/mobile/web%20os/htdocs/eyeOS59af42c2c7/system/lib/eyeString/replaces/utf8_functions.eyecode
+END
+native_core.eyecode
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/!svn/ver/22/trunk/mobile/web%20os/htdocs/eyeOS59af42c2c7/system/lib/eyeString/replaces/native_core.eyecode
+END
+utf8_fakes.eyecode
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/!svn/ver/22/trunk/mobile/web%20os/htdocs/eyeOS59af42c2c7/system/lib/eyeString/replaces/utf8_fakes.eyecode
+END

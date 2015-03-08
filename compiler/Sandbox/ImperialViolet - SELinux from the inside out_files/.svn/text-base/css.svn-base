@@ -1,0 +1,8 @@
+@media screen {
+@font-face {
+  font-family: 'Yanone Kaffeesatz';
+  font-style: normal;
+  font-weight: 200;
+  src: local('Yanone Kaffeesatz Thin'), local('YanoneKaffeesatz-Thin'), url('http://themes.googleusercontent.com/font?kit=We_iSDqttE3etzfdfhuPRYa6iXjgqaxY3DU3RqApPOI') format('woff');
+}
+}

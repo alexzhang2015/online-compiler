@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)http://www.imperialviolet.org/2009/07/14/selinux.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>ImperialViolet - SELinux from the inside out</title>
+    <meta name="author" content="Adam Langley">
+
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="http://www.imperialviolet.org/2009/07/14/iv-rss.xml">
+    <link rel="openid.server" href="http://www.myopenid.com/server">
+    <link rel="openid.delegate" href="http://alangley.myopenid.com/">
+    <link rel="openid2.local_id" href="http://alangley.myopenid.com/">
+    <link rel="openid2.provider" href="http://www.myopenid.com/server">
+    <link rel="me" type="text/html" href="http://www.google.com/profiles/alangley">
+    <link href="./ImperialViolet - SELinux from the inside out_files/css" rel="stylesheet" type="text/css">
+    <meta http-equiv="X-XRDS-Location" content="http://www.myopenid.com/xrds?username=alangley.myopenid.com">
+
+    <style>
+      body {
+        font-family: sans-serif;
+        text-align: justify;
+        max-width: 55em;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #fbfbfc;
+      }
+
+      h1, h2 {
+        font-family: 'Yanone Kaffeesatz', arial, serif;
+        font-weight: normal;
+      }
+
+      h3 a {
+        color: #222;
+        font-weight: bold;
+        text-decoration: none;
+      }
+
+      h1 a {
+        color: #222;
+        font-weight: bold;
+        text-decoration: none;
+      }
+
+      h1 {
+        font-size: 4.5em;
+        margin-bottom: 0;
+        padding-bottom: 0;
+        margin-top: 0;
+        padding-top: 0;
+      }
+
+      h2 {
+        margin-top: 0;
+        padding-top: 0;
+        margin-bottom: 2em;
+      }
+
+      h3 {
+        margin-left: -2em;
+        font-weight: normal;
+      }
+
+
+      td.topblock {
+        max-width: 25em;
+      }
+
+      td.topblockpadleft {
+        padding-left: 2em;
+      }
+
+      div.postcontents {
+      }
+
+      div.postcontents h3:before {
+        content: "» ";
+      }
+
+      div.postcontents h3 {
+        padding-top: 3em;
+      }
+
+      div.postcontents h3 a {
+        color: #222;
+        font-weight: bold;
+        text-decoration: none;
+      }
+
+      div.postcontents a {
+        color: #222;
+      }
+
+      div.topbox {
+      }
+
+      div.topbox h1 {
+      }
+
+      /* For the SELinux page */
+
+      div#selinux {
+        max-width: 65em;
+        text-align: justify;
+      }
+      div#selinux .subject {
+        color: red;
+      }
+      div#selinux .action {
+        color: green;
+      }
+      div#selinux .object {
+        color: blue;
+      }
+      div#selinux .class {
+        font-family: monospace;
+        color: brown;
+      }
+      .div#selinux permission {
+        font-family: monospace;
+        color: cadetblue;
+      }
+      div#selinux .type {
+        color: yellowgreen;
+      }
+      div#selinux .fileaction {
+        font-variant: small-caps;
+      }
+    </style>
+  </head>
+
+  <body>
+      <div class="topbox">
+    <h1><a href="http://www.imperialviolet.org/">ImperialViolet</a></h1>
+  </div>
+
+  <h3><a href="./ImperialViolet - SELinux from the inside out_files/ImperialViolet - SELinux from the inside out.htm">SELinux from the inside out</a> (14 Jul 2009)</h3>
+
+  <div class="post">
+    <div id="selinux">
+    <p>There are some great sources of information for users and sysadmins about SELinux
+    [<a href="http://www.redhat.com/docs/manuals/enterprise/RHEL-4-Manual/selinux-guide/index.html">1</a>]
+    [<a href="http://docs.fedoraproject.org/selinux-user-guide/f10/en-US/">2</a>] but your author has always
+    preferred to understand a system from the bottom-up and, in this regard, found the information somewhat
+    lacking. This document is a guide to the internals of SELinux by starting at the kernel source and working
+    outwards.</p>
+
+    <p>We'll be drawing on three different sources in order to write this document.</p>
+
+    <ul>
+      <li>The SELinux kernel code, which is carried in <tt>security/selinux</tt> in the <a href="http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=tree">kernel tree</a>.</li>
+      <li>The <a href="http://userspace.selinuxproject.org/trac">SELinux userspace tools</a>.</li>
+      <li>The <a href="http://oss.tresys.com/projects/refpolicy">SELinux reference policy</a>.</li>
+    </ul>
+
+    <h2>Access vectors</h2>
+
+    <p>SELinux is fundamentally about answering questions of the form “May <span class="subject"><i>x</i></span> do
+    <span class="action"><i>y</i></span> to <span class="object"><i>z</i></span>?” and enforcing the result.
+    Although the nature of the <span class="subject">subject</span> and <span class="object">object</span> can be
+    complex, they all boil down to security identifiers (SIDs), which are unsigned 32-bit integers.</p>
+
+    <p>The <span class="action">action</span> boils down to a <span class="class">class</span> and a <span class="permission">permission</span>. Each class can have up to 32 permissions (because they are stored as a
+    bitmask in a 32-bit int). Examples of classes are <tt class="class">FILE</tt>, <tt class="class">TCP_SOCKET</tt> and
+    <tt class="class">X_EVENT</tt>. For the <tt class="class">FILE</tt> class, some examples of permissions are <tt class="permission">READ</tt>, <tt class="permission">WRITE</tt>, <tt class="permission">LOCK</tt> etc.</p>
+
+    <p>At the time of writing there are 73 different classes (<tt>selinux/libselinux/include/selinux/flask.h</tt>) and
+    1025 different permissions (<tt>.../av_permissions.h</tt>).</p>
+
+    <p>The <i>security policy</i> of a system can be thought of as a table, with subjects running down the left edge,
+    objects across the top and, in each cell, the set of actions which that subject can perform on that object.</p>
+
+    <object width="599" height="304" data="http://www.imperialviolet.org/binary/selinux/dia1.svg" type="image/svg+xml" class="img"></object>
+
+    <p>This is reflected in the first part of the SELinux code that we'll look at : the <i>access vector cache</i>
+    (<tt>security/selinux/avc.c</tt>). The AVC is a hash map from (subject, object, class) to the bitset of permissions
+    allowed:</p>
+
+    <pre><span style="font-weight: bold;">struct</span> avc_entry {
+        <span style="font-weight: bold;">u32</span>                     <span class="subject">ssid</span>;    // <i>subject SID</i>
+        <span style="font-weight: bold;">u32</span>                     <span class="object">tsid</span>;    // <i>object SID</i>
+        <span style="font-weight: bold;">u16</span>                     <span class="class">tclass</span>;  // <i>class</i>
+        <span style="font-weight: bold;">struct</span> av_decision      avd;     // <i>contains the set of permissions for that class</i>
+};</pre>
+
+    <p>The AVC is queried when the kernel needs to make security decisions. SELinux hooks into the kernel using the <a href="http://en.wikipedia.org/wiki/Linux_Security_Modules">LSM hooks</a> and is called whenever the kernel is
+    about to perform an action which needs a security check. Consider the <tt>getpgid</tt> system call to get the current
+    process group ID. When SELinux is built into a kernel, this ends up calling the following hook function
+    (<tt>security/selinux/hooks.c</tt>):</p>
+
+    <pre><span style="font-weight: bold;">static int</span> selinux_task_getpgid(<span style="font-weight: bold;">struct</span> task_struct *p)
+{
+        <span style="font-weight: bold;">return</span> current_has_perm(p, <span class="permission">PROCESS__GETPGID</span>);
+}
+
+<span style="font-weight: bold;">static int</span> current_has_perm(<span style="font-weight: bold;">const struct</span> task_struct *tsk,
+                            <span style="font-weight: bold;">u32</span> <span class="permission">perms</span>)
+{
+        <span style="font-weight: bold;">u32</span> <span class="subject">sid</span>, <span class="object">tsid</span>;
+
+        <span class="subject">sid</span> = current_sid();
+        <span class="object">tsid</span> = task_sid(tsk);
+        <span style="font-weight: bold;">return</span> avc_has_perm(<span class="subject">sid</span>, <span class="object">tsid</span>, <span class="class">SECCLASS_PROCESS</span>, <span class="permission">perms</span>, NULL);
+}</pre>
+
+    <p>Referring back to the table concept: in order to check if a process with SID <i>x</i> may call <tt>getpgid</tt> we
+    find <i class="subject">x</i> across and <i class="object">x</i> down and check that <code class="class">SECCLASS_PROCESS</code>:<code class="permission">PROCESS__GETPID</code>  is in the set of allowed
+    actions.</p>
+
+    <p>So now we have to discover what the AVC is actually caching, and where these SIDs are coming from. We'll tackle
+    the latter question first.</p>
+
+    <h2>SIDs and Security Contexts</h2>
+
+    <p>SIDs turn out to be much like interned symbols in some languages. Rather than keeping track of complex objects and
+    spending time comparing them during lookups, they are reduced to an identifier via a table. SIDs are the interned
+    identifiers of security contexts. The <tt>sidtab</tt> maps from one to the other
+    (<tt>security/selinux/ss/sidtab.h</tt>):</p>
+
+    <pre><span style="font-weight: bold;">struct</span> sidtab {
+        <span style="font-weight: bold;">struct</span> sidtab_node **htable;
+        <span style="font-weight: bold;">unsigned int</span> nel;       /* <i>number of elements</i> */
+        <span style="font-weight: bold;">unsigned int</span> next_sid;  /* <i>next SID to allocate</i> */
+        <span style="font-weight: bold;">unsigned char</span> shutdown;
+        spinlock_t lock;
+};
+
+<span style="font-weight: bold;">struct</span> sidtab_node {
+        <span style="font-weight: bold;">u32</span> sid;                       /* <i>security identifier</i> */
+        <span style="font-weight: bold;">struct</span> context context;        /* <i>security context structure</i> */
+        <span style="font-weight: bold;">struct</span> sidtab_node *next;
+};</pre>
+
+    <p>The SID table is optimised for mapping from SIDs to security contexts. Mapping the other way involves walking the
+    whole hash table.</p>
+
+    <p>The structure for the security context is probably familiar to you if you have worked with SELinux before
+    (<tt>security/selinux/ss/context.h</tt>):
+
+</p><pre><span style="font-weight: bold;">struct</span> context {
+        <span style="font-weight: bold;">u32</span> user;
+        <span style="font-weight: bold;">u32</span> role;
+        <span style="font-weight: bold;">u32</span> <span class="type">type</span>;
+        <span style="font-weight: bold;">u32</span> len;        /* <i>length of string in bytes</i> */
+        <span style="font-weight: bold;">struct</span> mls_range range;
+        <span style="font-weight: bold;">char</span> *str;        /* <i>string representation if context cannot be mapped.</i> */
+};</pre>
+
+    <p>If you have an SELinux enabled system, you can look at your current security context with <code>id -Z</code>.
+    Running that will produce something like <tt>unconfined_u:unconfined_r:<span class="type">unconfined_t</span>:s0-s0:c0.c1023</tt>. This string splits into four parts:</p>
+
+    <ol>
+      <li>The SELinux “user”: <tt>unconfined_u</tt></li>
+      <li>The role: <tt>unconfined_r</tt></li>
+      <li>The type: <tt class="type">unconfined_t</tt> (we'll mostly be concentrating on types)</li>
+      <li>The multi-level-security (MLS) sensitivity and compartments: <tt>s0-s0:c0.c1023</tt></li>
+    </ol>
+
+    <p>(You might notice that the parts are broken up with colons, but that the MLS part can contain colons too!
+    Obviously, this is the only part that can contain colons to avoid ambiguity.)</p>
+
+    <p>When the system's security policy is compiled, these names are mapped to IDs. It's these IDs which end up in the
+    kernel's <tt>context</tt> structure. Also notice that, by convention, types end in <tt>_t</tt>, roles with
+    <tt>_r</tt> and users with <tt>_u</tt>. Don't confuse UNIX users with SELinux users; they are separate
+    namespaces. For a sense of scale, on a Fedora 11 box, the default policy includes 8 users, 11 roles and 2727
+    types.</p>
+
+    <h2>The Security Server</h2>
+
+    <p>We now address the question of what it is that the access vector cache is actually caching. When a question is
+    asked of the AVC to which it doesn't have an answer, it falls back on the security server. The security server is
+    responsible for interpreting the policy from userspace. The code lives in <tt>context_struct_compute_av</tt> (in
+    <tt>security/selinux/ss/services.c</tt>). We'll walk through its logic (and we'll expand on each of these points below):</p>
+
+    <ol>
+      <li>The subject and object's type are used to index <tt>type_attr_map</tt>, which results in a set of types for each of them.</li>
+      <li>We consider the Cartesian product of the two sets and build up a 32-bit <tt>allowed</tt> bit-vector based on the union of the permissions in the access vector table for each (subject, object) pair.</li>
+      <li>For each pair in the product, we also include the union of permissions from a second access vector table: the conditional access vector table.</li>
+      <li>The target type is used to index an array and from that we get a linked list of “constraints”. Each constraint contains byte code for a stack based virtual machine and can limit the granted permissions.</li>
+      <li>If the resulting set of permissions includes role transition, then we walk a linked list of allowed role transitions. If the transition isn't whitelisted, those permissions are removed.</li>
+      <li>If either the subject or object's type is ‘bounded’, then we recurse and check the permissions of the bounded types. We verify that the resulting permissions are a subset of the permissions enjoyed by types that they are bounded by. This should be statically enforced by the tool with produced the policy so, if we find a violation, it's logged and the resulting permissions are clipped.</li>
+    </ol>
+
+    <p>Now, dealing with each of those steps in more detail:</p>
+
+    <h4>Type attributes</h4>
+
+    <p>Type attributes are discussed in the <a href="http://www.nsa.gov/research/_files/selinux/papers/policy2/x109.shtml">Configuring the SELinux Policy report</a>.
+    They are used for grouping types together: by including a type attribute on a new type, the new type inherits all
+    the permissions granted to the type attribute. As can be seen from the description above, type attributes are
+    implemented as types themselves.</p>
+
+    <p>These attributes could have been statically expanded by the tool which generated the policy file. Expanding at
+    generation time is a time/space tradeoff and the SELinux developers opted for the smaller policy file.
+
+    </p><p>It's also worth noting that <tt>type_attr_map</tt> isn't expanded recursively: one can only have one level of
+    type attributes.</p>
+
+    <p>Type attributes conventionally end in <tt>_type</tt> (as opposed to types, which end in <tt>_t</tt>). In the Fedora 11 policy, here are the top five type attributes:</p>
+
+    <table>
+      <tbody><tr><th>Name of type attribute</th> <th>Number of types with that attribute</th></tr>
+      <tr><td><tt>file_type</tt></td> <td>1406</td></tr>
+      <tr><td><tt>non_security_file_type</tt></td> <td>1401</td></tr>
+      <tr><td><tt>exec_type</tt></td> <td>484</td></tr>
+      <tr><td><tt>entry_type</tt></td> <td>478</td></tr>
+      <tr><td><tt>domain</tt></td> <td>442</td></tr>
+    </tbody></table>
+
+    <p>The graph of types and type attributes is, as expected, bipartite.</p>
+
+    <h4>The conditional access vector table</h4>
+
+    <p>The conditional access vector table contains permissions just like the regular access vector table except that each,
+    optionally, has an extra flag: <tt>AV_ENABLED</tt> (<tt>security/selinux/avtab.h</tt>). This flag can be enabled and disabled
+    at run time by changing the value of ‘booleans’. These booleans are quite well covered by the
+    higher-level documentation for the policy language (<a href="http://www.crypt.gen.nz/selinux/conditional_policy.html">here</a> and <a href="http://docs.fedoraproject.org/selinux-user-guide/f11/en-US/sect-Security-Enhanced_Linux-Working_with_SELinux-Booleans.html#">here</a>).</p>
+
+    <p>The set of booleans can be found in <tt>/selinux/booleans</tt> (if you are running SELinux). They can be read
+    without special authority although you should be aware of a bug: trying to read more than a page from one of those
+    files results in -<tt>EINVAL</tt> and recent <tt>coreutils</tt> binaries (like <tt>cat</tt>) use a buffer size of
+    32K. Instead you can use <tt>dd</tt>, or just run the friendly tool: <tt>semanage boolean -l</tt>.</p>
+
+    <p>The <tt>AV_ENABLED</tt> flag is updated when a boolean is changed. The conditional access vector table is populated by a list
+    of <tt>cond_node</tt> structures (<tt>security/selinux/conditional.h</tt>). These contain a bytecode for a limited, stack based
+    machine and and two lists of access vectors which should be enabled or disabled in the case that the machine returns
+    true or false.</p>
+
+    <p>The stack machine can read any of the configured booleans and combine them with standard boolean algebra,
+    returning a single bit result.</p>
+
+    <h4>Constraints</h4>
+
+    <p><q>One of the parts of the SELinux policy language is the ability
+      to define constraints. Constraints are defined using the <tt>neverallow</tt> command. Constraints are used to
+      prevent people from writing bad policy, or in the case of MLS, to enforce rules governing information flow.</q>
+    <cite><a href="http://danwalsh.livejournal.com/12333.html">http://danwalsh.livejournal.com/12333.html</a></cite></p>
+
+    <p>As you can see if you read the above linked blog post, constraints are statically enforced by the policy tools
+    where possible and also checked by the kernel. Constraints are evaluated by running a stack-machine bytecode. (This is a different machine
+    than that which is used for the conditional access vector table.) Based on the kernel code for
+    the stack-machine, we can write a simple disassembler and see what constraints are enforced in the kernel.</p>
+
+    <p>In the Fedora 11 policy, 32 classes have constraints applied to them. Let's have a look at some of them. Here's the first one:</p>
+
+    <pre>constraint for class '<span class="class">process</span>' permissions:800000:
+  <span class="permission">DYNTRANSITION</span>
+subject.user == object.user?
+subject.role == object.role?
+<b>and</b></pre>
+
+    <p>Roughly translated, this means “Whenever operating on an object of class <span class="class">process</span>, the
+    <span class="permission">DYNTRANSITION</span> permission is forbidden unless the user and role of the subject and
+    object match”. A <span class="permission">DYNTRANSITION</span> (dynamic transition) is when a process switches security contexts without
+    <tt>exec</tt>ing a binary. Think of it like a <tt>setuid</tt> call for security contexts (we'll cover how to perform
+    this later).</p>
+
+    <p>Here's another constraint, a longer one this time:</p>
+
+    <pre>constraint for class '<span class="class">file</span>' permissions:188:
+  <span class="permission">CREATE</span>
+  <span class="permission">RELABELFROM</span>
+  <span class="permission">RELABELTO</span>
+subject.user == object.user?
+[<span class="type">bootloader_t</span>, <span class="type">devicekit_power_t</span>, <span class="type">logrotate_t</span>, <span class="type">ldconfig_t</span>, <span class="type">unconfined_cronjob_t</span>, <span class="type">unconfined_sendmail_t</span>, <span class="type">setfiles_mac_t</span>,
+<span class="type">initrc_t</span>, <span class="type">sysadm_t</span>, <span class="type">ada_t</span>, <span class="type">fsadm_t</span>, <span class="type">kudzu_t</span>, <span class="type">lvm_t</span>, <span class="type">mdadm_t</span>, <span class="type">mono_t</span>, <span class="type">rpm_t</span>, <span class="type">wine_t</span>, <span class="type">xdm_t</span>, <span class="type">unconfined_mount_t</span>,
+<span class="type">oddjob_mkhomedir_t</span>, <span class="type">saslauthd_t</span>, <span class="type">krb5kdc_t</span>, <span class="type">newrole_t</span>, <span class="type">prelink_t</span>, <span class="type">anaconda_t</span>, <span class="type">local_login_t</span>, <span class="type">rpm_script_t</span>,
+<span class="type">sysadm_passwd_t</span>, <span class="type">system_cronjob_t</span>, <span class="type">tmpreaper_t</span>, <span class="type">samba_unconfined_net_t</span>, <span class="type">unconfined_notrans_t</span>, <span class="type">unconfined_execmem_t</span>,
+<span class="type">devicekit_disk_t</span>, <span class="type">firstboot_t</span>, <span class="type">samba_unconfined_script_t</span>, <span class="type">unconfined_java_t</span>, <span class="type">unconfined_mono_t</span>,
+<span class="type">httpd_unconfined_script_t</span>, <span class="type">groupadd_t</span>, <span class="type">depmod_t</span>, <span class="type">insmod_t</span>, <span class="type">kernel_t</span>, <span class="type">kpropd_t</span>, <span class="type">livecd_t</span>, <span class="type">oddjob_t</span>, <span class="type">passwd_t</span>, <span class="type">apmd_t</span>,
+<span class="type">chfn_t</span>, <span class="type">clvmd_t</span>, <span class="type">crond_t</span>, <span class="type">ftpd_t</span>, <span class="type">inetd_t</span>, <span class="type">init_t</span>, <span class="type">rshd_t</span>, <span class="type">sshd_t</span>, <span class="type">staff_t</span>, <span class="type">udev_t</span>, <span class="type">virtd_t</span>, <span class="type">xend_t</span>, <span class="type">devicekit_t</span>,
+<span class="type">remote_login_t</span>, <span class="type">inetd_child_t</span>, <span class="type">qemu_unconfined_t</span>, <span class="type">restorecond_t</span>, <span class="type">setfiles_t</span>, <span class="type">unconfined_t</span>, <span class="type">kadmind_t</span>,
+<span class="type">ricci_modcluster_t</span>, <span class="type">rlogind_t</span>, <span class="type">sulogin_t</span>, <span class="type">yppasswdd_t</span>, <span class="type">telnetd_t</span>, <span class="type">useradd_t</span>, <span class="type">xserver_t</span>] <b>contains</b> subject.type?
+<b>or</b></pre>
+
+    <p>This means that when you create a file or change its security context, either the SELinux user of the file has
+    to match your current SELinux user, or you have to be one of a list of privileged types.</p>
+
+    <p>One last example foreshadows several large subjects: user-land object managers and multi-level security. For now
+    I'll leave it undiscussed to wet your appetite.</p>
+
+<pre>constraint for class '<span class="class">db_database</span>' permissions:7de:
+  <span class="permission">DROP</span>
+  <span class="permission">GETATTR</span>
+  <span class="permission">SETATTR</span>
+  <span class="permission">RELABELFROM</span>
+  <span class="permission">ACCESS</span>
+  <span class="permission">INSTALL_MODULE</span>
+  <span class="permission">LOAD_MODULE</span>
+  <span class="permission">GET_PARAM</span>
+  <span class="permission">SET_PARAM</span>
+object.sensitivity[high] dominates type?</pre>
+
+    <h4>Roles and users</h4>
+
+    <p>In step 5, above, we mention ‘role transitions’, so we should probably discuss SELinux users and
+    roles. Keep in mind that SELinux users are <i>separate</i> from normal UNIX users.</p>
+
+    <p>Each type inhabits some set of roles and each role inhabits some set of SELinux users. UNIX users are mapped to
+    SELinux users at login time (run `<tt>semanage login -l</tt>`) and so each user has some set of roles that they may
+    operate under. Like the standard custom of administrating a system by logging in as a normal user and using
+    <tt>sudo</tt> only for the tasks which need root privilege, roles are designed for the same purpose. Although a
+    given physical user may need to perform administrative tasks, they probably don't want to have that power all the
+    time. If they did, then there would be a <i>confused deputy problem</i> when they perform what should be an
+    unprivileged task which does far more than intended because they performed it with excess authority.</p>
+
+    <p>Here's the graph of users and roles in the Fedora 11 targeted policy:</p>
+
+    <object width="800" height="100" data="http://www.imperialviolet.org/binary/selinux/dia2.svg" type="image/svg+xml" class="img"></object>
+
+    <p>An SELinux user can move between roles with the <tt>newrole</tt> command, if such a role transition is permitted.
+    Here's the graph of permitted role transitions in the Fedora policy:</p>
+
+    <object width="800" height="270" data="http://www.imperialviolet.org/binary/selinux/dia3.svg" type="image/svg+xml" class="img"></object>
+
+    <p>With the targeted policy at least, roles and users play a relatively small part in SELinux and we won't cover
+    them again.</p>
+
+    <h4>Bounded types</h4>
+
+    <p>A type in SELinux may be “bounded” to another type. This means that the bounded type's permissions
+    are a strict subset of the parent and here we find the beginnings of a type hierarchy. The code for enforcing this
+    originally existed only in the user-space tools which build the policy, but recently it was directly integrated into
+    the kernel.</p>
+
+    <p>In the future, this will make it possible for a lesser privileged process to safely carve out subsets of policy
+    underneath the administratively-defined policy. At the time of writing, this functionality has yet to be integrated
+    in any shipping distribution.</p>
+
+    <p>(Thanks to Stephen Smalley for clearing up this section.)</p>
+
+    <h2>The SELinux filesystem</h2>
+
+    <p>The kernel mostly communicates with userspace via filesystems. There's both the SELinux filesystem (usually
+    mounted at <tt>/selinux</tt>) and the standard <tt>proc</tt> filesystem.  Here we'll run down some of the various
+    SELinux specific entries in each.</p>
+
+    <p>But first, a quick note. Several of the entries are described as ‘transaction’ files. This means that
+    you must open them, perform a single write and then a single read to get the result. You must use the same file
+    descriptor for both (so, no <tt>echo</tt>, <tt>cat</tt> pairs in shell scripts).</p>
+
+    <h4><tt>/selinux/enforcing</tt></h4>
+
+    <p>A boolean file which specifies if the system is in ‘enforcing’ mode. If so, SELinux permissions
+    checks are enforced. Otherwise, they only cause audit messages.</p>
+
+    <p>(<span class="fileaction">Read</span>: unprivileged. <span class="fileaction">Write</span>: requires
+    <tt>root</tt>, <span class="class">SECURITY</span>:<span class="permission">SETENFORCE</span> and that the kernel be
+    built with <tt>CONFIG_SECURITY_SELINUX_DEVELOP</tt>.)</p>
+
+    <h4><tt>/selinux/disable</tt></h4>
+
+    <p>A write only, boolean file which causes SELinux to be disabled. The LSM looks are reset, the SELinux filesystem
+    is unregistered etc. SELinux can only be disabled once and probably doesn't leave your kernel in the best of
+    states.</p>
+
+    <p>(<span class="fileaction">Read</span>: unsupported. <span class="fileaction">Write</span>: requires
+    <tt>root</tt>, and that the kernel be built with <tt>CONFIG_SECURITY_SELINUX_DISABLE</tt>.)</p>
+
+    <h4><tt>/selinux/policyvers</tt></h4>
+
+    <p>A read only file which contains the version of the current policy. The version of a policy is contained in the
+    binary policy file and the kernel contains logic to deal with older policy versions, should the version number in
+    the file suggest that it's needed.</p>
+
+    <p>(<span class="fileaction">Read</span>: unprivileged. <span class="fileaction">Write</span>: unsupported.)</p>
+
+    <h4><tt>/selinux/load</tt></h4>
+
+    <p>A write only file which is used to load policies into the kernel. Loading a new policy triggers a global AVC
+    invalidation.</p>
+
+    <p>(<span class="fileaction">Read</span>: unsupported. <span class="fileaction">Write</span>: requires
+    <tt>root</tt> and <span class="class">SECURITY</span>:<span class="permission">LOAD_POLICY</span>.)</p>
+
+    <h4><tt>/selinux/context</tt></h4>
+
+    <p>A transaction file. One writes a security context string and then reads the resulting, canonicalised context. The
+    context is canonicalised by running it via the sidtab.</p>
+
+    <p>(<span class="fileaction">Read/Write</span>: unprivileged.)</p>
+
+    <h4><tt>/selinux/checkreqprot</tt></h4>
+
+    <p>A boolean file which determines which permissions are checked for mmap and mprotect calls. In certain cases the
+    kernel can actually grant a process more access than it requests with these calls. (For example, if a shared library
+    is marked as needing an executable stack, then the kernel may add the <tt>PROT_EXEC</tt> permission if the process
+    didn't request it.)</p>
+
+    <p>If the value of this boolean is one, then SELinux checks the permissions requested by the process. If 0, it
+    checks the permissions which the process will actually receive.</p>
+
+    <p>(<span class="fileaction">Read</span>: unprivileged. <span class="fileaction">Write</span>: requires
+    <tt>root</tt>, and <span class="class">SECURITY</span>:<span class="permission">SETCHECKREQPROT</span>.)</p>
+
+    <h4><tt>/selinux/access</tt></h4>
+
+    <p>A transaction file which allows a user-space process to query the access vector table. This is the basis of
+    user-space object managers.</p>
+
+    <p>The write phase consists of a string of the following form: <tt>${<span class="subject">subject security context</span> (<i>string</i>)} ${<span class="object">object security context</span> (<i>string</i>)} ${<span class="class">class</span> (<i>uint16_t, base 10</i>)} ${<span class="permission">requested permissions</span> (<i>uint32_t bitmap, base 16</i>)}</tt>.</p>
+
+    <p>The read phase results in a string with this format: <tt>${<span class="permission">allowed permissions</span> (<i>uint32_t bitmap, base 16</i>)} 0xffffffff ${audit allow <i>(uint32_t bitmap, base 16)</i>} ${audit deny (<i>uint32_t bitmap, base 16</i>)} ${sequence number (<i>uint32_t, base 10</i>)} ${flags (<i>uint32_t, base 16</i>)}.</tt></p>
+
+    <p>This call will be covered in greater detail in the User-space Object Managers section, below.</p>
+
+    <p>(<span class="fileaction">Read/Write</span>: <span class="class">SECURITY</span>:<span class="permission">COMPUTE_AV</span>.)</p>
+
+    <h4>Attribute files</h4>
+
+    <p>SELinux is also responsible for a number of attribute files in <tt>/proc</tt>. The attribute system is actually
+    a generic LSM hook, although the names of the nodes are current hardcoded into the code for the <tt>proc</tt>
+    filesystem.</p>
+
+    <h4><tt>/proc/<i>pid</i>/attr/current</tt></h4>
+
+    <p>Contains the current security context for the process. Writing to this performs a dynamic transition to the new
+    context. In order to do this:</p>
+    <ul>
+      <li>The current security context must have <span class="class">PROCESS</span>:<span class="permission">DYNTRANSITION</span> to the new context.</li>
+      <li>The process must be single threaded <i>or</i> the transition must be to a context bounded by the current context.</li>
+      <li>If the process is being traced, the tracer must have permissions to trace the new context.</li>
+    </ul>
+
+    <p>(<span class="fileaction">Read</span>: <span class="class">PROCESS</span>:<span class="permission">GETATTR</span>. <span class="fileaction">Write</span>: only allowed for the current process and requires <span class="class">PROCESS</span>:<span class="permission">SETCURRENT</span>)</p>
+
+    <h4><tt>/proc/<i>pid</i>/attr/exec</tt></h4>
+
+    <p>Sets the security context for child processes. The permissions checking is done at exec time rather than when
+    writing this file.</p>
+
+    <p>(<span class="fileaction">Read</span>: <span class="class">PROCESS</span>:<span class="permission">GETATTR</span>. <span class="fileaction">Write</span>: only allowed for the current process and requires <span class="class">PROCESS</span>:<span class="permission">SETEXEC</span>)</p>
+
+    <h4><tt>/proc/<i>pid</i>/attr/fscreate</tt></h4>
+
+    <p>Sets the security context for files created by the current process. The permissions checking is done at <tt>creat</tt>/<tt>open</tt> time rather than when writing this file.</p>
+
+    <p>(<span class="fileaction">Read</span>: <span class="class">PROCESS</span>:<span class="permission">GETATTR</span>. <span class="fileaction">Write</span>: only allowed for the current process and requires <span class="class">PROCESS</span>:<span class="permission">SETFSCREATE</span>)</p>
+
+    <h4><tt>/proc/<i>pid</i>/attr/keycreate</tt></h4>
+
+    <p>Sets the security context for keys created by the current process. Keys support in the kernel is documented in <tt>Documentation/keys.txt</tt>. The permissions checking is done at creation time rather than when writing this file.</p>
+
+    <p>(<span class="fileaction">Read</span>: <span class="class">PROCESS</span>:<span class="permission">GETATTR</span>. <span class="fileaction">Write</span>: only allowed for the current process and requires <span class="class">PROCESS</span>:<span class="permission">SETKEYCREATE</span>)</p>
+
+    <h4><tt>/proc/<i>pid</i>/attr/sockcreate</tt></h4>
+
+    <p>Sets the security context for sockets created by the current process. The permissions checking is done at creation time rather than when writing this file.</p>
+
+    <p>(<span class="fileaction">Read</span>: <span class="class">PROCESS</span>:<span class="permission">GETATTR</span>. <span class="fileaction">Write</span>: only allowed for the current process and requires <span class="class">PROCESS</span>:<span class="permission">SETSOCKCREATE</span>)</p>
+
+    <h2>User-space object managers</h2>
+
+    <p>Although the kernel is a large source of authority for many process, it's certainly not the only one these days.
+    An increasing amount of ambient authority is being granted via new services like <a href="http://www.freedesktop.org/wiki/Software/dbus">DBus</a> and then there's always the venerable old X server
+    which, by default, allows clients to screenshot other windows, grab the keyboard input etc.</p>
+
+    <p>The most common example of a user-space process attempting to enforce a security policy is probably a SQL
+    servers. PostgreSQL and MySQL both have a login system and an internal user namespace, permissions database etc. This
+    leads to administrators having to learn a whole separate security system, use password authentication over local
+    sockets, include passwords embedded in CGI scripts etc.</p>
+
+    <p>User-space object managers are designed to solve this issue by allowing a single policy to express the allowed
+    actions for objects which are managed outside the kernel. The NSA has published a number of papers about securing these types of
+    systems: X:    [<a href="http://www.nsa.gov/research/_files/selinux/papers/x11-abs.shtml">1</a>]
+                   [<a href="http://www.nsa.gov/research/_files/selinux/papers/xorg07-abs.shtml">2</a>],
+             DBus: [<a href="http://www.nsa.gov/research/_files/selinux/papers/gconf07-abs.shtml">1</a>]. See also the
+             <a href="http://code.google.com/p/sepgsql/">SE-PostgreSQL</a> project for details on PostgreSQL and
+             Apache.</p>
+
+    <p>In order to implement such a design a user-space process needs to be able to label its objects, query the global
+    policy and determine the security context of requests from clients. The <tt>libselinux</tt> library contains the
+    canonical functions for doing all these things, but this document is about what lies under the hood, so we'll be
+    doing it raw here.</p>
+
+    <p>The task of labeling objects is quite specific to each different object manager and this problem is discussed in
+    the above referenced papers. Labels need to be stored (probably persistently) and administrators need some way to
+    query and manipulate them. For example, in the X server, objects are often labeled with a type which derives from
+    its name ("XInput" → "<tt>input_ext_t</tt>")</p>
+
+    <p>When it comes to querying the policy database, a process could either open the policy file from disk (which we'll
+    cover later) or it could query the kernel. Querying the kernel solves a number of issues around locating the policy
+    and invalidating caches when it gets reloaded, so that's the path which the SELinux folks have taken. See the
+    section on <tt>/selinux/access</tt> for the interface for doing this.</p>
+
+    <p>In order to authenticate requests from clients, SELinux allows a process to get the security context of the other
+    end of a local socket. There are efforts underway to extend this beyond the scope of a single computer, but I'm
+    going to omit the details for brevity here.</p>
+
+    <p>I'll start with a code example of this authentication first:</p>
+
+    <pre>  <span style="font-weight: bold;">const int</span> afd = socket(PF_UNIX, SOCK_STREAM, 0);
+  assert(afd &gt;= 0);
+
+  <span style="font-weight: bold;">struct</span> sockaddr_un sun;
+  memset(&amp;sun, 0, sizeof(sun));
+  sun.sun_family = AF_UNIX;
+  strcpy(sun.sun_path, "test-socket");
+  assert(bind(afd, (<span style="font-weight: bold;">struct</span> sockaddr*) &amp;sun, sizeof(sun)) == 0);
+  assert(listen(afd, 1) == 0);
+  <span style="font-weight: bold;">const int</span> fd = accept(afd, NULL, NULL);
+  assert(fd &gt;= 0);
+
+  <span style="font-weight: bold;">char</span> buf[256];
+  socklen_t bufsize = sizeof(buf);
+  assert(getsockopt(fd, SOL_SOCKET, SO_PEERSEC, buf, &amp;bufsize) == 0);
+  printf("%s\n", buf);</pre>
+
+  <p>This code snippet will print the security context of any process which connects to it. Running it without any
+  special configuration on a Fedora 11 system (targeted policy) will result in a context of
+  <tt>unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023</tt>. Don't try running it on a socket pair however, you
+  end up with <tt>system_u:object_r:unlabeled_t:s0</tt>.</p>
+
+  <p>If you already have code which is using <tt>SCM_CREDENTIALS</tt> to authenticate peers, you can use
+  <tt>getpidcon</tt> to get a security context from a PID. Under the hood this just reads
+  <tt>/proc/<i>pid</i>/attr/context</tt>.</p>
+
+  <p>Now that we can label requests, the next part of the puzzle is getting access decisions from the kernel. As hinted at above, the
+  <tt>/selinux/access</tt> file allows this. See above for the details of the transaction format. As an example, we'll
+  see if the action <span class="class">PROCESS</span>:<span class="permission">GETATTR</span>, with a subject and
+  object of <tt>unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023</tt>, is permitted.</p>
+
+  <pre>  → unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 2 00010000
+  ← f77fffff ffffffff 0 fffafb7f 11</pre>
+
+  <p>This is telling us that it is permitted (the only bits missing are for <span class="permission">EXECHEAP</span>
+  and <span class="permission">DYNTRANSITION</span>). It also tells us the permissions which should be logged on allow
+  and deny and the sequence number of the policy state in the kernel. Note that, above, we documented an additional
+  flags field, however it's missing in this example. That's another good reason to use <tt>libselinux</tt>! The flags
+  field was only <a href="http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=8a6f83afd0c5355db6d11394a798e94950306239">recently added</a>
+  and isn't in the kernel which I'm using for these examples.</p>
+
+  <p>At this time, the astute reader will be worried about the performance impact of getting this information from the
+  kernel in such a manner. The solution is to use the same access vector cache code that the kernel uses, in user-space
+  to cache the answers from the kernel. This is another benefit which <tt>libselinux</tt> brings.</p>
+
+  <p>However, every cache brings with it problems of consistency and this is no different. All user-space object
+  managers need to know when the administrator updates the system security policy so that they can flush their AVCs.
+  This notification is achieved via a netlink socket, as demonstrated by the following snippet:</p>
+
+  <pre>  <span style="font-weight: bold;">const int</span> fd = socket(PF_NETLINK, SOCK_RAW, NETLINK_SELINUX);
+  assert(fd &gt;= 0);
+
+  <span style="font-weight: bold;">struct</span> sockaddr_nl addr;
+  int len = sizeof(addr);
+  memset(&amp;addr, 0, len);
+  addr.nl_family = AF_NETLINK;
+  addr.nl_groups = SELNL_GRP_AVC;
+  assert(bind(fd, (struct sockaddr*) &amp;ddr, len) == 0);
+
+  <span style="font-weight: bold;">struct</span> sockaddr_nl nladdr;
+  <span style="font-weight: bold;">socklen_t</span> nladdrlen;
+  <span style="font-weight: bold;">char</span> buf[1024];
+  <span style="font-weight: bold;">struct</span> nlmsghdr *nlh = (<span style="font-weight: bold;">struct</span> nlmsghdr *)buf;
+
+  <span style="font-weight: bold;">for</span> (;;) {
+    nladdrlen = <span style="font-weight: bold;">sizeof</span>(nladdr);
+    const ssize_t r = recvfrom(fd, buf, sizeof(buf), 0,
+                               (<span style="font-weight: bold;">struct</span> sockaddr*) &amp;nladdr, &amp;nladdrlen);
+    assert(r &gt;= 0);
+    assert(nladdrlen == <span style="font-weight: bold;">sizeof</span>(nladdr));
+    assert(nladdr.nl_pid == 0);
+    assert((nlh-&gt;nlmsg_flags &amp; MSG_TRUNC) == 0);
+    assert(nlh-&gt;nlmsg_len &lt;= r);
+
+    <span style="font-weight: bold;">if</span> (nlh-&gt;nlmsg_type == SELNL_MSG_SETENFORCE) {
+      <span style="font-weight: bold;">struct</span> selnl_msg_setenforce *msg = NLMSG_DATA(nlh);
+      printf("enforcing %s\n", msg-&gt;val ? "on" : "off");
+    } <span style="font-weight: bold;">else if</span> (nlh-&gt;nlmsg_type == SELNL_MSG_POLICYLOAD) {
+      <span style="font-weight: bold;">struct</span> selnl_msg_policyload *msg = NLMSG_DATA(nlh);
+      printf("policy loaded, seqno:%d\n", msg-&gt;seqno);
+    }
+  }</pre>
+
+  <p>If you toggle the enforcing mode off and on, or reload the system policy (with <tt>`semodule -R`</tt>), a message is
+  delivered to via the netlink socket. A user-space object manager can then flush its AVC etc.</p>
+
+  <p>With all the above, hopefully it's now clear how user-space object managers work. If you wish to write your own,
+  remember to read the <tt>libselinux</tt> man pages first.</p>
+
+  <h2>Reading binary policy files</h2>
+
+  <p>The system security policy is written in a text-based language which has been well documented elsewhere. These text
+  files are compiled and checked by user-space tools and converted into a binary blob that can be loaded into the
+  kernel. The binary blob is also saved on disk and can be a useful source for information.</p>
+
+  <p>The SELinux <a href="http://userspace.selinuxproject.org/trac">user-space tools</a> contain <tt>libsepol</tt> which
+  is very useful for parsing these files. Here's a snippet of example code which returns the number of users, roles and
+  types defined in a policy file:</p>
+
+  <pre>#include &lt;sepol/policydb.h&gt;
+#include &lt;sepol/policydb/policydb.h&gt;
+
+int main(int argc, char **argv) {
+  FILE* file = fopen(argv[1], "r");
+  sepol_policy_file_t* input;
+  sepol_policy_file_create(&amp;input);
+  sepol_policy_file_set_fp(input, file);
+
+  sepol_policydb_t* policy;
+  sepol_policydb_create(&amp;policy);
+  sepol_policydb_read(policy, input);
+
+  printf("users:%d roles:%d types:%d\n",
+         policy-&gt;p.p_users.nprim
+         policy-&gt;p.p_roles.nprim
+         policy-&gt;p.p_types.nprim);
+
+  return 0;
+};</pre>
+
+  <p>By looking in the <tt>sepol/policydb/policydb.h</tt> header, you can probably find whatever you are looking for.
+  Pay special heed to the comments about indexing however. Users, roles and types are indexed from 1 in some places and
+  from 0 in others.</p>
+
+  <p>With a little C code, much of the useful information can be extracted from the policy files. The numbers and graphs
+  above were generated this way, with a little help from a few Python scripts.</p>
+
+  <h2>Conclusion</h2>
+
+  <p>Hopefully we've covered some useful areas of SELinux that some people were unfamiliar with before, or at least
+  shown the inner workings of something which you already knew about.</p>
+
+  <p>If you want information about the practical aspects of administering a system with SELinux, you should start with
+  the <a href="http://fedoraproject.org/wiki/SELinux">Fedora documentation on the subject</a>. After reading this
+  document I hope that some of it is clearer now.</p>
+</div>
+
+  </div>
+
+  
+
+</body></html>

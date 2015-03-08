@@ -1,0 +1,520 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0053)http://www.unixwiz.net/techtips/chroot-practices.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="./Best Practices for UNIX chroot() Operations_files/unixwiz.css">
+<link rel="shortcut icon" href="http://www.unixwiz.net/favicon.ico">
+
+<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://unixwiz.net/techtips/techtips.rss">
+<meta name="version" content="$Id: //websites/unixwiz/unixwiz.net/webroot/techtips/chroot-practices.web#13 $">
+<!-- RSS description = application. -->
+<!-- RSS pubDate = 2002/01/18 -->
+<!-- Host: cs.unixwiz.net -->
+<style type="text/css">
+LI	{ margin-top: 8pt; }
+</style>
+<title>Best Practices for UNIX chroot() Operations</title>
+</head>
+<body>
+<div id="warning">
+  <h2>Does this site look plain?</h2>
+  <p>This site uses advanced css techniques</p>
+</div>
+<div id="logo">
+ <a href="http://www.unixwiz.net/">
+  <img src="./Best Practices for UNIX chroot() Operations_files/unixwiz-logo-140x80.gif" alt="[Steve Friedl Logo]">
+ </a>
+</div>
+<div id="pageheader">
+<h1> Steve Friedl's Unixwiz.net Tech Tips </h1>
+<h2> Best Practices for UNIX chroot() Operations </h2>
+</div>
+<div id="navmenu">
+  <ul>
+<li><a href="http://www.unixwiz.net/"> Home </a> </li>
+<li><a href="http://www.unixwiz.net/contact"> Contact </a> </li>
+<li><a href="http://www.unixwiz.net/about/"> About </a> </li>
+<li><a href="http://www.unixwiz.net/techtips/"> TechTips </a> </li>
+<li><a href="http://www.unixwiz.net/tools/"> Tools&amp;Source </a> </li>
+<li><a href="http://www.unixwiz.net/evo/"> Evo Payroll </a> </li>
+<li><a href="http://www.unixwiz.net/research/"> Research </a> </li>
+<li><a href="http://www.unixwiz.net/3b2.html"> AT&amp;T 3B2 </a> </li>
+<li><a href="http://www.unixwiz.net/advisories.html"> Advisories </a> </li>
+<li><a href="http://www.unixwiz.net/news.html"> News/Pubs </a> </li>
+<li><a href="http://www.unixwiz.net/literacy.html"> Literacy </a> </li>
+<li><a href="http://www.unixwiz.net/voting/"> Calif.Voting </a> </li>
+<li><a href="http://www.unixwiz.net/personal/"> Personal </a> </li>
+<li><a href="http://blog.unixwiz.net/"> Tech Blog </a> </li>
+<li><a href="http://smokeblog.unixwiz.net/"> SmokeBlog </a> </li>
+</ul>
+</div>
+<div id="pagecontent">
+
+<p>
+Systems exposed to the internet are heavily challenged to keep the bad
+guys out, and keeping up with the latest security patches is not always
+easy. So, the wise admin will attempt to institute <b>systemic</b> steps
+to limit the damage should a compromise occur, and one excellent
+method is the use of a <b>chroot()</b> jail.
+</p>
+
+<div id="toc">
+<center> Table of Contents </center>
+<ul>
+<li> <a href="http://www.unixwiz.net/techtips/chroot-practices.html#bg"> Background </a> </li>
+<li> <a href="http://www.unixwiz.net/techtips/chroot-practices.html#brkout"> Breaking out of Jail </a> </li>
+<li> <a href="http://www.unixwiz.net/techtips/chroot-practices.html#princ"> General principles </a> </li>
+<li> <a href="http://www.unixwiz.net/techtips/chroot-practices.html#refs"> Other References </a> </li>
+</ul>
+</div>
+
+<p>
+A chroot jail presents a dramatically restricted view of the filesystem to an
+application, and usually far fewer system privileges, and this all intends
+to limit the damage should the application go awry or be subverted by the
+bad guy.
+</p>
+
+<p>
+This document touches on how chroot works and discusses some best
+practices that developers and administrators can use to make their
+installations more secure.
+</p>
+
+<br clear="all">
+
+<h1 id="bg">Background on chroot</h1>
+
+<p>
+The <tt>chroot</tt> system call <b>ch</b>anges the <b>root</b> directory
+of the current and all child processes to the given path, and this is
+nearly always some restricted subdirectory below the real root of the
+filesystem. This new path is seen entirely as "<b>/</b>" by the process,
+and we refer to this restricted environment as the "jail". It's not
+possible to escape this jail except in very limited circumstances.
+</p>
+
+<p>
+The <tt>chroot</tt> system call is found in all versions of UNIX that
+we know of, and it serves to create a temporary root directory for
+a running process, and it's a way of taking a limited hierarchy
+of a filesystem (say, <tt>/chroot/named</tt>) and making this the
+top of the directory tree as seen by the application.
+</p>
+
+<h1 id="brkout">How to break out of jail</h1>
+
+<p>
+There are well-known techniques used to escape from jail, but the most
+common one requires root privileges inside the jail. The idea is for the
+program to do a chroot to a subdirectory, leaving the <b>current</b>
+directory <i>outside the jail</i>.
+</p>
+
+<p>
+We'll add more notes on ways to break out of a jail - which is meant
+more to show what must be protected against than it is as a how-to
+for jailbreakers -- but we've found a good article on chroot in general
+<a href="http://www.bpfh.net/simes/computing/chroot-break.html">here</a>.
+</p>
+
+<ul>
+<li> Use <b>mknod</b> to create a raw disk device, thereby doing
+pretty much anything you like to the system.</li>
+
+<li> Use <b>mknod</b> to create <b>/dev/mem</b> and modify kernel memory </li>
+
+<li> Find a carelessly-left hard link that leads outside the
+jail (though <b>symbolic</b> links don't escape jail, <b>hard</b>
+links do).</li>
+
+<li> Use <b>ptrace</b> to trace a process living outside the jail.
+We may be able to modify this program to do our bad stuff on our behalf.</li>
+</ul>
+
+<p>
+Almost all jail breaking requires root privileges.
+</p>
+
+<h1 id="princ">General chroot principles</h1>
+
+<p>
+We have presented these in no particular order, and no one site will
+use them all. In particular, some tips apply to developers at the source
+code level, while others apply to administrators trying to jail an
+existing system.
+</p>
+
+<p>
+Many of these points may end up being overly petty in practice, in
+that there are only so many layers of defense that a workable system
+can use, but we'll present all we can think of and let you pick and
+choose. An overriding principle is "What if the bad guy somehow does
+X? How can we limit our exposure".
+</p>
+
+<p>
+Our general concern is mostly about remote buffer overflows, and
+this can give the bad guy complete control over our CPU: all our
+steps are designed to limit the damage should this unfortunate
+circumstance arise.
+</p>
+
+<dl class="defnlist">
+<dt> Run in the jail as a non-root user </dt>
+<dd>
+A chroot jail is <u>not</u>
+impervious to escape, but it not easy and requires root permission in
+the jail itself, so we must take steps to limit this possibility. By
+running the jail as a non-root user, it's as secure as we know how to
+make it. It may be necessary for the daemon to launch as root in order
+to do a few tasks that require these permissions (say, binding to a
+low-numbered port), but the program must "give up" its root permissions
+after doing so.
+</dd>
+
+<dd>
+We believe that this single factor is the most important one
+in setting up a jail properly.
+</dd>
+
+<dt> "Give up" permissions correctly </dt>
+<dd>
+We've seen situations where
+on some operating systems, a program can jump back and forth between
+a non-root user and root by use of a "saved" uid, and this has been
+exploited by the bad guy who get root.
+</dd>
+
+<dd>
+The details of how to do this correctly are <b>much</b> more tricky when
+OS differences are taken into account: the variants are <b>setresuid()</b>
+<b>seteuid()</b>, <b>setreuid()</b>, and <b>setuid()</b> — it's likely
+that this does not exhaust the options. The right one depends on the OS
+you're running.
+</dd>
+
+<dd>
+The best resource <b>by far</b> we've found on this is the outstanding
+Usenix 2002 paper <a href="http://www.cs.berkeley.edu/~daw/papers/setuid-usenix02.pdf">Setuid Demystified</a>,
+by Hao Chen, David Wagner, and Drew Dean: it is precisely on point, and we'll
+direct the reader to section 5.2 "Comparison among Uid-setting System Calls".
+</dd>
+
+<dt> Explicitly chdir into the jail </dt>
+<dd> The chroot call itself does not change the working directory, so if
+the new root is <i>below</i> the current directory, the application can
+still have access outside resources.
+</dd>
+
+<dd>
+The application should <i>explicitly</i> change to a directory within the
+jail before running chroot:
+</dd>
+
+<dd>
+<pre class="codeblock">...
+<b>chdir(<i>dir</i>);</b>
+<b>chroot(<i>dir</i>);</b>
+<b>setXXuid(<i>nonroot</i>);</b>      // give up root permissions correctly.
+...
+</pre>
+</dd>
+
+<dd>
+This closes a trivial escape route from the jail (but we'll note that you
+<b>must</b> use the proper setuid-esqe calls as noted in the previous item).
+</dd>
+
+<dt> Keep as little in the jail as possible</dt>
+<dd> This limits what
+can be compromised should a vulnerability be discovered. Often this
+requires development support to do some "preloading" of non-jailed
+files before the chroot operation itself is performed (we'll touch
+on this a bit more later). But we're quite ruthless in removing things
+from the jail when possible.
+</dd>
+
+<dt> Limit non-jail running of jailed binaries </dt>
+<dd> For systems that
+do not have a command-line option for running chroot, the only alternative
+is to create a wrapper program. This wrapper will perform the key chroot
+operation, give up root permission, and then execute the jailed binary.
+</dd>
+
+<dd>
+The wrapper must be run as root (only chroot can perform this
+operation), but the wrapper itself must not be found in the jail.
+Otherwise an intruder could quietly compromise the wrapper, and
+the next time the system is launched, the intruder's program would
+be run as root in a non-jailed environment. This is complete
+compromise.
+</dd>
+
+<dt> Have root own as many jailed files as possible</dt>
+<dd> This limits the
+ability of the intruder to make changes should a compromise occur.
+Our feeling is that the most likely cause of penetration will be
+the buffer overflow exploit in which the intruder executes arbitrary
+code in environment, and for files that the jailed system need not
+ever write to, making them readonly <u>and owned by root</u> means that
+the penetration can't <tt>chmod</tt> the file before writing to it. This
+rule applies to directories as well.
+</dd>
+
+<dt> Drastically limit all permissions of files and directories</dt>
+<dd> Our
+feeling is that if a permission bit is not required, it should not
+be set. For instance, the jailed "<tt>/dev/</tt>" directory should be of
+mode    <tt>d--x--x--x</tt>   with owner = root. Even though the only thing
+in the directory is <tt>/dev/null</tt>, forbidding searching of a directory
+strikes us as prudent practice across the board when it's known to work.
+</dd>
+
+<dt> Create a permissions-setting script </dt>
+<dd> When first setting
+up the jail, many of the permission-related knobs are tweaked by hand
+as we gradually tighten things up, looking for things to break (at
+which point the knob is eased back a bit). This research is intricate,
+and the knowledge gained really ought to be represented in <i>source code</i>
+somewhere.
+</dd>
+<dd>
+We typically create a small shell script — living <i>outside</i> the jail
+— that sets the owner, group, and permissions mode on every file in the
+jailed environment. It always starts with a few recursive change-everything
+options to hardcode everything to very tight permissions, then relaxes
+the settings on the files that can tolerate this. It's important to include
+documentation in the script on <b>why</b> particular permissions are relaxed,
+as well as describing why certain files are found in the jail in the first
+place.
+</dd>
+
+<dd>
+Once this script is created, we typically make <em>all</em> of our
+permissions-related changed here and then re-run the script to
+make them take effect. This is the only way that we can be sure
+that our script matches the running environment.
+A great side benefit of the permission script is that it serves as
+documentation to the next person setting up a similar environment.
+</dd>
+
+<dd>
+A sample permission script that we use for one of our projects
+(running BIND in a chroot jail). The specific details aren't
+really important, but this gives an idea
+</dd>
+
+<dd>
+<pre class="codeblock">cd /chroot/named
+
+# by default, root owns /everything/ and only root can write
+# but directories have to be executable too.
+
+chown -R root.named .
+
+find .         -print | xargs chmod u=rw,og=r      # *all* files
+find . -type d -print | xargs chmod u=rwx,og=rx    # directories
+
+# the "secondaries" directory is where we park files from
+# master nameservers, and named needs to be able to update
+# these files and create new ones.
+
+find conf/secondaries -type f -print | xargs chown named.named
+find conf/secondaries -type f -print | xargs chmod ug=r,o=
+chown root.named conf/secondaries
+chmod ug=rwx,o=   conf/secondaries
+
+# the var/run business is for the PID file
+chown root.root  var
+chmod u=rwx,og=x var
+
+chown root.named  var/run
+chmod ug=rwx,o=rx var/run
+</pre>
+</dd>
+
+<dt> Try to do the <tt>chroot</tt> operation <i>inside</i> the daemon itself </dt>
+<dd> ... rather than rely on the explicit <tt>chroot</tt> command (this requires
+source code modifications). A daemon that has its own internal chroot
+can often park the executable located <b>outside</b> the jail: this is a big
+win because an intruder is not able to ever infect the binary directly.
+</dd>
+
+<dd>
+But the more immediate benefit is that shared libraries and other startup
+files can be automatically loaded from the full system and need not be
+located inside the jail. This not only makes the system safer — less
+exposure to the outside — but also makes it easier to set up.
+</dd>
+
+<dd>
+In many cases, even configuration files can be loaded from outside the
+jail, though this won't usually work if the daemon includes any kind of
+"reread config files" option.
+</dd>
+
+<dt> Preload dynamically loaded objects </dt>
+<dd>
+For developers adding chroot
+support to programs, consider operations that require access to full-system
+resources and perform them before closing the jail door. These steps are
+often not entirely obvious at first and require some trial and error,
+but we've found several that qualify.
+</dd>
+
+<dd>
+Many systems load nameservice resolver clients dynamically at runtime,
+and they are <b>not</b> included in the shared objects bound to the executables.
+We have found that simply calling <tt>gethostbyname</tt> one time before the
+jail door is closed will load all the appropriate libraries required, so
+that later nameservice requests are handled properly:
+</dd>
+
+<dd>
+<pre class="codeblock">(void) gethostbyname("localhost");
+</pre>
+</dd>
+
+<dd>
+We believe that syslogging operations fall in this category too, as many
+systems uses UNIX domain sockets for this and require access to the socket
+that <tt>syslogd</tt> is listening on. We've not done the modifications required
+for syslog support and cannot offer any specific suggestions. We believe
+that Solaris -- with its use of "doors" -- is an added complication.
+</dd>
+
+<dd>
+For daemons that permit cmdline parameters to select the runtime users
+and group (after giving up root), the mapping of name to UID and GID must
+be done before the <tt>chroot</tt> operation so that the system-wide <tt>/etc/passwd</tt>
+and related files are used, <b>not</b> the one inside the jail. See the
+next section for the rationale.
+</dd>
+
+<dd>
+This bit of C code shows the idea of how the user lookup should be performed
+separately from the user ID changing:
+</dd>
+
+<dd>
+<pre class="codeblock">if ( geteuid() == 0 )
+{
+struct passwd *userent = 0;
+
+    if ( (run_as_user != 0) &amp;&amp; (userent = getpwnam(run_as_user)) == 0 )
+    {
+        /* ERROR */
+    }
+
+    chroot( working_dir );
+
+    if ( userent )
+        setXXuid(userent);    // use the proper call!
+
+    ...
+</pre>
+</dd>
+
+<dt>Avoid using the jailed <tt>/etc/passwd</tt> file</dt>
+<dd> ...particularly for
+name to UID mapping used to determine the runtime user ID of the daemon.
+The mapping involves scanning the <tt>passwd</tt> file for the given name
+(say, <tt>named</tt>) and finding the user ID associated with it.  If the
+bad guy somehow manages to compromise the jailed <tt>passwd</tt> file, it's
+possible that the UID for the runtime user could be changed to <b>zero</b>,
+which is root. This will take effect the next time the daemon restarts.
+</dd>
+
+<dd>
+The bad guy shouldn't be able to compromise this file in the first place,
+because it should not be writable by the running user, but it's not out
+of the question that the daemon could somehow retain a writable file
+descriptor that the buffer overflow could use to modify the file: we
+believe we have seen this happen before. As is so common, a bug in one
+area of the system can have surprising impacts on security.
+</dd>
+
+<dt> Close file descriptors aggressively before chrooting </dt>
+<dd> We don't
+wish to leave handles open to non-jailed resources because these can all
+be exploited by those living inside the jail. Some file descriptors are
+required (day, to the syslog daemon), but developers should make a point
+to close <i>anything</i> that is not strictly required.
+</dd>
+
+<dt> Link config files from the outside </dt>
+<dd>
+Some systems (such as BIND)
+share the configuration file between the jailed daemon and other utilities
+that are run from user mode. In this case, the config file simply must
+live inside the jail so that the daemon can access it, but the other utils
+from user mode still need to access this file. Rather than rebuild these
+utilities to use the special path (say, <tt>/chroot/named/etc/named.conf</tt>),
+instead go to the "regular" place for this file and create a symbolic
+link from the outside to the inside of the jail:
+</dd>
+
+<dd>
+<pre class="codeblock"># <b>ln -s /chroot/named/etc/named.conf /etc/named.conf</b>
+</pre>
+</dd>
+
+<dd>
+This allows most of the tools to operate "normally", though one has
+to be a little more careful that users editing <tt>/etc/named.conf</tt>
+realize that they're affecting a jailed system.
+</dd>
+
+<dd>
+This doesn't go the "other" direction, though it's not always obvious
+at first. Symbolic links from inside the jail to the outside <b>will</b>
+work for the administrator but <b>will not</b> work for the system running
+inside the jail.
+</dd>
+
+</dl>
+
+<h1 id="refs">Other Resources</h1>
+
+<ul>
+<li>
+<a href="http://www.bpfh.net/simes/computing/chroot-break.html">How to break
+out of a chroot jail()</a>
+<a href="http://www.unixwiz.net/techtips/mirror/chroot-break.html" class="mirror">M</a>
+ — great demonstration on why one must
+be careful
+</li>
+<li>
+<a href="http://www.cs.berkeley.edu/~daw/papers/setuid-usenix02.pdf">Setuid Demystified</a>
+<a href="http://www.unixwiz.net/techtips/mirror/setuid-usenix02.pdf" class="mirror">M</a>,
+— what a fantastic work on this subject
+</li>
+</ul>
+
+<hr>
+
+<div id="navmore">
+  <a href="http://www.unixwiz.net/techtips/index.html"> More Tech Tips </a>
+</div>
+
+</div>
+<div id="pagefooter">
+  <span class="bottomright"> </span>
+  <div class="pagefootercontent">
+    <a href="http://www.unixwiz.net/"> Home </a>
+	<span class="divbrick"> &nbsp; </span> 
+    <a href="http://www.unixwiz.net/contact.html">Stephen J. Friedl</a>
+    <span class="divbrick"> &nbsp;</span>
+    Software Consultant
+    <span class="divbrick"> &nbsp;</span>
+    Orange County, CA USA
+    <span class="divbrick"> &nbsp;</span>
+    <img src="./Best Practices for UNIX chroot() Operations_files/steve-email.gif" alt="[Steve&#39;s Email]">
+<span class="divbrick"> &nbsp; </span>
+  <a href="http://unixwiz.net/techtips/techtips.rss">
+    <img src="./Best Practices for UNIX chroot() Operations_files/feed-icon-14x14.png" alt="[RSS Feed available]" width="14" height="14" border="0">
+  </a>
+  </div>
+</div>
+
+</body></html>

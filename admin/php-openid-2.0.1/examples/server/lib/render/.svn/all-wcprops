@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/examples/server/lib/render
+END
+trust.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/examples/server/lib/render/trust.php
+END
+login.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/examples/server/lib/render/login.php
+END
+idpage.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/examples/server/lib/render/idpage.php
+END
+about.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/examples/server/lib/render/about.php
+END
+idpXrds.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/examples/server/lib/render/idpXrds.php
+END
+userXrds.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/examples/server/lib/render/userXrds.php
+END

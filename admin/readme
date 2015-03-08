@@ -1,0 +1,112 @@
+0.packages  requirements
+$sudo apt-get install apache2
+$sudo apt-get install php5
+$sudo apt-get install libapache2-mod-php5
+
+$ sudo apt-get install blitz++
+$ sudo apt-get install libboost-dev
+$ sudo apt-get install loki
+$ sudo apt-get install lua5.1
+$ sudo apt-get install ghc6  
+$ sudo apt-get install swi-prolog
+$ sudo apt-get install openjdk-6-jdk
+
+/////////////////////////////////////////////
+Install Google go lang .  2011.06.12
+http://golang.org/doc/install.html
+$ sudo apt-get install mercurial
+$ cd ~
+$ hg clone -u release https://go.googlecode.com/hg/ go
+$ cd go/src
+$ ./all.bash
+$ export PATH=~/go/bin:$PATH   to your ~/.bash_profile.
+$ cp -rf ~/go/ /var/www/
+
+/////////////////////////////////////////////
+
+1.log file just store in the sqlite datebase ,
+#sudo apt-get install php5-sqlite ,can auto-configure 
+the php5 and the sqlite .
+
+#php -m
+SQLite  exist!!!
+
+2.
+Installing PHP5 and Apache on Ubuntu9.10
+
+If you are doing any kind of PHP development, you’ll almost always be using Apache along with it. Here’s the quick and easy way to get PHP up and running on your Ubuntu box.
+First, you’ll want to add the extra repositories to Ubuntu’s sources.list file.
+From a command shell, you will run the following commands:
+sudo apt-get install apache2
+sudo apt-get install php5
+sudo apt-get install libapache2-mod-php5
+sudo /etc/init.d/apache2 restart
+Note that if apache is already installed you can omit the first line. Your web files will now be found in /var/www/
+
+then 
+$sudo chown  www-data www/    #Let the others group can access the www/,mainly the apache2 ,
+and have the read and write permission. by alex 2011.03.07 test on ubuntu 10.10
+get the direction Permissions!
+copy the project to the file 
+
+If you make /var/www writeable by its group and add the user to the group, that user will not have to use sudo. Try this: 
+sudo adduser <username> www-data
+sudo chown -R www-data:www-data /var/www
+sudo chmod -R g+rw /var/www
+
+3.auto start !
+#sudo cp onlinecompiler /usr/local/bin
+then put onlinecompiler in the starting stript.
+
+4.protect ways
+   1.set the admin folder readonly!
+   2.add a user (compiler) ,then su compiler ,start the onlinecompiler stript.
+   
+   
+5.strace the process 
+$ps ax |grep compiler
+2177 ?        S      0:04 ./compiler
+then 
+$strace -F -f -p 2177 
+this would be strace the process system calls .
+
+6.process memory usage
+a process's memory contains (VIRT SWAP RES  SHR CODE DATA)
+VIRT = SWAP + RES. virtual memory  usageThe total amount of virtual memory used by the task. It includes all code, data and shared libraries plus pages that have been swapped out.
+SWAP -- Swapped size   The swapped out portion of a task's total virtual memory image.
+RES：resident memory usage  The non-swapped physical memory a task has used.
+RES = CODE + DATA.
+CODE -- Code size  The amount of physical memory devoted to executable code, also known as the 'text resident set' size or TRS.
+DATA：Data+Stack size  The amount of physical memory devoted to other than executable code, also known as the 'data resident set' size or DRS.
+SHR：shared memory  The amount of shared memory used by a task. It simply reflects memory that could be potentially shared with other processes.
+
+tools:
+pstree  
+ps  aux     
+top 
+pmap -X pid  
+cat /proc/1234/smaps
+/proc/[pid]/statm
+Valgrind 
+
+
+
+
+#################################
+2011.04.02
+After r32  ,the process module changes.
+compiler the compiler_module.
+cd /var/www
+g++ -o compiler_module compiler/compile.cpp compiler/handlewrong.cpp
+
+Php use the compiler_module to process the request concurrency,the session used as the unique mark to differentiate requests.
+
+some tasks i need to do!
+* During the same session ,if it will many requests ,it will cause problems.So design sequence process module to deal the same session.
+* When interpret the code like python ,handle the time_out(),kill the python thread, so when many python requests ,so this  strategy will 
+be weak.So use the 
+int getrlimit(int resource, struct rlimit *rlim);
+int setrlimit(int resource, const struct rlimit *rlim);
+deal with it.
+* Design the request mode to ajax model, generate the web app api ,to move forward a single step just a cloud computing app.
+#################################

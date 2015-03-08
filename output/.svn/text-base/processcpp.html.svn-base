@@ -1,0 +1,24 @@
+<html>
+<head>
+
+<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+<script type="text/javascript">
+<!--
+function delayer(){
+    window.location = "/output/?filetype=cpp"
+}
+//-->
+</script>
+<style type="text/css">
+body {background-image:url('/images/cpp.jpeg');
+background-repeat:no-repeat;
+background-color:#d0e4fe;
+background-position:center center;
+height:100%;                 <!--to handle the firefox position show problems! ,-->
+}
+</style>
+</head>
+<body onLoad="setTimeout('delayer()', 750)">
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+Feedback Tab
+
+Collect and prioritize product-specific customer feedback by adding a feedback tab to any (or every) page of your site.
+
+Features:
+Customizable tab opens into a feedback collection widget when clicked
+Widget fades away when not active
+Each piece of customer feedback becomes a fully actionable topic
+Allows customers to join in and cast their vote to prioritize the collection of ideas, questions, problems, or praise
+Option for customers to post private feedback (which is then sent directly to you via email)
+Includes latent collection of relevant data, including user browser and OS.
+
+
+http://getsatisfaction.com/alexzhang/admin/widgets
+a good tool ,widget for websit ,use it for comments,ideas ,feedback !
+i just in the getsatisfaction sign on alexzhang ,like a community, 
+then get own feedback widgets ,that's cool;
+http://getsatisfaction.com/alexzhang           home page of the widget!
+This is your space, dedicated to open conversation between customers and employees. It can be used in different ways -- to share great ideas, solve problems, and answer questions that will help everyone.
+
+usename :alexzhang
+password :*********
+
+<script type="text/javascript" charset="utf-8">
+  var is_ssl = ("https:" == document.location.protocol);
+  var asset_host = is_ssl ? "https://s3.amazonaws.com/getsatisfaction.com/" : "http://s3.amazonaws.com/getsatisfaction.com/";
+  document.write(unescape("%3Cscript src='" + asset_host + "javascripts/feedback-v2.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+<script type="text/javascript" charset="utf-8">
+  var feedback_widget_options = {};
+
+  feedback_widget_options.display = "overlay";  
+  feedback_widget_options.company = "alexzhang";
+  feedback_widget_options.placement = "right";
+  feedback_widget_options.color = "#222";
+  feedback_widget_options.style = "idea";
+  
+  
+  
+  
+  
+  
+
+  var feedback_widget = new GSFN.feedback_widget(feedback_widget_options);
+</script>

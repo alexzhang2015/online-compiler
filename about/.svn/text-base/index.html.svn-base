@@ -1,0 +1,1017 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"> 
+<html> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+<title>About Online Compiler!</title> 
+</head>
+<body text="#000000" bgcolor="#FFFFFF" topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0" marginheight="0" marginwidth="0" onLoad="document.textform.text.focus();doWarn=1;">
+ <table width="100%" cellpadding="0" cellspacing="0" style="border-bottom: 1px solid #ccc; margin: 0; width: 100%; padding: 8px 8px 4px 8px;"><tr> 
+        <td style="text-align: left"> 
+        <span class="logo"><a href="/"><img src="/images/cooltext443682926.png" alt="Logo"></a></span> 
+        
+        </td> 
+        <td style="text-align: right"> 
+        <nobr> 
+          
+        
+        <span class="menu">
+        <font size="6" face="Times" color="green">
+	 
+	
+        <a href="/about">about</a> </font>
+        </span> 
+        </nobr> 
+        </td> 
+        <div style="margin: 8px 8px 8px 8px"> 
+ </table>
+ <table>
+        <div class="section"> 
+	<span class="heading"><b>Compiler and interpreter versions</b></span><br/> 
+	Here are the compilers and interpreters  uses to execute code:
+ 
+	<div style="margin-left:2em"> 
+	<p> 
+	<b>C</b>: gcc 4.4.1 <br/> 
+	flags: <tt>-O -fmessage-length=0 -fno-merge-constants -fstrict-aliasing -fstack-protector-all</tt> 
+	<p> 
+	<b>C++</b>: g++ 4.4.1 <br/> 
+	flags: <tt>-O -std=c++98 -pedantic-errors  -Werror -Wall -Wextra -Wno-missing-field-initializers -Wwrite-strings -Wno-deprecated -	Wno-unused -Wno-non-virtual-dtor -Wno-variadic-macros -fmessage-length=0 -ftemplate-depth-128 -fno-merge-constants -fno-nonansi-builtins -fno-		gnu-keywords -fno-elide-constructors -fstrict-aliasing -fstack-protector-all -Winvalid-pch</tt> 
+	<br/><br/>
+	<b>library</b>: support following libraries <br/> 
+	Openmp!  Boost!   Blitz++!  Loki!<br/>
+	<p> 
+	<p> 
+	<b>Java</b>: OpenJDK 1.6.0_20 <br/> 
+	<p>
+	<b>Python</b>:Python 2.6.4
+	<p>
+	<b>Haskell</b>:Glasgow Haskell Compiler Version 6.10.4 <br/>
+	<p>
+	<b>Prolog</b>:SWI-Prolog version 5.6.64  <br/>
+	<p> 
+	<b>Lua</b>:Lua 5.1.4 <br/>
+	<p> 
+	<b>Google Go</b>:8g version release.r57.1 8294 <br/>
+	
+</tables>
+<table>	
+	<div class="section"> 
+	<span class="heading"><b>samples!</b></span><br/> 
+	Here are some simple codes :
+ <br><br>
+	
+C++ helloworld! 
+ 
+<pre class="heading"><style type='text/css'><!--/**
+ * GeSHi (C) 2004 - 2007 Nigel McNie, 2007 - 2008 Benny Baumann
+ * (http://qbnz.com/highlighter/ and http://geshi.org/)
+ */
+.c  {font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;}
+.c a:link {color: #000060;}
+.c a:hover {background-color: #f0f000;}
+.c .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.c .imp {font-weight: bold; color: red;}
+.c .kw1 {color: #b1b100;}
+.c .kw2 {color: #000000; font-weight: bold;}
+.c .kw3 {color: #000066;}
+.c .kw4 {color: #993333;}
+.c .co1 {color: #666666; font-style: italic;}
+.c .co2 {color: #339933;}
+.c .coMULTI {color: #808080; font-style: italic;}
+.c .es0 {color: #000099; font-weight: bold;}
+.c .es1 {color: #000099; font-weight: bold;}
+.c .es2 {color: #660099; font-weight: bold;}
+.c .es3 {color: #660099; font-weight: bold;}
+.c .es4 {color: #660099; font-weight: bold;}
+.c .es5 {color: #006699; font-weight: bold;}
+.c .br0 {color: #009900;}
+.c .sy0 {color: #339933;}
+.c .st0 {color: #ff0000;}
+.c .nu0 {color: #0000dd;}
+.c .nu6 {color: #208080;}
+.c .nu8 {color: #208080;}
+.c .nu12 {color: #208080;}
+.c .nu16 {color:#800080;}
+.c .nu17 {color:#800080;}
+.c .nu18 {color:#800080;}
+.c .nu19 {color:#800080;}
+.c .me1 {color: #202020;}
+.c .me2 {color: #202020;}
+.c span.xtra { display:block; }
+--></style><table class="c" style="font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;"><tbody><tr class="li1"><td class="ln"><pre class="de1">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="de1"><pre class="de1"><span class="co2">#include &lt;iostream&gt;</span> 
+using namespace std<span class="sy0">;</span> 
+<span class="kw4">int</span> main<span class="br0">&#40;</span><span class="br0">&#41;</span> 
+<span class="br0">&#123;</span> 
+&nbsp; cout<span class="sy0">&lt;&lt;</span> <span class="st0">&quot;Hello World!&quot;</span> <span class="sy0">&lt;&lt;</span> endl<span class="sy0">;</span> 
+&nbsp; cout<span class="sy0">&lt;&lt;</span> <span class="st0">&quot;Welcome to C++ Programming&quot;</span> <span class="sy0">&lt;&lt;</span> endl<span class="sy0">;</span> 
+&nbsp; <span class="kw1">return</span> <span class="nu0">0</span><span class="sy0">;</span> 
+<span class="br0">&#125;</span> &nbsp; &nbsp; &nbsp; &nbsp;</pre></td></tr></tbody></table></pre> 
+		 	 
+
+<br><br>
+C helloworld!
+<pre class="heading"><style type='text/css'><!--/**
+ * GeSHi (C) 2004 - 2007 Nigel McNie, 2007 - 2008 Benny Baumann
+ * (http://qbnz.com/highlighter/ and http://geshi.org/)
+ */
+.c  {font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;}
+.c a:link {color: #000060;}
+.c a:hover {background-color: #f0f000;}
+.c .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.c .imp {font-weight: bold; color: red;}
+.c .kw1 {color: #b1b100;}
+.c .kw2 {color: #000000; font-weight: bold;}
+.c .kw3 {color: #000066;}
+.c .kw4 {color: #993333;}
+.c .co1 {color: #666666; font-style: italic;}
+.c .co2 {color: #339933;}
+.c .coMULTI {color: #808080; font-style: italic;}
+.c .es0 {color: #000099; font-weight: bold;}
+.c .es1 {color: #000099; font-weight: bold;}
+.c .es2 {color: #660099; font-weight: bold;}
+.c .es3 {color: #660099; font-weight: bold;}
+.c .es4 {color: #660099; font-weight: bold;}
+.c .es5 {color: #006699; font-weight: bold;}
+.c .br0 {color: #009900;}
+.c .sy0 {color: #339933;}
+.c .st0 {color: #ff0000;}
+.c .nu0 {color: #0000dd;}
+.c .nu6 {color: #208080;}
+.c .nu8 {color: #208080;}
+.c .nu12 {color: #208080;}
+.c .nu16 {color:#800080;}
+.c .nu17 {color:#800080;}
+.c .nu18 {color:#800080;}
+.c .nu19 {color:#800080;}
+.c .me1 {color: #202020;}
+.c .me2 {color: #202020;}
+.c span.xtra { display:block; }
+--></style><table class="c" style="font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;"><tbody><tr class="li1"><td class="ln"><pre class="de1">1
+2
+3
+4
+5
+6
+</pre></td><td class="de1"><pre class="de1"><span class="co2">#include &lt;stdio.h&gt;</span> 
+<span class="kw4">int</span> main<span class="br0">&#40;</span><span class="br0">&#41;</span> 
+<span class="br0">&#123;</span> 
+&nbsp; <a href="http://www.opengroup.org/onlinepubs/009695399/functions/printf.html"><span class="kw3">printf</span></a> &nbsp;<span class="br0">&#40;</span><span class="st0">&quot;hello world<span class="es1">\n</span>&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span> 
+<span class="kw1">return</span> <span class="nu0">0</span><span class="sy0">;</span> 
+<span class="br0">&#125;</span> &nbsp; </pre></td></tr></tbody></table></pre> 
+				 
+
+
+
+<br><br>
+your own input data!
+<pre class="source"><style type='text/css'><!--/**
+ * GeSHi (C) 2004 - 2007 Nigel McNie, 2007 - 2008 Benny Baumann
+ * (http://qbnz.com/highlighter/ and http://geshi.org/)
+ */
+.cpp  {font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;}
+.cpp a:link {color: #000060;}
+.cpp a:hover {background-color: #f0f000;}
+.cpp .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.cpp .imp {font-weight: bold; color: red;}
+.cpp .kw1 {color: #0000ff;}
+.cpp .kw2 {color: #0000ff;}
+.cpp .kw3 {color: #0000dd;}
+.cpp .kw4 {color: #0000ff;}
+.cpp .co1 {color: #666666;}
+.cpp .co2 {color: #339900;}
+.cpp .coMULTI {color: #ff0000; font-style: italic;}
+.cpp .es0 {color: #000099; font-weight: bold;}
+.cpp .es1 {color: #000099; font-weight: bold;}
+.cpp .es2 {color: #660099; font-weight: bold;}
+.cpp .es3 {color: #660099; font-weight: bold;}
+.cpp .es4 {color: #660099; font-weight: bold;}
+.cpp .es5 {color: #006699; font-weight: bold;}
+.cpp .br0 {color: #008000;}
+.cpp .sy0 {color: #008000;}
+.cpp .sy1 {color: #000080;}
+.cpp .sy2 {color: #000040;}
+.cpp .sy3 {color: #000040;}
+.cpp .sy4 {color: #008080;}
+.cpp .st0 {color: #FF0000;}
+.cpp .nu0 {color: #0000dd;}
+.cpp .nu6 {color: #208080;}
+.cpp .nu8 {color: #208080;}
+.cpp .nu12 {color: #208080;}
+.cpp .nu16 {color:#800080;}
+.cpp .nu17 {color:#800080;}
+.cpp .nu18 {color:#800080;}
+.cpp .nu19 {color:#800080;}
+.cpp .me1 {color: #007788;}
+.cpp .me2 {color: #007788;}
+.cpp span.xtra { display:block; }
+--></style><table class="cpp" style="font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;"><tbody><tr class="li1"><td class="ln"><pre class="de1">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="de1"><pre class="de1"><span class="co2">#include &lt;iostream&gt;</span> 
+<span class="kw2">using</span> <span class="kw2">namespace</span> std<span class="sy4">;</span> 
+<span class="kw4">int</span> main<span class="br0">&#40;</span><span class="kw4">void</span><span class="br0">&#41;</span> 
+<span class="br0">&#123;</span> 
+<span class="kw4">int</span> number<span class="sy4">;</span> 
+<span class="kw3">cout</span><span class="sy1">&lt;&lt;</span><span class="st0">&quot;Please enter a &nbsp; number !&quot;</span><span class="sy1">&lt;&lt;</span>endl<span class="sy4">;</span> 
+<span class="kw3">cin</span><span class="sy1">&gt;&gt;</span>number<span class="sy4">;</span> 
+<span class="kw3">cout</span><span class="sy1">&lt;&lt;</span><span class="st0">&quot;the number is:&quot;</span><span class="sy1">&lt;&lt;</span>number<span class="sy1">&lt;&lt;</span>endl<span class="sy4">;</span> 
+<span class="kw1">return</span> <span class="nu0">0</span><span class="sy4">;</span> 
+<span class="br0">&#125;</span> &nbsp; &nbsp; &nbsp; &nbsp;</pre></td></tr></tbody></table></pre> 
+
+<font face="Verdana" size="2" color="blue">stdin :</font> 
+
+<pre class="source"><style type='text/css'></style><table class="cpp" style="font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;"><tbody><tr class="li1"><td class="ln"><pre class="de1">1
+</pre></td><td class="de1"><pre class="de1"><span class="nu0">10000</span></pre></td></tr></tbody></table></pre> 
+<br><br>
+A Simple <a href=https://dl.dropbox.com/u/1110700/prolog_tutorial/INDEX.html TARGET="_blank">Prolog </a>code!
+<pre class="source"><style type='text/css'><!--/**
+ * GeSHi (C) 2004 - 2007 Nigel McNie, 2007 - 2008 Benny Baumann
+ * (http://qbnz.com/highlighter/ and http://geshi.org/)
+ */
+.prolog  {font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;}
+.prolog a:link {color: #000060;}
+.prolog a:hover {background-color: #f0f000;}
+.prolog .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.prolog .imp {font-weight: bold; color: red;}
+.prolog .kw1 {color: #990000;}
+.prolog .co1 {color: #666666; font-style: italic;}
+.prolog .coMULTI {color: #666666; font-style: italic;}
+.prolog .es0 {color: #000099; font-weight: bold;}
+.prolog .es_h {color: #000099; font-weight: bold;}
+.prolog .br0 {color: #009900;}
+.prolog .sy0 {color: #339933;}
+.prolog .sy1 {color: #339933;}
+.prolog .sy2 {color: #339933;}
+.prolog .sy3 {color: #339933;}
+.prolog .sy4 {color: #339933;}
+.prolog .sy5 {color: #339933;}
+.prolog .sy6 {color: #339933;}
+.prolog .st0 {color: #0000ff;}
+.prolog .st_h {color: #0000ff;}
+.prolog .nu0 {color: #800080;}
+.prolog .re0 {color: #008080;}
+.prolog span.xtra { display:block; }
+--></style><table class="prolog" style="font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;"><tbody><tr class="li1"><td class="ln"><pre class="de1">1
+2
+3
+4
+</pre></td><td class="de1"><pre class="de1">fib<span class="br0">&#40;</span>1<span class="sy4">,</span>1<span class="br0">&#41;</span><span class="sy4">.</span> 
+fib<span class="br0">&#40;</span>2<span class="sy4">,</span>1<span class="br0">&#41;</span><span class="sy4">.</span> 
+fib<span class="br0">&#40;</span><span class="re0">N</span><span class="sy4">,</span><span class="re0">R</span><span class="br0">&#41;</span><span class="sy1">:-</span> <span class="re0">N</span> <span class="sy6">&gt;=</span> 3<span class="sy4">,</span><span class="re0">N1</span>  <span class="kw1">is</span>  <span class="re0">N</span><span class="sy3">-</span>1<span class="sy4">,</span><span class="re0">N2</span>  <span class="kw1">is</span></a> <span class="re0">N</span><span class="sy3">-</span>2<span class="sy4">,</span> 
+&nbsp; &nbsp; fib<span class="br0">&#40;</span><span class="re0">N1</span><span class="sy4">,</span><span class="re0">R1</span><span class="br0">&#41;</span><span class="sy4">,</span>fib<span class="br0">&#40;</span><span class="re0">N2</span><span class="sy4">,</span><span class="re0">R2</span><span class="br0">&#41;</span><span class="sy4">,</span><span class="re0">R</span>  <span class="kw1">is</span></a> <span class="re0">R1</span><span class="sy3">+</span><span class="re0">R2</span><span class="sy4">.</span> &nbsp; &nbsp; &nbsp; &nbsp;</pre></td></tr></tbody></table></pre> 
+<font face="Verdana" size="2" color="blue">stdin :</font> 
+<pre class="source"><style type='text/css'></style><table class="cpp" style="font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;"><tbody><tr class="li1"><td class="ln"><pre class="de1">1
+</pre></td><td class="de1"><pre class="de1">fib<span class="br0">&#40;</span><span class="nu0">10</span>,R<span class="br0">&#41;</span>.</pre></td></tr></tbody></table></pre>
+			 
+
+<br><br>
+A simple <a href=https://dl.dropbox.com/u/1110700/diveintopython-5.4/html/toc/index.html TARGET="_blank">python</a> code!
+<pre class="source"><style type='text/css'><!--/**
+ * GeSHi (C) 2004 - 2007 Nigel McNie, 2007 - 2008 Benny Baumann
+ * (http://qbnz.com/highlighter/ and http://geshi.org/)
+ */
+.python  {font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;}
+.python a:link {color: #000060;}
+.python a:hover {background-color: #f0f000;}
+.python .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.python .imp {font-weight: bold; color: red;}
+.python .kw1 {color: #ff7700;font-weight:bold;}
+.python .kw2 {color: #008000;}
+.python .kw3 {color: #dc143c;}
+.python .kw4 {color: #0000cd;}
+.python .co1 {color: #808080; font-style: italic;}
+.python .coMULTI {color: #808080; font-style: italic;}
+.python .es0 {color: #000099; font-weight: bold;}
+.python .br0 {color: black;}
+.python .sy0 {color: #66cc66;}
+.python .st0 {color: #483d8b;}
+.python .nu0 {color: #ff4500;}
+.python .me1 {color: black;}
+.python span.xtra { display:block; }
+--></style><table class="python" style="font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;"><tbody><tr class="li1"><td class="ln"><pre class="de1">1
+2
+</pre></td><td class="de1"><pre class="de1">name =<span class="kw2">raw_input</span><span class="br0">&#40;</span><span class="st0">&quot;what is your name?<span class="es0">\n</span>&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span> 
+<span class="kw1">print</span> <span class="st0">&quot;hello &quot;</span> ,name<span class="sy0">;</span> &nbsp;</pre></td></tr></tbody></table></pre> 
+
+<br><br>
+A Simple <a href=https://dl.dropbox.com/u/1110700/haskell-98-tutorial-html/index.html TARGET="_blank">Haskell</a> code!
+<pre class="source"><style type='text/css'><!--/**
+ * GeSHi (C) 2004 - 2007 Nigel McNie, 2007 - 2008 Benny Baumann
+ * (http://qbnz.com/highlighter/ and http://geshi.org/)
+ */
+.haskell  {font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;}
+.haskell a:link {color: #000060;}
+.haskell a:hover {background-color: #f0f000;}
+.haskell .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.haskell .imp {font-weight: bold; color: red;}
+.haskell .kw1 {color: #06c; font-weight: bold;}
+.haskell .kw2 {color: #06c; font-weight: bold;}
+.haskell .kw3 {font-weight: bold;}
+.haskell .kw4 {color: #cccc00; font-weight: bold;}
+.haskell .kw5 {color: maroon;}
+.haskell .co1 {color: #5d478b; font-style: italic;}
+.haskell .co2 {color: #339933; font-weight: bold;}
+.haskell .coMULTI {color: #5d478b; font-style: italic;}
+.haskell .es0 {background-color: #3cb371; font-weight: bold;}
+.haskell .br0 {color: green;}
+.haskell .sy0 {color: #339933; font-weight: bold;}
+.haskell .st0 {background-color: #3cb371;}
+.haskell .nu0 {color: red;}
+.haskell .me1 {color: #060;}
+.haskell span.xtra { display:block; }
+--></style><table class="haskell" style="font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;"><tbody><tr class="li1"><td class="ln"><pre class="de1">1
+2
+3
+4
+</pre></td><td class="de1"><pre class="de1">fac 0 <span class="sy0">=</span> 1
+fac n <span class="sy0">=</span> n <span class="sy0">*</span> fac <span class="br0">&#40;</span>n<span class="sy0">-</span>1<span class="br0">&#41;</span> 
+&nbsp;
+main <span class="sy0">=</span> <a href="http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#v:print"><span class="kw3">print</span></a> <span class="br0">&#40;</span>fac <span class="nu0">42</span><span class="br0">&#41;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</pre></td></tr></tbody></table></pre> 
+
+<br><br>
+A Simple <a href=http://lua-users.org/wiki/TutorialDirectory TARGET="_blank">Lua </a>Code !
+<pre class="source"><style type='text/css'><!--/**
+ * GeSHi (C) 2004 - 2007 Nigel McNie, 2007 - 2008 Benny Baumann
+ * (http://qbnz.com/highlighter/ and http://geshi.org/)
+ */
+.lua  {font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;}
+.lua a:link {color: #000060;}
+.lua a:hover {background-color: #f0f000;}
+.lua .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.lua .imp {font-weight: bold; color: red;}
+.lua .kw1 {color: #b1b100;}
+.lua .co1 {color: #808080; font-style: italic;}
+.lua .coMULTI {color: #808080; font-style: italic;}
+.lua .es0 {color: #000099; font-weight: bold;}
+.lua .br0 {color: #66cc66;}
+.lua .sy0 {color: #66cc66;}
+.lua .st0 {color: #ff0000;}
+.lua .nu0 {color: #cc66cc;}
+.lua .me0 {color: #b1b100;}
+.lua span.xtra { display:block; }
+--></style><table class="lua" style="font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;"><tbody><tr class="li1"><td class="ln"><pre class="de1">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="de1"><pre class="de1"><span class="kw1">local</span> <span class="kw1">read</span>, <span class="kw1">write</span> <span class="sy0">=</span> <span class="kw1">io.read</span>, <span class="kw1">io.write</span> 
+<span class="kw1">local</span> num, nl <span class="sy0">=</span> <span class="st0">'*n'</span>, <span class="st0">'<span class="es0">\n</span>'</span> 
+<span class="kw1">while</span> <span class="kw1">true</span> <span class="kw1">do</span> 
+&nbsp; <span class="kw1">local</span> a <span class="sy0">=</span> <span class="kw1">read</span><span class="br0">&#40;</span>num<span class="br0">&#41;</span> 
+&nbsp; <span class="kw1">if</span> a <span class="sy0">==</span> 42 <span class="kw1">then</span> <span class="kw1">return</span> <span class="kw1">end</span> 
+&nbsp; <span class="kw1">write</span><span class="br0">&#40;</span>a, nl<span class="br0">&#41;</span> 
+<span class="kw1">end</span></pre></td></tr></tbody></table></pre> 
+<font face="Verdana" size="2" color="blue">stdin :</font> 
+<pre class="source"><style type='text/css'></style><table class="cpp" style="font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;"><tbody><tr class="li1"><td class="ln"><pre class="de1">1
+2
+3
+4
+</pre></td><td class="de1"><pre class="de1"><span class="nu0">12</span> 
+<span class="nu0">21</span> 
+<span class="nu0">42</span> 
+&nbsp;</pre></td></tr></tbody></table></pre> 
+
+
+<br><br>
+A Simple <a href=http://golang.org TARGET="_blank">GO</a> code!
+<pre class="source"><style type='text/css'>
+<!--/**
+* GeSHi (C) 2004 - 2007 Nigel McNie, 2007 - 2008 Benny Baumann
+ * (http://qbnz.com/highlighter/ and http://geshi.org/)
+ */
+.cpp  {font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;}
+.cpp a:link {color: #000060;}
+.cpp a:hover {background-color: #f0f000;}
+.cpp .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.cpp .imp {font-weight: bold; color: red;}
+.cpp .kw1 {color: #0000ff;}
+.cpp .kw2 {color: #0000ff;}
+.cpp .kw3 {color: #0000dd;}
+.cpp .kw4 {color: #0000ff;}
+.cpp .co1 {color: #666666;}
+.cpp .co2 {color: #339900;}
+.cpp .coMULTI {color: #ff0000; font-style: italic;}
+.cpp .es0 {color: #000099; font-weight: bold;}
+.cpp .es1 {color: #000099; font-weight: bold;}
+.cpp .es2 {color: #660099; font-weight: bold;}
+.cpp .es3 {color: #660099; font-weight: bold;}
+.cpp .es4 {color: #660099; font-weight: bold;}
+.cpp .es5 {color: #006699; font-weight: bold;}
+.cpp .br0 {color: #008000;}
+.cpp .sy0 {color: #008000;}
+.cpp .sy1 {color: #000080;}
+.cpp .sy2 {color: #000040;}
+.cpp .sy3 {color: #000040;}
+.cpp .sy4 {color: #008080;}
+.cpp .st0 {color: #FF0000;}
+.cpp .nu0 {color: #0000dd;}
+.cpp .nu6 {color: #208080;}
+.cpp .nu8 {color: #208080;}
+.cpp .nu12 {color: #208080;}
+.cpp .nu16 {color:#800080;}
+.cpp .nu17 {color:#800080;}
+.cpp .nu18 {color:#800080;}
+.cpp .nu19 {color:#800080;}
+.cpp .me1 {color: #007788;}
+.cpp .me2 {color: #007788;}
+.cpp span.xtra { display:block; }
+.ln, .ln{ vertical-align: top; }
+.coMULTI, .cpp span{ line-height:13px !important;}
+--></style><table class="cpp"><tbody><tr class="li1"><td class="ln"><pre class="de1">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="de1"><pre class="de1">package main
+&nbsp;
+import <span class="st0">&quot;fmt&quot;</span> 
+&nbsp;
+func main<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span> 
+&nbsp; &nbsp; &nbsp; &nbsp; fmt.<span class="me1">Printf</span><span class="br0">&#40;</span><span class="st0">&quot;hello, world<span class="es1">\n</span>&quot;</span><span class="br0">&#41;</span> 
+<span class="br0">&#125;</span> 
+&nbsp;</pre></td></tr></tbody></table></pre> 
+
+
+<br><br>
+the <a href=https://computing.llnl.gov/tutorials/openMP/ TARGET="_blank">omp</a> support!
+<pre class="source"><style type='text/css'><!--/**
+ * GeSHi (C) 2004 - 2007 Nigel McNie, 2007 - 2008 Benny Baumann
+ * (http://qbnz.com/highlighter/ and http://geshi.org/)
+ */
+.cpp  {font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;}
+.cpp a:link {color: #000060;}
+.cpp a:hover {background-color: #f0f000;}
+.cpp .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.cpp .imp {font-weight: bold; color: red;}
+.cpp .kw1 {color: #0000ff;}
+.cpp .kw2 {color: #0000ff;}
+.cpp .kw3 {color: #0000dd;}
+.cpp .kw4 {color: #0000ff;}
+.cpp .co1 {color: #666666;}
+.cpp .co2 {color: #339900;}
+.cpp .coMULTI {color: #ff0000; font-style: italic;}
+.cpp .es0 {color: #000099; font-weight: bold;}
+.cpp .es1 {color: #000099; font-weight: bold;}
+.cpp .es2 {color: #660099; font-weight: bold;}
+.cpp .es3 {color: #660099; font-weight: bold;}
+.cpp .es4 {color: #660099; font-weight: bold;}
+.cpp .es5 {color: #006699; font-weight: bold;}
+.cpp .br0 {color: #008000;}
+.cpp .sy0 {color: #008000;}
+.cpp .sy1 {color: #000080;}
+.cpp .sy2 {color: #000040;}
+.cpp .sy3 {color: #000040;}
+.cpp .sy4 {color: #008080;}
+.cpp .st0 {color: #FF0000;}
+.cpp .nu0 {color: #0000dd;}
+.cpp .nu6 {color: #208080;}
+.cpp .nu8 {color: #208080;}
+.cpp .nu12 {color: #208080;}
+.cpp .nu16 {color:#800080;}
+.cpp .nu17 {color:#800080;}
+.cpp .nu18 {color:#800080;}
+.cpp .nu19 {color:#800080;}
+.cpp .me1 {color: #007788;}
+.cpp .me2 {color: #007788;}
+.cpp span.xtra { display:block; }
+--></style><table class="cpp" style="font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;"><tbody><tr class="li1"><td class="ln"><pre class="de1">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="de1"><pre class="de1"><span class="co2">#include &lt;omp.h&gt; </span> 
+<span class="co2">#include &lt;iostream&gt; </span> 
+<span class="kw4">int</span> main <span class="br0">&#40;</span><span class="kw4">int</span> argc, <span class="kw4">char</span> <span class="sy2">*</span>argv<span class="br0">&#91;</span><span class="br0">&#93;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span> 
+&nbsp;<span class="kw4">int</span> th_id, nthreads<span class="sy4">;</span> 
+<span class="co2">#pragma omp parallel private(th_id) </span> 
+&nbsp;<span class="br0">&#123;</span> 
+&nbsp; th_id <span class="sy1">=</span> omp_get_thread_num<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy4">;</span> 
+&nbsp; std<span class="sy4">::</span> <span class="kw3">cout</span> &nbsp;<span class="sy1">&lt;&lt;</span> <span class="st0">&quot;OpenMP Thread&quot;</span> <span class="sy1">&lt;&lt;</span> th_id <span class="sy1">&lt;&lt;</span> <span class="st0">&quot;<span class="es1">\n</span>&quot;</span><span class="sy4">;</span> 
+<span class="co2">#pragma omp barrier </span> 
+&nbsp;<span class="kw1">if</span> <span class="br0">&#40;</span> th_id <span class="sy1">==</span> 0 <span class="br0">&#41;</span> <span class="br0">&#123;</span> 
+&nbsp; &nbsp;nthreads <span class="sy1">=</span> omp_get_num_threads<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy4">;</span> 
+&nbsp; &nbsp;std<span class="sy4">::</span> <span class="kw3">cout</span> &nbsp;<span class="sy1">&lt;&lt;</span> <span class="st0">&quot;There are &quot;</span> <span class="sy1">&lt;&lt;</span> nthreads <span class="sy1">&lt;&lt;</span> <span class="st0">&quot; threads<span class="es1">\n</span>&quot;</span><span class="sy4">;</span> 
+&nbsp; <span class="br0">&#125;</span> 
+&nbsp;<span class="br0">&#125;</span> 
+&nbsp;<span class="kw1">return</span> <span class="nu0">0</span><span class="sy4">;</span> 
+<span class="br0">&#125;</span> &nbsp; &nbsp; &nbsp; &nbsp; </pre></td></tr></tbody></table></pre> 
+<br><br>
+c++ stl example!
+<pre class="source"><style type='text/css'><!--/**
+ * GeSHi (C) 2004 - 2007 Nigel McNie, 2007 - 2008 Benny Baumann
+ * (http://qbnz.com/highlighter/ and http://geshi.org/)
+ */
+.cpp  {font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;}
+.cpp a:link {color: #000060;}
+.cpp a:hover {background-color: #f0f000;}
+.cpp .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.cpp .imp {font-weight: bold; color: red;}
+.cpp .kw1 {color: #0000ff;}
+.cpp .kw2 {color: #0000ff;}
+.cpp .kw3 {color: #0000dd;}
+.cpp .kw4 {color: #0000ff;}
+.cpp .co1 {color: #666666;}
+.cpp .co2 {color: #339900;}
+.cpp .coMULTI {color: #ff0000; font-style: italic;}
+.cpp .es0 {color: #000099; font-weight: bold;}
+.cpp .es1 {color: #000099; font-weight: bold;}
+.cpp .es2 {color: #660099; font-weight: bold;}
+.cpp .es3 {color: #660099; font-weight: bold;}
+.cpp .es4 {color: #660099; font-weight: bold;}
+.cpp .es5 {color: #006699; font-weight: bold;}
+.cpp .br0 {color: #008000;}
+.cpp .sy0 {color: #008000;}
+.cpp .sy1 {color: #000080;}
+.cpp .sy2 {color: #000040;}
+.cpp .sy3 {color: #000040;}
+.cpp .sy4 {color: #008080;}
+.cpp .st0 {color: #FF0000;}
+.cpp .nu0 {color: #0000dd;}
+.cpp .nu6 {color: #208080;}
+.cpp .nu8 {color: #208080;}
+.cpp .nu12 {color: #208080;}
+.cpp .nu16 {color:#800080;}
+.cpp .nu17 {color:#800080;}
+.cpp .nu18 {color:#800080;}
+.cpp .nu19 {color:#800080;}
+.cpp .me1 {color: #007788;}
+.cpp .me2 {color: #007788;}
+.cpp span.xtra { display:block; }
+--></style><table class="cpp" style="font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;"><tbody><tr class="li1"><td class="ln"><pre class="de1">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+</pre></td><td class="de1"><pre class="de1"><span class="co2">#include &lt;iostream&gt;</span> 
+<span class="co2">#include &lt;vector&gt;</span> 
+<span class="kw2">using</span> <span class="kw2">namespace</span> std<span class="sy4">;</span> 
+&nbsp;
+<span class="kw4">int</span> main <span class="br0">&#40;</span><span class="br0">&#41;</span> 
+<span class="br0">&#123;</span> 
+&nbsp; vector<span class="sy1">&lt;</span><span class="kw4">int</span><span class="sy1">&gt;</span> myvector <span class="br0">&#40;</span>3,100<span class="br0">&#41;</span><span class="sy4">;</span> 
+&nbsp; vector<span class="sy1">&lt;</span><span class="kw4">int</span><span class="sy1">&gt;</span><span class="sy4">::</span><span class="me2">iterator</span> it<span class="sy4">;</span> 
+&nbsp;
+&nbsp; it <span class="sy1">=</span> myvector.<span class="me1">begin</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy4">;</span> 
+&nbsp; it <span class="sy1">=</span> myvector.<span class="me1">insert</span> <span class="br0">&#40;</span> it , 200 <span class="br0">&#41;</span><span class="sy4">;</span> 
+&nbsp;
+&nbsp; myvector.<span class="me1">insert</span> <span class="br0">&#40;</span>it,2,300<span class="br0">&#41;</span><span class="sy4">;</span> 
+&nbsp;
+&nbsp; <span class="co1">// &quot;it&quot; no longer valid, get a new one:</span> 
+&nbsp; it <span class="sy1">=</span> myvector.<span class="me1">begin</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy4">;</span> 
+&nbsp;
+&nbsp; vector<span class="sy1">&lt;</span><span class="kw4">int</span><span class="sy1">&gt;</span> anothervector <span class="br0">&#40;</span>2,400<span class="br0">&#41;</span><span class="sy4">;</span> 
+&nbsp; myvector.<span class="me1">insert</span> <span class="br0">&#40;</span>it<span class="sy2">+</span>2,anothervector.<span class="me1">begin</span><span class="br0">&#40;</span><span class="br0">&#41;</span>,anothervector.<span class="me1">end</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy4">;</span> 
+&nbsp;
+&nbsp; <span class="kw4">int</span> myarray <span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy1">=</span> <span class="br0">&#123;</span> 501,502,503 <span class="br0">&#125;</span><span class="sy4">;</span> 
+&nbsp; myvector.<span class="me1">insert</span> <span class="br0">&#40;</span>myvector.<span class="me1">begin</span><span class="br0">&#40;</span><span class="br0">&#41;</span>, myarray, myarray<span class="sy2">+</span>3<span class="br0">&#41;</span><span class="sy4">;</span> 
+&nbsp;
+&nbsp; <span class="kw3">cout</span> <span class="sy1">&lt;&lt;</span> <span class="st0">&quot;myvector contains:&quot;</span><span class="sy4">;</span> 
+&nbsp; <span class="kw1">for</span> <span class="br0">&#40;</span>it<span class="sy1">=</span>myvector.<span class="me1">begin</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy4">;</span> it<span class="sy1">&lt;</span>myvector.<span class="me1">end</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy4">;</span> it<span class="sy2">++</span><span class="br0">&#41;</span> 
+&nbsp; &nbsp; <span class="kw3">cout</span> <span class="sy1">&lt;&lt;</span> <span class="st0">&quot; &quot;</span> <span class="sy1">&lt;&lt;</span> <span class="sy2">*</span>it<span class="sy4">;</span> 
+&nbsp; <span class="kw3">cout</span> <span class="sy1">&lt;&lt;</span> endl<span class="sy4">;</span> 
+&nbsp;
+&nbsp; <span class="kw1">return</span> <span class="nu0">0</span><span class="sy4">;</span> 
+<span class="br0">&#125;</span></pre></td></tr></tbody></table></pre> 
+				 
+<br><br>
+Eight queens puzzle!
+
+<pre class="source"><style type='text/css'><!--/**
+ * GeSHi (C) 2004 - 2007 Nigel McNie, 2007 - 2008 Benny Baumann
+ * (http://qbnz.com/highlighter/ and http://geshi.org/)
+ */
+.c  {font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;}
+.c a:link {color: #000060;}
+.c a:hover {background-color: #f0f000;}
+.c .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.c .imp {font-weight: bold; color: red;}
+.c .kw1 {color: #b1b100;}
+.c .kw2 {color: #000000; font-weight: bold;}
+.c .kw3 {color: #000066;}
+.c .kw4 {color: #993333;}
+.c .co1 {color: #666666; font-style: italic;}
+.c .co2 {color: #339933;}
+.c .coMULTI {color: #808080; font-style: italic;}
+.c .es0 {color: #000099; font-weight: bold;}
+.c .es1 {color: #000099; font-weight: bold;}
+.c .es2 {color: #660099; font-weight: bold;}
+.c .es3 {color: #660099; font-weight: bold;}
+.c .es4 {color: #660099; font-weight: bold;}
+.c .es5 {color: #006699; font-weight: bold;}
+.c .br0 {color: #009900;}
+.c .sy0 {color: #339933;}
+.c .st0 {color: #ff0000;}
+.c .nu0 {color: #0000dd;}
+.c .nu6 {color: #208080;}
+.c .nu8 {color: #208080;}
+.c .nu12 {color: #208080;}
+.c .nu16 {color:#800080;}
+.c .nu17 {color:#800080;}
+.c .nu18 {color:#800080;}
+.c .nu19 {color:#800080;}
+.c .me1 {color: #202020;}
+.c .me2 {color: #202020;}
+.c span.xtra { display:block; }
+--></style><table class="c" style="font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;"><tbody><tr class="li1"><td class="ln"><pre class="de1">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+</pre></td><td class="de1"><pre class="de1"><span class="co2">#include &lt;stdio.h&gt;</span> 
+&nbsp;
+<span class="kw4">int</span> &nbsp;SIZE<span class="sy0">,</span> MASK<span class="sy0">,</span> COUNT<span class="sy0">;</span> 
+&nbsp;
+<span class="kw4">void</span> Backtrack<span class="br0">&#40;</span><span class="kw4">int</span> y<span class="sy0">,</span> <span class="kw4">int</span> left<span class="sy0">,</span> <span class="kw4">int</span> down<span class="sy0">,</span> <span class="kw4">int</span> right<span class="br0">&#41;</span> 
+<span class="br0">&#123;</span> 
+&nbsp; &nbsp; <span class="kw4">int</span> &nbsp;bitmap<span class="sy0">,</span> bit<span class="sy0">;</span> 
+&nbsp;
+&nbsp; &nbsp; <span class="kw1">if</span> <span class="br0">&#40;</span>y <span class="sy0">==</span> SIZE<span class="br0">&#41;</span> <span class="br0">&#123;</span> 
+&nbsp; &nbsp; &nbsp; &nbsp; COUNT<span class="sy0">++;</span> 
+&nbsp; &nbsp; <span class="br0">&#125;</span> <span class="kw1">else</span> <span class="br0">&#123;</span> 
+&nbsp; &nbsp; &nbsp; &nbsp; bitmap <span class="sy0">=</span> MASK <span class="sy0">&amp;</span> ~<span class="br0">&#40;</span>left <span class="sy0">|</span> down <span class="sy0">|</span> right<span class="br0">&#41;</span><span class="sy0">;</span> 
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">while</span> <span class="br0">&#40;</span>bitmap<span class="br0">&#41;</span> <span class="br0">&#123;</span> 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; bit <span class="sy0">=</span> <span class="sy0">-</span>bitmap <span class="sy0">&amp;</span> bitmap<span class="sy0">;</span> 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; bitmap <span class="sy0">^=</span> bit<span class="sy0">;</span> 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Backtrack<span class="br0">&#40;</span>y<span class="sy0">+</span>1<span class="sy0">,</span> <span class="br0">&#40;</span>left <span class="sy0">|</span> bit<span class="br0">&#41;</span><span class="sy0">&lt;&lt;</span>1<span class="sy0">,</span> down <span class="sy0">|</span> bit<span class="sy0">,</span> <span class="br0">&#40;</span>right <span class="sy0">|</span> bit<span class="br0">&#41;</span><span class="sy0">&gt;&gt;</span>1<span class="br0">&#41;</span><span class="sy0">;</span> 
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="br0">&#125;</span> 
+&nbsp; &nbsp; <span class="br0">&#125;</span> 
+<span class="br0">&#125;</span> 
+<span class="kw4">int</span> main<span class="br0">&#40;</span><span class="kw4">void</span><span class="br0">&#41;</span> 
+<span class="br0">&#123;</span> 
+&nbsp; &nbsp; SIZE <span class="sy0">=</span> <span class="nu0">8</span><span class="sy0">;</span> &nbsp; <span class="coMULTI">/* &nbsp;&lt;- N &nbsp;*/</span> 
+&nbsp; &nbsp; COUNT <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span> &nbsp; <span class="coMULTI">/* result */</span> 
+&nbsp;
+&nbsp; &nbsp; MASK <span class="sy0">=</span> <span class="br0">&#40;</span>1 <span class="sy0">&lt;&lt;</span> SIZE<span class="br0">&#41;</span> <span class="sy0">-</span> <span class="nu0">1</span><span class="sy0">;</span> 
+&nbsp; &nbsp; Backtrack<span class="br0">&#40;</span>0<span class="sy0">,</span> 0<span class="sy0">,</span> 0<span class="sy0">,</span> 0<span class="br0">&#41;</span><span class="sy0">;</span> 
+&nbsp;
+&nbsp; &nbsp; <a href="http://www.opengroup.org/onlinepubs/009695399/functions/printf.html"><span class="kw3">printf</span></a><span class="br0">&#40;</span><span class="st0">&quot;N=%d -&gt; %d<span class="es1">\n</span>&quot;</span><span class="sy0">,</span> SIZE<span class="sy0">,</span> COUNT<span class="br0">&#41;</span><span class="sy0">;</span> 
+&nbsp; &nbsp; <span class="kw1">return</span> <span class="nu0">0</span><span class="sy0">;</span> 
+<span class="br0">&#125;</span></pre></td></tr></tbody></table></pre> 
+<br><br>
+<a href=https://dl.dropbox.com/u/1110700/boost/HTML/libs/libraries.htm TARGET="_blank">Boost</a> examples!It's cool!
+	
+
+
+<pre class="source"><style type='text/css'><!--/**
+ * GeSHi (C) 2004 - 2007 Nigel McNie, 2007 - 2008 Benny Baumann
+ * (http://qbnz.com/highlighter/ and http://geshi.org/)
+ */
+.cpp  {font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;}
+.cpp a:link {color: #000060;}
+.cpp a:hover {background-color: #f0f000;}
+.cpp .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.cpp .imp {font-weight: bold; color: red;}
+.cpp .kw1 {color: #0000ff;}
+.cpp .kw2 {color: #0000ff;}
+.cpp .kw3 {color: #0000dd;}
+.cpp .kw4 {color: #0000ff;}
+.cpp .co1 {color: #666666;}
+.cpp .co2 {color: #339900;}
+.cpp .coMULTI {color: #ff0000; font-style: italic;}
+.cpp .es0 {color: #000099; font-weight: bold;}
+.cpp .es1 {color: #000099; font-weight: bold;}
+.cpp .es2 {color: #660099; font-weight: bold;}
+.cpp .es3 {color: #660099; font-weight: bold;}
+.cpp .es4 {color: #660099; font-weight: bold;}
+.cpp .es5 {color: #006699; font-weight: bold;}
+.cpp .br0 {color: #008000;}
+.cpp .sy0 {color: #008000;}
+.cpp .sy1 {color: #000080;}
+.cpp .sy2 {color: #000040;}
+.cpp .sy3 {color: #000040;}
+.cpp .sy4 {color: #008080;}
+.cpp .st0 {color: #FF0000;}
+.cpp .nu0 {color: #0000dd;}
+.cpp .nu6 {color: #208080;}
+.cpp .nu8 {color: #208080;}
+.cpp .nu12 {color: #208080;}
+.cpp .nu16 {color:#800080;}
+.cpp .nu17 {color:#800080;}
+.cpp .nu18 {color:#800080;}
+.cpp .nu19 {color:#800080;}
+.cpp .me1 {color: #007788;}
+.cpp .me2 {color: #007788;}
+.cpp span.xtra { display:block; }
+--></style><table class="cpp" style="font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;"><tbody><tr class="li1"><td class="ln"><pre class="de1">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+</pre></td><td class="de1"><pre class="de1"><span class="co1">// &nbsp;Boost string_algo library example file &nbsp;---------------------------------//</span> 
+&nbsp;
+<span class="co1">// &nbsp;Copyright Pavol Droba 2002-2003. Use, modification and</span> 
+<span class="co1">// &nbsp;distribution is subject to the Boost Software License, Version</span> 
+<span class="co1">// &nbsp;1.0. (See accompanying file LICENSE_1_0.txt or copy at</span> 
+<span class="co1">// &nbsp;http://www.boost.org/LICENSE_1_0.txt)</span> 
+&nbsp;
+<span class="co1">// &nbsp;See http://www.boost.org for updates, documentation, and revision history.</span> 
+&nbsp;
+<span class="co2">#include &lt;string&gt;</span> 
+<span class="co2">#include &lt;iostream&gt;</span> 
+<span class="co2">#include &lt;algorithm&gt;</span> 
+<span class="co2">#include &lt;functional&gt;</span> 
+<span class="co2">#include &lt;boost/algorithm/string/case_conv.hpp&gt;</span> 
+<span class="co2">#include &lt;boost/algorithm/string/find.hpp&gt;</span> 
+&nbsp;
+<span class="kw2">using</span> <span class="kw2">namespace</span> std<span class="sy4">;</span> 
+<span class="kw2">using</span> <span class="kw2">namespace</span> boost<span class="sy4">;</span> 
+&nbsp;
+<span class="kw4">int</span> main<span class="br0">&#40;</span><span class="br0">&#41;</span> 
+<span class="br0">&#123;</span> &nbsp;
+&nbsp; &nbsp; <span class="kw3">cout</span> <span class="sy1">&lt;&lt;</span> <span class="st0">&quot;* Find Example *&quot;</span> <span class="sy1">&lt;&lt;</span> endl <span class="sy1">&lt;&lt;</span> endl<span class="sy4">;</span> 
+&nbsp;
+&nbsp; &nbsp; string str1<span class="br0">&#40;</span><span class="st0">&quot;abc___cde___efg&quot;</span><span class="br0">&#41;</span><span class="sy4">;</span> 
+&nbsp; &nbsp; string str2<span class="br0">&#40;</span><span class="st0">&quot;abc&quot;</span><span class="br0">&#41;</span><span class="sy4">;</span> 
+&nbsp;
+&nbsp; &nbsp; <span class="co1">// find &quot;cde&quot; substring</span> 
+&nbsp; &nbsp; iterator_range<span class="sy1">&lt;</span>string<span class="sy4">::</span><span class="me2">iterator</span><span class="sy1">&gt;</span> range<span class="sy1">=</span>find_first<span class="br0">&#40;</span> str1, string<span class="br0">&#40;</span><span class="st0">&quot;cde&quot;</span><span class="br0">&#41;</span> <span class="br0">&#41;</span><span class="sy4">;</span> 
+&nbsp;
+&nbsp; &nbsp; <span class="co1">// convert a substring to upper case</span> 
+&nbsp; &nbsp; <span class="co1">// note that iterator range can be directly passed to the algorithm</span> 
+&nbsp; &nbsp; to_upper<span class="br0">&#40;</span> range <span class="br0">&#41;</span><span class="sy4">;</span> 
+&nbsp;
+&nbsp; &nbsp; <span class="kw3">cout</span> <span class="sy1">&lt;&lt;</span> <span class="st0">&quot;str1 with upper-cased part matching cde: &quot;</span> <span class="sy1">&lt;&lt;</span> str1 <span class="sy1">&lt;&lt;</span> endl<span class="sy4">;</span> 
+&nbsp;
+&nbsp; &nbsp; <span class="co1">// get a head of the string</span> 
+&nbsp; &nbsp; iterator_range<span class="sy1">&lt;</span>string<span class="sy4">::</span><span class="me2">iterator</span><span class="sy1">&gt;</span> head<span class="sy1">=</span>find_head<span class="br0">&#40;</span> str1, 3 <span class="br0">&#41;</span><span class="sy4">;</span> 
+&nbsp; &nbsp; <span class="kw3">cout</span> <span class="sy1">&lt;&lt;</span> <span class="st0">&quot;head(3) of the str1: &quot;</span> <span class="sy1">&lt;&lt;</span> string<span class="br0">&#40;</span> head.<span class="me1">begin</span><span class="br0">&#40;</span><span class="br0">&#41;</span>, head.<span class="me1">end</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#41;</span> <span class="sy1">&lt;&lt;</span> endl<span class="sy4">;</span> 
+&nbsp;
+&nbsp; &nbsp; <span class="co1">// get the tail</span> 
+&nbsp; &nbsp; head<span class="sy1">=</span>find_tail<span class="br0">&#40;</span> str2, 5 <span class="br0">&#41;</span><span class="sy4">;</span> 
+&nbsp; &nbsp; <span class="kw3">cout</span> <span class="sy1">&lt;&lt;</span> <span class="st0">&quot;tail(5) of the str2: &quot;</span> <span class="sy1">&lt;&lt;</span> string<span class="br0">&#40;</span> head.<span class="me1">begin</span><span class="br0">&#40;</span><span class="br0">&#41;</span>, head.<span class="me1">end</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#41;</span> <span class="sy1">&lt;&lt;</span> endl<span class="sy4">;</span> 
+&nbsp;
+&nbsp; &nbsp; <span class="co1">// char processing</span> 
+&nbsp; &nbsp; <span class="kw4">char</span> text<span class="br0">&#91;</span><span class="br0">&#93;</span><span class="sy1">=</span><span class="st0">&quot;hello dolly!&quot;</span><span class="sy4">;</span> 
+&nbsp; &nbsp; iterator_range<span class="sy1">&lt;</span><span class="kw4">char</span><span class="sy2">*</span><span class="sy1">&gt;</span> crange<span class="sy1">=</span>find_last<span class="br0">&#40;</span>text,<span class="st0">&quot;ll&quot;</span><span class="br0">&#41;</span><span class="sy4">;</span> 
+&nbsp;
+&nbsp; &nbsp; <span class="co1">// transform the range ( add 1 )</span> 
+&nbsp; &nbsp; transform<span class="br0">&#40;</span> crange.<span class="me1">begin</span><span class="br0">&#40;</span><span class="br0">&#41;</span>, crange.<span class="me1">end</span><span class="br0">&#40;</span><span class="br0">&#41;</span>, crange.<span class="me1">begin</span><span class="br0">&#40;</span><span class="br0">&#41;</span>, bind2nd<span class="br0">&#40;</span> plus<span class="sy1">&lt;</span><span class="kw4">char</span><span class="sy1">&gt;</span><span class="br0">&#40;</span><span class="br0">&#41;</span>, 1 <span class="br0">&#41;</span> <span class="br0">&#41;</span><span class="sy4">;</span> 
+&nbsp; &nbsp; <span class="co1">// uppercase the range</span> 
+&nbsp; &nbsp; to_upper<span class="br0">&#40;</span> crange <span class="br0">&#41;</span><span class="sy4">;</span> 
+&nbsp;
+&nbsp; &nbsp; <span class="kw3">cout</span> <span class="sy1">&lt;&lt;</span> text <span class="sy1">&lt;&lt;</span> endl<span class="sy4">;</span> 
+&nbsp;
+&nbsp; &nbsp; <span class="kw3">cout</span> <span class="sy1">&lt;&lt;</span> endl<span class="sy4">;</span> 
+&nbsp;
+&nbsp; &nbsp; <span class="kw1">return</span> <span class="nu0">0</span><span class="sy4">;</span> 
+<span class="br0">&#125;</span></pre></td></tr></tbody></table></pre> 
+
+<br><br>
+<a href=http://www.oonumerics.org/blitz/docs/blitz.html TARGET="_blank"> Blitz++ </a>example! 
+<pre class="source"><style type='text/css'></style><table class="cpp" style="font-family:monospace;color: #000066; border: 1px solid #d0d0d0; background-color: #f0f0f0; padding: 3px;"><tbody><tr class="li1"><td class="ln"><pre class="de1">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre></td><td class="de1"><pre class="de1"><span class="co2">#include &lt;blitz/array.h&gt;</span> 
+&nbsp;
+<span class="kw2">using</span> <span class="kw2">namespace</span> blitz<span class="sy4">;</span> 
+&nbsp;
+<span class="kw4">int</span> main<span class="br0">&#40;</span><span class="br0">&#41;</span> 
+<span class="br0">&#123;</span> 
+&nbsp; &nbsp; Array<span class="sy1">&lt;</span><span class="kw4">float</span>,2<span class="sy1">&gt;</span> A<span class="br0">&#40;</span>3,3<span class="br0">&#41;</span>, B<span class="br0">&#40;</span>3,3<span class="br0">&#41;</span>, C<span class="br0">&#40;</span>3,3<span class="br0">&#41;</span><span class="sy4">;</span> 
+&nbsp;
+&nbsp; &nbsp; A <span class="sy1">=</span> 1, 0, 0,
+&nbsp; &nbsp; &nbsp; &nbsp; 2, 2, 2,
+&nbsp; &nbsp; &nbsp; &nbsp; 1, 0, <span class="nu0">0</span><span class="sy4">;</span> 
+&nbsp;
+&nbsp; &nbsp; B <span class="sy1">=</span> 0, 0, 7,
+&nbsp; &nbsp; &nbsp; &nbsp; 0, 8, 0,
+&nbsp; &nbsp; &nbsp; &nbsp; 9, 9, <span class="nu0">9</span><span class="sy4">;</span> 
+&nbsp;
+&nbsp; &nbsp; C <span class="sy1">=</span> A <span class="sy2">+</span> B<span class="sy4">;</span> 
+&nbsp;
+&nbsp; &nbsp; <span class="kw3">cout</span> <span class="sy1">&lt;&lt;</span> <span class="st0">&quot;A = &quot;</span> <span class="sy1">&lt;&lt;</span> A <span class="sy1">&lt;&lt;</span> endl
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="sy1">&lt;&lt;</span> <span class="st0">&quot;B = &quot;</span> <span class="sy1">&lt;&lt;</span> B <span class="sy1">&lt;&lt;</span> endl
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="sy1">&lt;&lt;</span> <span class="st0">&quot;C = &quot;</span> <span class="sy1">&lt;&lt;</span> C <span class="sy1">&lt;&lt;</span> endl<span class="sy4">;</span> 
+&nbsp;
+&nbsp; &nbsp; <span class="kw1">return</span> <span class="nu0">0</span><span class="sy4">;</span> 
+<span class="br0">&#125;</span> 
+&nbsp;</pre></td></tr></tbody></table></pre> 
+<br>
+<a href="http://docs.google.com/leaf?id=0B8NeS0rcVnV_OGQ2OWFmODItYzg2NS00ZWU1LTk1N2QtYWNmODY0MzQxOGQ5&hl=en" TARGET="_blank">Some More Code!</a> 
+				</div> 
+ </table>
+<br><br><br>
+<div class="section"> 
+<span class="heading"><b>Recommended Browser</b></span><br/> 
+  <a href="http://www.google.com/chrome" TARGET="_blank"> Gogole Chrome!</a>  
+</div>  
+
+<br><br>
+<div class="section"> 
+<span class="heading"><b>Find bug?</b></span><br/> 
+You're welcome to try.  <a href="mailto:zch051383471952@gmail.com">Let me
+know</a> if you have any success! or ,just give me some suggestions!Thank you!
+</div> 
+<br><br> 
+<div class="section"> 
+<span class="heading"><b>Version</b></span><br/> 
+just the beta !
+</div>
+<br><br> 
+<div class="section"> 
+<span class="heading"><b>Future work</b></span><br/> 
+<ul>
+	<li>add more language support ,lt's complicated,every language need be tested !  </li>
+	<li>test the system on dirrerent browsers and os!</li>
+	<li>beautify(css and ajax ) and Optimization the system !</li>
+	<li>integrate the emacs ad vi into the online edite user face !</li>
+	<li>now the server just process the request with Single-threaded ,pool efficiency ,so i would develop the openmp multi-thread in the server!
+	</li>
+	<li>the most challenge job is add the debugger function in the online compiler!</li>
+</ul>
+</div>  
+<p style="background-color:Wheat       ;text-align:center">  ©2010 by alex zhang
+</p>
+
+<script type="text/javascript" charset="utf-8">
+  var is_ssl = ("https:" == document.location.protocol);
+  var asset_host = is_ssl ? "https://s3.amazonaws.com/getsatisfaction.com/" : "http://s3.amazonaws.com/getsatisfaction.com/";
+  document.write(unescape("%3Cscript src='" + asset_host + "javascripts/feedback-v2.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+<script type="text/javascript" charset="utf-8">
+  var feedback_widget_options = {};
+
+  feedback_widget_options.display = "overlay";  
+  feedback_widget_options.company = "alexzhang";
+  feedback_widget_options.placement = "right";
+  feedback_widget_options.color = "#222";
+  feedback_widget_options.style = "idea";
+  
+  
+  
+  
+  
+  
+
+  var feedback_widget = new GSFN.feedback_widget(feedback_widget_options);
+</script> 
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-10642680-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>       
+</body> 
+</html>  

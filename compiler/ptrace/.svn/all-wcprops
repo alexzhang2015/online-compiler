@@ -1,0 +1,107 @@
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/43/trunk/compiler/ptrace
+END
+hello_fork
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/41/trunk/compiler/ptrace/hello_fork
+END
+hello.c
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/41/trunk/compiler/ptrace/hello.c
+END
+ptrace_syscall.c
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/43/trunk/compiler/ptrace/ptrace_syscall.c
+END
+sys-call.doc
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/43/trunk/compiler/ptrace/sys-call.doc
+END
+ptrace_singlestep.c
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/41/trunk/compiler/ptrace/ptrace_singlestep.c
+END
+unistd.h
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/43/trunk/compiler/ptrace/unistd.h
+END
+ptrace_peekdata.c
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/41/trunk/compiler/ptrace/ptrace_peekdata.c
+END
+bits-syscall.h
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/43/trunk/compiler/ptrace/bits-syscall.h
+END
+ptrace.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/41/trunk/compiler/ptrace/ptrace.c
+END
+syscall.h
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/43/trunk/compiler/ptrace/syscall.h
+END
+unistd_32.h
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/22/trunk/compiler/ptrace/unistd_32.h
+END
+ptrace_peekuser.c
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/41/trunk/compiler/ptrace/ptrace_peekuser.c
+END
+hello
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/41/trunk/compiler/ptrace/hello
+END
+hello_fork.c
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/41/trunk/compiler/ptrace/hello_fork.c
+END
+unistd1.h
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/43/trunk/compiler/ptrace/unistd1.h
+END
+Playing with ptrace, Part I.html
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/22/trunk/compiler/ptrace/Playing%20with%20ptrace,%20Part%20I.html
+END
+ptrace
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/22/trunk/compiler/ptrace/ptrace
+END

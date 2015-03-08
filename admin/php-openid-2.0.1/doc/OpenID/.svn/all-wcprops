@@ -1,0 +1,605 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID
+END
+Auth_OpenID_NoReturnToError.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_NoReturnToError.html
+END
+_Auth---OpenID---Message.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---OpenID---Message.php.html
+END
+Auth_OpenID_SRegBase.html
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_SRegBase.html
+END
+Auth_OpenID_OpenIDStore.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_OpenIDStore.html
+END
+Auth_Yadis_Service.html
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_Yadis_Service.html
+END
+Auth_Yadis_ManagerLoader.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_Yadis_ManagerLoader.html
+END
+Auth_OpenID_FileStore.html
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_FileStore.html
+END
+Auth_OpenID_AX_StoreRequest.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_AX_StoreRequest.html
+END
+Auth_OpenID_DiffieHellmanSHA1ServerSession.html
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_DiffieHellmanSHA1ServerSession.html
+END
+Auth_OpenID_PAPE_Response.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_PAPE_Response.html
+END
+Auth_OpenID_CheckIDRequest.html
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_CheckIDRequest.html
+END
+Auth_Yadis_Yadis.html
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_Yadis_Yadis.html
+END
+_Auth---OpenID---SReg.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---OpenID---SReg.php.html
+END
+Auth_Yadis_Manager.html
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_Yadis_Manager.html
+END
+Auth_Yadis_SessionLoader.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_Yadis_SessionLoader.html
+END
+Auth_OpenID_FailureResponse.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_FailureResponse.html
+END
+Auth_OpenID_AX.html
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_AX.html
+END
+_Auth---Yadis---Yadis.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---Yadis---Yadis.php.html
+END
+_Auth---OpenID---DumbStore.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---OpenID---DumbStore.php.html
+END
+Auth_OpenID_Extension.html
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_Extension.html
+END
+Auth_OpenID_MalformedTrustRoot.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_MalformedTrustRoot.html
+END
+_Auth---OpenID---AX.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---OpenID---AX.php.html
+END
+Auth_OpenID_SQLiteStore.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_SQLiteStore.html
+END
+Auth_OpenID_Encoder.html
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_Encoder.html
+END
+_Auth---Yadis---XRDS.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---Yadis---XRDS.php.html
+END
+Auth_OpenID_AX_Error.html
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_AX_Error.html
+END
+Auth_OpenID_AX_KeyValueMessage.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_AX_KeyValueMessage.html
+END
+Auth_OpenID_ServerErrorContainer.html
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_ServerErrorContainer.html
+END
+Auth_OpenID_AssociateRequest.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_AssociateRequest.html
+END
+Auth_OpenID_Message.html
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_Message.html
+END
+Auth_OpenID_TypeURIMismatch.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_TypeURIMismatch.html
+END
+Auth_OpenID_ServiceEndpointLoader.html
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_ServiceEndpointLoader.html
+END
+Auth_OpenID_NamespaceMap.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_NamespaceMap.html
+END
+Auth_OpenID_AX_FetchRequest.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_AX_FetchRequest.html
+END
+Auth_OpenID_Consumer.html
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_Consumer.html
+END
+Auth_OpenID_PAPE_Request.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_PAPE_Request.html
+END
+Auth_OpenID_SigningEncoder.html
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_SigningEncoder.html
+END
+Auth_OpenID_AX_FetchResponse.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_AX_FetchResponse.html
+END
+_Auth---OpenID---FileStore.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---OpenID---FileStore.php.html
+END
+Auth_OpenID_ConsumerResponse.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_ConsumerResponse.html
+END
+Auth_OpenID_ServerRequest.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_ServerRequest.html
+END
+_Auth---OpenID---Extension.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---OpenID---Extension.php.html
+END
+_Auth---OpenID---SQLStore.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---OpenID---SQLStore.php.html
+END
+Auth_OpenID_DatabaseConnection.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_DatabaseConnection.html
+END
+Auth_OpenID_SetupNeededResponse.html
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_SetupNeededResponse.html
+END
+_Auth---OpenID---PostgreSQLStore.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---OpenID---PostgreSQLStore.php.html
+END
+Auth_OpenID_SuccessResponse.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_SuccessResponse.html
+END
+Auth_OpenID_Request.html
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_Request.html
+END
+_Auth---OpenID---DatabaseConnection.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---OpenID---DatabaseConnection.php.html
+END
+Auth_OpenID_Mapping.html
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_Mapping.html
+END
+Auth_Yadis_domxml.html
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_Yadis_domxml.html
+END
+_Auth---Yadis---XML.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---Yadis---XML.php.html
+END
+Auth_OpenID_DiffieHellmanSHA256ConsumerSession.html
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_DiffieHellmanSHA256ConsumerSession.html
+END
+Auth_Yadis_DiscoveryResult.html
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_Yadis_DiscoveryResult.html
+END
+Auth_Yadis_Discovery.html
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_Yadis_Discovery.html
+END
+Auth_OpenID_CancelResponse.html
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_CancelResponse.html
+END
+Auth_OpenID_Server.html
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_Server.html
+END
+_Auth---OpenID---Nonce.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---OpenID---Nonce.php.html
+END
+Auth_OpenID_CheckAuthRequest.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_CheckAuthRequest.html
+END
+_Auth---Yadis---Manager.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---Yadis---Manager.php.html
+END
+_Auth---OpenID---Server.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---OpenID---Server.php.html
+END
+Auth_OpenID_DiffieHellmanSHA256ServerSession.html
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_DiffieHellmanSHA256ServerSession.html
+END
+_Auth---OpenID.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---OpenID.php.html
+END
+Auth_OpenID_AX_AttrInfo.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_AX_AttrInfo.html
+END
+Auth_OpenID_SRegResponse.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_SRegResponse.html
+END
+Auth_OpenID_SessionNegotiator.html
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_SessionNegotiator.html
+END
+Auth_OpenID_UntrustedReturnURL.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_UntrustedReturnURL.html
+END
+Auth_OpenID_PostgreSQLStore.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_PostgreSQLStore.html
+END
+_Auth---OpenID---Association.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---OpenID---Association.php.html
+END
+Auth_OpenID_MySQLStore.html
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_MySQLStore.html
+END
+_Auth---OpenID---ServerRequest.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---OpenID---ServerRequest.php.html
+END
+Auth_OpenID_ServerResponse.html
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_ServerResponse.html
+END
+_Auth---OpenID---MySQLStore.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---OpenID---MySQLStore.php.html
+END
+Auth_OpenID_PlainTextConsumerSession.html
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_PlainTextConsumerSession.html
+END
+Auth_OpenID_MalformedReturnURL.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_MalformedReturnURL.html
+END
+_Auth---OpenID---PAPE.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---OpenID---PAPE.php.html
+END
+Auth_OpenID_WebResponse.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_WebResponse.html
+END
+_Auth---OpenID---Consumer.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---OpenID---Consumer.php.html
+END
+Auth_OpenID_EncodingError.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_EncodingError.html
+END
+tutorial_OpenID.pkg.html
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/tutorial_OpenID.pkg.html
+END
+Auth_OpenID_AX_StoreResponse.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_AX_StoreResponse.html
+END
+Auth_OpenID_PlainTextServerSession.html
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_PlainTextServerSession.html
+END
+Auth_OpenID_DumbStore.html
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_DumbStore.html
+END
+Auth_OpenID_Decoder.html
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_Decoder.html
+END
+_Auth---OpenID---Interface.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---OpenID---Interface.php.html
+END
+Auth_Yadis_XMLParser.html
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_Yadis_XMLParser.html
+END
+Auth_OpenID_SRegRequest.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_SRegRequest.html
+END
+Auth_Yadis_dom.html
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_Yadis_dom.html
+END
+Auth_OpenID_AuthRequest.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_AuthRequest.html
+END
+Auth_Yadis_XRDS.html
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_Yadis_XRDS.html
+END
+Auth_OpenID_AlreadySigned.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_AlreadySigned.html
+END
+Auth_OpenID_Association.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_Association.html
+END
+Auth_OpenID_SQLStore.html
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_SQLStore.html
+END
+Auth_OpenID_AX_Message.html
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_AX_Message.html
+END
+Auth_OpenID_Signatory.html
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_Signatory.html
+END
+Auth_OpenID_ServerError.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_ServerError.html
+END
+_Auth---OpenID---SQLiteStore.php.html
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/_Auth---OpenID---SQLiteStore.php.html
+END
+Auth_OpenID_DiffieHellmanSHA1ConsumerSession.html
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_DiffieHellmanSHA1ConsumerSession.html
+END
+Auth_Yadis_PHPSession.html
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_Yadis_PHPSession.html
+END
+Auth_OpenID_GenericConsumer.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/doc/OpenID/Auth_OpenID_GenericConsumer.html
+END

@@ -1,0 +1,167 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID
+END
+Nonce.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/Nonce.php
+END
+KVForm.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/KVForm.php
+END
+DumbStore.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/DumbStore.php
+END
+Server.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/Server.php
+END
+AX.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/AX.php
+END
+Parse.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/Parse.php
+END
+BigMath.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/BigMath.php
+END
+Extension.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/Extension.php
+END
+SQLStore.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/SQLStore.php
+END
+Association.php
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/Association.php
+END
+SQLiteStore.php
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/SQLiteStore.php
+END
+Discover.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/Discover.php
+END
+ServerRequest.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/ServerRequest.php
+END
+PostgreSQLStore.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/PostgreSQLStore.php
+END
+MySQLStore.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/MySQLStore.php
+END
+Message.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/Message.php
+END
+DatabaseConnection.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/DatabaseConnection.php
+END
+HMACSHA1.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/HMACSHA1.php
+END
+PAPE.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/PAPE.php
+END
+TrustRoot.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/TrustRoot.php
+END
+DiffieHellman.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/DiffieHellman.php
+END
+URINorm.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/URINorm.php
+END
+Consumer.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/Consumer.php
+END
+FileStore.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/FileStore.php
+END
+CryptUtil.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/CryptUtil.php
+END
+Interface.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/Interface.php
+END
+SReg.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/OpenID/SReg.php
+END

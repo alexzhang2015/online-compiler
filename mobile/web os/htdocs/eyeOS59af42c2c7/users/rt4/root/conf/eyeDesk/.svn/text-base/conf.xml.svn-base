@@ -1,0 +1,9 @@
+<eyeDesk>
+	<theme>eyeFusion</theme>
+	<autolaunch>eyeBar</autolaunch>
+	<autolaunch>eyeDesk_extras</autolaunch>
+	<autolaunch>miniActions</autolaunch>
+	<autolaunch>eyeDockText</autolaunch>
+	<wallpaper></wallpaper>
+	<restoreDock>4</restoreDock>
+</eyeDesk>

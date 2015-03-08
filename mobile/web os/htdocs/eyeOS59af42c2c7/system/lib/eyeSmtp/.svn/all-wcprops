@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/22/trunk/mobile/web%20os/htdocs/eyeOS59af42c2c7/system/lib/eyeSmtp
+END
+sasl.eyecode
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/22/trunk/mobile/web%20os/htdocs/eyeOS59af42c2c7/system/lib/eyeSmtp/sasl.eyecode
+END
+smtp.eyecode
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/22/trunk/mobile/web%20os/htdocs/eyeOS59af42c2c7/system/lib/eyeSmtp/smtp.eyecode
+END
+plain_sasl_client.eyecode
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/!svn/ver/22/trunk/mobile/web%20os/htdocs/eyeOS59af42c2c7/system/lib/eyeSmtp/plain_sasl_client.eyecode
+END
+main.eyecode
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/22/trunk/mobile/web%20os/htdocs/eyeOS59af42c2c7/system/lib/eyeSmtp/main.eyecode
+END

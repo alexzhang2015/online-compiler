@@ -1,0 +1,346 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0056)http://en.wikipedia.org/wiki/Sandbox_(computer_security) -->
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Sandbox (computer security) - Wikipedia, the free encyclopedia</title>
+
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta name="generator" content="MediaWiki 1.17wmf1">
+<link rel="alternate" type="application/x-wiki" title="Edit this page" href="http://en.wikipedia.org/w/index.php?title=Sandbox_(computer_security)&action=edit">
+<link rel="edit" title="Edit this page" href="http://en.wikipedia.org/w/index.php?title=Sandbox_(computer_security)&action=edit">
+<link rel="apple-touch-icon" href="http://en.wikipedia.org/apple-touch-icon.png">
+<link rel="shortcut icon" href="http://en.wikipedia.org/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="http://en.wikipedia.org/w/opensearch_desc.php" title="Wikipedia (en)">
+<link rel="EditURI" type="application/rsd+xml" href="http://en.wikipedia.org/w/api.php?action=rsd">
+<link rel="copyright" href="http://creativecommons.org/licenses/by-sa/3.0/">
+<link rel="alternate" type="application/atom+xml" title="Wikipedia Atom feed" href="http://en.wikipedia.org/w/index.php?title=Special:RecentChanges&feed=atom">
+<link rel="stylesheet" href="./Sandbox (computer security) - Wikipedia, the free encyclopedia_files/load.php" type="text/css" media="all">
+<meta name="ResourceLoaderDynamicStyles" content=""><link rel="stylesheet" href="./Sandbox (computer security) - Wikipedia, the free encyclopedia_files/load(1).php" type="text/css" media="all">
+<style type="text/css" media="all">a.new,#quickbar a.new{color:#ba0000}
+
+/* cache key: enwiki:resourceloader:filter:minify-css:5:f2a9127573a22335c2a9102b208c73e7 */</style>
+<script type="text/javascript">wgNamespaceNumber=0;wgAction="view";wgPageName="Sandbox_(computer_security)";wgMainPageTitle="Main Page";wgWikimediaMobileUrl="http:\/\/en.m.wikipedia.org\/wiki";</script><script src="./Sandbox (computer security) - Wikipedia, the free encyclopedia_files/MobileRedirect.js" type="text/javascript"></script><!--[if lt IE 7]><style type="text/css">body{behavior:url("/w/skins-1.17/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Sandbox_computer_security skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- sitenotice -->
+			<div id="siteNotice"><!-- centralNotice loads here --><script type="text/javascript">
+/* <![CDATA[ */
+document.writeln("\x3cdiv id=\"localNotice\"\x3e\x3cp\x3e\x3c/p\x3e\n\x3c/div\x3e");
+/* ]]> */
+</script><div id="localNotice"><p></p>
+</div>
+</div>
+			<!-- /sitenotice -->
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Sandbox (computer security)</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Wikipedia, the free encyclopedia</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="http://en.wikipedia.org/wiki/Sandbox_(computer_security)#mw-head">navigation</a>,
+					<a href="http://en.wikipedia.org/wiki/Sandbox_(computer_security)#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table class="metadata plainlinks ambox ambox-content" style="">
+<tbody><tr>
+<td class="mbox-image">
+<div style="width: 52px;"><img alt="" src="./Sandbox (computer security) - Wikipedia, the free encyclopedia_files/50px-Question_book-new.svg.png" width="50" height="39"></div>
+</td>
+<td class="mbox-text" style="">This article <b>does not <a href="http://en.wikipedia.org/wiki/Wikipedia:Citing_sources" title="Wikipedia:Citing sources">cite</a> any <a href="http://en.wikipedia.org/wiki/Wikipedia:Verifiability" title="Wikipedia:Verifiability">references or sources</a></b>.<br>
+<small>Please help <a href="http://en.wikipedia.org/w/index.php?title=Sandbox_(computer_security)&action=edit" class="external text" rel="nofollow">improve this article</a> by adding citations to <a href="http://en.wikipedia.org/wiki/Wikipedia:Identifying_reliable_sources" title="Wikipedia:Identifying reliable sources">reliable sources</a>. Unsourced material may be <a href="http://en.wikipedia.org/wiki/Template:Citation_needed" title="Template:Citation needed">challenged</a> and <a href="http://en.wikipedia.org/wiki/Wikipedia:Verifiability#Burden_of_evidence" title="Wikipedia:Verifiability">removed</a>. <i>(December 2009)</i></small></td>
+</tr>
+</tbody></table>
+<dl>
+<dd><i>This article is about the <a href="http://en.wikipedia.org/wiki/Computer_security">computer security</a> mechanism. For the Wikipedia feature, where newcomers can experiment with editing or established editors can experiment with new features, see <a href="http://en.wikipedia.org/wiki/Wikipedia:Sandbox">Wikipedia:Sandbox</a>.</i></dd>
+</dl>
+<dl>
+<dd><i>For the software testing practice, see <a href="http://en.wikipedia.org/wiki/Sandbox_(software_development)">sandbox (software development)</a>.</i></dd>
+</dl>
+<p>In <a href="http://en.wikipedia.org/wiki/Computer_security">computer security</a>, a <b>sandbox</b> is a security mechanism for separating running programs. It is often used to execute untested code, or <a href="http://en.wikipedia.org/wiki/Untrusted">untrusted</a> programs from unverified third-parties, suppliers and untrusted users.</p>
+<p>The sandbox typically provides a tightly-controlled set of resources for guest programs to run in, such as <a href="http://en.wikipedia.org/wiki/Scratch_space">scratch space</a> on disk and memory. Network access, the ability to inspect the host system or read from input devices are usually disallowed or heavily restricted. In this sense, sandboxes are a specific example of <a href="http://en.wikipedia.org/wiki/Virtual_machine" title="Virtual machine">virtualization</a>.</p>
+<p>Some examples of sandboxes are:</p>
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Applet" title="Applet">Applets</a> are self-contained programs that run in a <a href="http://en.wikipedia.org/wiki/Virtual_machine">virtual machine</a> or <a href="http://en.wikipedia.org/wiki/Scripting_language">scripting language</a> <a href="http://en.wikipedia.org/wiki/Interpreter_(computing)" title="Interpreter (computing)">interpreter</a> that does the sandboxing. In <a href="http://en.wikipedia.org/wiki/Application_streaming">application streaming</a> schemes, the applet is downloaded onto a remote client and may begin executing before it arrives in its entirety. Applets are common in <a href="http://en.wikipedia.org/wiki/Web_browser" title="Web browser">web browsers</a>, which use the mechanism to safely execute untrusted code embedded in web pages. Three common applet implementations—<a href="http://en.wikipedia.org/wiki/Adobe_Flash">Adobe Flash</a>, <a href="http://en.wikipedia.org/wiki/Java_applet" title="Java applet">Java applets</a> and <a href="http://en.wikipedia.org/wiki/Silverlight" class="mw-redirect" title="Silverlight">Silverlight</a>—provide (at minimum) a rectangular window with which to interact with the user and some persistent storage (at the user's permission).</li>
+<li>A <a href="http://en.wikipedia.org/wiki/Jail_(computer_security)" title="Jail (computer security)" class="mw-redirect">jail</a> is a set of resource limits imposed on programs by the operating system <a href="http://en.wikipedia.org/wiki/Kernel_(computer_science)" title="Kernel (computer science)" class="mw-redirect">kernel</a>. It can include I/O bandwidth caps, disk quotas, network access restrictions and a restricted filesystem namespace. Jails are most commonly used in <a href="http://en.wikipedia.org/wiki/Virtual_hosting">virtual hosting</a>.</li>
+<li>Rule-based Execution gives users full control over what processes are started, spawned (by other applications), or allowed to inject code into other apps and have access to the net. It also can control file/registry security (What programs can read and write to the file system/registry) As such, viruses and trojans will have a less likely chance of infecting your PC. The <a href="http://en.wikipedia.org/wiki/SELinux" class="mw-redirect" title="SELinux">SELinux</a> and <a href="http://en.wikipedia.org/wiki/Apparmor" class="mw-redirect" title="Apparmor">Apparmor</a> security frameworks are two such implementations for <a href="http://en.wikipedia.org/wiki/Linux_kernel" title="Linux kernel">Linux</a>.</li>
+<li><a href="http://en.wikipedia.org/wiki/Virtual_machine" title="Virtual machine">Virtual machines</a> <a href="http://en.wikipedia.org/wiki/Emulator" title="Emulator">emulate</a> a complete host computer, on which a conventional operating system may boot and run as on actual hardware. The guest operating system is sandboxed in the sense that it does not run natively on the host and can only access host resources through the emulator.</li>
+<li>Sandboxing on native hosts: Security researchers rely heavily on sandboxing technologies to analyse malware behaviour. By creating an environment that mimics or replicates the targeted desktops, researchers can evaluate how malware infects and compromises a target host.</li>
+<li><a href="http://en.wikipedia.org/wiki/Capability-based_security" title="Capability-based security">Capability</a> systems can be thought of as a fine-grained sandboxing mechanism, in which programs are given opaque tokens when spawned and have the ability to do specific things based on what tokens they hold. Capability based implementations can work at various levels, from kernel to user-space. An example of capability-based user-level sandboxing would be HTML rendering in <a href="http://en.wikipedia.org/wiki/Google_Chrome">Google Chrome</a>.</li>
+<li><a href="http://en.wikipedia.org/wiki/Online_judge">Online judge</a> systems to test programs in programming contests.</li>
+<li>New generation <a href="http://en.wikipedia.org/wiki/Pastebins" class="mw-redirect" title="Pastebins">pastebins</a> allowing users to execute pasted <a href="http://en.wikipedia.org/wiki/Code_snippets" class="mw-redirect" title="Code snippets">code snippets</a>.</li>
+<li>Linux' <a href="http://en.wikipedia.org/wiki/Seccomp" title="Seccomp">Secure Computing Mode (seccomp)</a> is a sandbox built in the Linux kernel. When activated seccomp only allows the <tt>write()</tt>, <tt>read()</tt>, <tt>exit()</tt> and <tt>sigreturn()</tt> system calls.</li>
+</ul>
+<h2><span class="editsection">[<a href="http://en.wikipedia.org/w/index.php?title=Sandbox_(computer_security)&action=edit&section=1" title="Edit section: See also">edit</a>]</span> <span class="mw-headline" id="See_also">See also</span></h2>
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Chroot">Chroot</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Sandbox_(software_development)">Sandbox (software development)</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Sandbox_effect">Sandbox effect</a> (search engines)</li>
+<li><a href="http://en.wikipedia.org/wiki/Avast" class="mw-redirect" title="Avast">Avast</a> Pro (security software with sandbox feature)</li>
+<li><a href="http://en.wikipedia.org/wiki/Comodo_Internet_Security">Comodo Internet Security</a> (security software with sandbox feature)</li>
+<li><a href="http://en.wikipedia.org/wiki/Sandboxie">Sandboxie</a> (sandbox security software)</li>
+<li><a href="http://en.wikipedia.org/wiki/ICore_Virtual_Accounts">iCore Virtual Accounts</a> (sandbox security software)</li>
+<li><a href="http://en.wikipedia.org/wiki/Returnil_Virtual_System">Returnil Virtual System</a> (sandbox security software)</li>
+</ul>
+<table class="metadata plainlinks stub" style="background: transparent;">
+<tbody><tr>
+<td><i>This <a href="http://en.wikipedia.org/wiki/Security_software">security software</a> article is a <a href="http://en.wikipedia.org/wiki/Wikipedia:Stub" title="Wikipedia:Stub">stub</a>. You can help Wikipedia by <a href="http://en.wikipedia.org/w/index.php?title=Sandbox_(computer_security)&action=edit" class="external text" rel="nofollow">expanding it</a>.</i><span class="noprint plainlinks navbar" style="position:absolute; right:15px; font-size:smaller; display:none;"><span style="white-space:nowrap;word-spacing:-.12em;"><a href="http://en.wikipedia.org/wiki/Template:Security-software-stub" title="Template:Security-software-stub"><span style="" title="View this template">v</span></a> <span style=""><b>·</b></span> <a href="http://en.wikipedia.org/wiki/Template_talk:Security-software-stub" title="Template talk:Security-software-stub"><span style="" title="Discuss this template">d</span></a> <span style=""><b>·</b></span> <a href="http://en.wikipedia.org/w/index.php?title=Template:Security-software-stub&action=edit" class="external text" rel="nofollow"><span style="" title="Edit this template">e</span></a></span></span></td>
+</tr>
+</tbody></table>
+
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 528/1000000
+Post-expand include size: 9100/2048000 bytes
+Template argument size: 2033/2048000 bytes
+Expensive parser function count: 1/500
+-->
+
+<!-- Saved in parser cache with key enwiki:pcache:idhash:1291932-0!*!0!!en!4 and timestamp 20110406114237 -->
+<div class="printfooter">
+Retrieved from "<a href="./Sandbox (computer security) - Wikipedia, the free encyclopedia_files/Sandbox (computer security) - Wikipedia, the free encyclopedia.htm">http://en.wikipedia.org/wiki/Sandbox_(computer_security)</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id="catlinks" class="catlinks"><div id="mw-normal-catlinks"><a href="http://en.wikipedia.org/wiki/Special:Categories" title="Special:Categories">Categories</a>: <span dir="ltr"><a href="http://en.wikipedia.org/wiki/Category:Operating_system_security" title="Category:Operating system security">Operating system security</a></span> | <span dir="ltr"><a href="http://en.wikipedia.org/wiki/Category:Virtualization_software" title="Category:Virtualization software">Virtualization software</a></span> | <span dir="ltr"><a href="http://en.wikipedia.org/wiki/Category:Computer_security_software_stubs" title="Category:Computer security software stubs">Computer security software stubs</a></span></div><div id="mw-hidden-catlinks" class="mw-hidden-cats-hidden">Hidden categories: <span dir="ltr"><a href="http://en.wikipedia.org/wiki/Category:Articles_lacking_sources_from_December_2009" title="Category:Articles lacking sources from December 2009">Articles lacking sources from December 2009</a></span> | <span dir="ltr"><a href="http://en.wikipedia.org/wiki/Category:All_articles_lacking_sources" title="Category:All articles lacking sources">All articles lacking sources</a></span></div></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li id="pt-login"><a href="http://en.wikipedia.org/w/index.php?title=Special:UserLogin&returnto=Sandbox_(computer_security)" title="You are encouraged to log in; however, it is not mandatory. [o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li id="ca-nstab-main" class="selected"><span><a href="./Sandbox (computer security) - Wikipedia, the free encyclopedia_files/Sandbox (computer security) - Wikipedia, the free encyclopedia.htm" title="View the content page [c]" accesskey="c">Article</a></span></li>
+					<li id="ca-talk"><span><a href="http://en.wikipedia.org/wiki/Talk:Sandbox_(computer_security)" title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="http://en.wikipedia.org/wiki/Sandbox_(computer_security)#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="./Sandbox (computer security) - Wikipedia, the free encyclopedia_files/Sandbox (computer security) - Wikipedia, the free encyclopedia.htm">Read</a></span></li>
+					<li id="ca-edit"><span><a href="http://en.wikipedia.org/w/index.php?title=Sandbox_(computer_security)&action=edit" title="You can edit this page. 
+Please use the preview button before saving. [e]" accesskey="e">Edit</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://en.wikipedia.org/w/index.php?title=Sandbox_(computer_security)&action=history" title="Past versions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="http://en.wikipedia.org/wiki/Sandbox_(computer_security)#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://en.wikipedia.org/w/index.php" id="searchform">
+		<input type="hidden" name="title" value="Special:Search">
+				<div id="simpleSearch">
+						<input id="searchInput" name="search" type="text" title="Search Wikipedia [f]" accesskey="f" value="">
+						<button id="searchButton" type="submit" name="button" title="Search Wikipedia for this text"><img src="./Sandbox (computer security) - Wikipedia, the free encyclopedia_files/search-ltr.png" alt="Search"></button>
+					</div>
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(http://upload.wikimedia.org/wikipedia/en/b/bc/Wiki.png);" href="http://en.wikipedia.org/wiki/Main_Page" title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id="p-navigation">
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-mainpage-description"><a href="http://en.wikipedia.org/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main page</a></li>
+					<li id="n-contents"><a href="http://en.wikipedia.org/wiki/Portal:Contents" title="Guides to browsing Wikipedia">Contents</a></li>
+					<li id="n-featuredcontent"><a href="http://en.wikipedia.org/wiki/Portal:Featured_content" title="Featured content – the best of Wikipedia">Featured content</a></li>
+					<li id="n-currentevents"><a href="http://en.wikipedia.org/wiki/Portal:Current_events" title="Find background information on current events">Current events</a></li>
+					<li id="n-randompage"><a href="http://en.wikipedia.org/wiki/Special:Random" title="Load a random article [x]" accesskey="x">Random article</a></li>
+					<li id="n-sitesupport"><a href="http://wikimediafoundation.org/wiki/Special:Landingcheck?landing_page=WMFJA085&language=en&utm_source=donate&utm_medium=sidebar&utm_campaign=20101204SB002" title="Support us">Donate to Wikipedia</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- interaction -->
+<div class="portal" id="p-interaction">
+	<h5>Interaction</h5>
+	<div class="body">
+				<ul>
+					<li id="n-help"><a href="http://en.wikipedia.org/wiki/Help:Contents" title="Guidance on how to use and edit Wikipedia">Help</a></li>
+					<li id="n-aboutsite"><a href="http://en.wikipedia.org/wiki/Wikipedia:About" title="Find out about Wikipedia">About Wikipedia</a></li>
+					<li id="n-portal"><a href="http://en.wikipedia.org/wiki/Wikipedia:Community_portal" title="About the project, what you can do, where to find things">Community portal</a></li>
+					<li id="n-recentchanges"><a href="http://en.wikipedia.org/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-contact"><a href="http://en.wikipedia.org/wiki/Wikipedia:Contact_us" title="How to contact Wikipedia">Contact Wikipedia</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /interaction -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://en.wikipedia.org/wiki/Special:WhatLinksHere/Sandbox_(computer_security)" title="List of all English Wikipedia pages containing links to this page [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://en.wikipedia.org/wiki/Special:RecentChangesLinked/Sandbox_(computer_security)" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																					<li id="t-upload"><a href="http://en.wikipedia.org/wiki/Wikipedia:Upload" title="Upload files [u]" accesskey="u">Upload file</a></li>
+											<li id="t-specialpages"><a href="http://en.wikipedia.org/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://en.wikipedia.org/w/index.php?title=Sandbox_(computer_security)&oldid=422648987" title="Permanent link to this revision of the page">Permanent link</a></li>
+				<li id="t-cite"><a href="http://en.wikipedia.org/w/index.php?title=Special:Cite&page=Sandbox_(computer_security)&id=422648987" title="Information on how to cite this page">Cite this page</a></li>		</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id="p-coll-print_export">
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://en.wikipedia.org/w/index.php?title=Special:Book&bookcmd=book_creator&referer=Sandbox+%28computer+security%29" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://en.wikipedia.org/w/index.php?title=Special:Book&bookcmd=render_article&arttitle=Sandbox+%28computer+security%29&oldid=422648987&writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://en.wikipedia.org/w/index.php?title=Sandbox_(computer_security)&printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+<div class="portal" id="p-lang">
+	<h5>Languages</h5>
+	<div class="body">
+		<ul>
+					<li class="interwiki-ar"><a href="http://ar.wikipedia.org/wiki/%D8%B5%D9%86%D8%AF%D9%88%D9%82_%D8%B1%D9%85%D9%84" title="صندوق رمل">العربية</a></li>
+					<li class="interwiki-cs"><a href="http://cs.wikipedia.org/wiki/Sandbox" title="Sandbox">Česky</a></li>
+					<li class="interwiki-de"><a href="http://de.wikipedia.org/wiki/Sandbox" title="Sandbox">Deutsch</a></li>
+					<li class="interwiki-es"><a href="http://es.wikipedia.org/wiki/Aislamiento_de_procesos_(inform%C3%A1tica)" title="Aislamiento de procesos (informática)">Español</a></li>
+					<li class="interwiki-fr"><a href="http://fr.wikipedia.org/wiki/Sandbox_(s%C3%A9curit%C3%A9_informatique)" title="Sandbox (sécurité informatique)">Français</a></li>
+					<li class="interwiki-ko"><a href="http://ko.wikipedia.org/wiki/%EC%83%8C%EB%93%9C%EB%B0%95%EC%8A%A4_(%EC%BB%B4%ED%93%A8%ED%84%B0_%EB%B3%B4%EC%95%88)" title="샌드박스 (컴퓨터 보안)">한국어</a></li>
+					<li class="interwiki-it"><a href="http://it.wikipedia.org/wiki/Sandbox" title="Sandbox">Italiano</a></li>
+					<li class="interwiki-he"><a href="http://he.wikipedia.org/wiki/%D7%90%D7%A8%D7%92%D7%96_%D7%97%D7%95%D7%9C_(%D7%9E%D7%97%D7%A9%D7%91%D7%99%D7%9D)" title="ארגז חול (מחשבים)">עברית</a></li>
+					<li class="interwiki-hu"><a href="http://hu.wikipedia.org/wiki/Homokoz%C3%B3_(biztons%C3%A1g)" title="Homokozó (biztonság)">Magyar</a></li>
+					<li class="interwiki-ja"><a href="http://ja.wikipedia.org/wiki/%E3%82%B5%E3%83%B3%E3%83%89%E3%83%9C%E3%83%83%E3%82%AF%E3%82%B9_(%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3)" title="サンドボックス (セキュリティ)">日本語</a></li>
+					<li class="interwiki-pl"><a href="http://pl.wikipedia.org/wiki/Piaskownica_(bezpiecze%C5%84stwo_informatyczne)" title="Piaskownica (bezpieczeństwo informatyczne)">Polski</a></li>
+					<li class="interwiki-ru"><a href="http://ru.wikipedia.org/wiki/%D0%9F%D0%B5%D1%81%D0%BE%D1%87%D0%BD%D0%B8%D1%86%D0%B0_(%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C)" title="Песочница (безопасность)">Русский</a></li>
+					<li class="interwiki-scn"><a href="http://scn.wikipedia.org/wiki/Cascia_di_rina_(sicurizza_%27nfurmatica)" title="Cascia di rina (sicurizza &#39;nfurmatica)">Sicilianu</a></li>
+					<li class="interwiki-fi"><a href="http://fi.wikipedia.org/wiki/Hiekkalaatikko_(tietotekniikka)" title="Hiekkalaatikko (tietotekniikka)">Suomi</a></li>
+					<li class="interwiki-uk"><a href="http://uk.wikipedia.org/wiki/Sandbox" title="Sandbox">Українська</a></li>
+					<li class="interwiki-zh"><a href="http://zh.wikipedia.org/wiki/%E6%B2%99%E7%9B%92_(%E9%9B%BB%E8%85%A6%E5%AE%89%E5%85%A8)" title="沙盒 (電腦安全)">中文</a></li>
+				</ul>
+	</div>
+</div>
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 6 April 2011 at 06:06.<br></li>
+																							<li id="footer-info-copyright">Text is available under the <a rel="license" href="http://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License">Creative Commons Attribution-ShareAlike License</a><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/" style="display:none;"></a>;
+additional terms may apply.
+See <a href="http://wikimediafoundation.org/wiki/Terms_of_Use">Terms of Use</a> for details.<br>
+Wikipedia® is a registered trademark of the <a href="http://www.wikimediafoundation.org/">Wikimedia Foundation, Inc.</a>, a non-profit organization.<br></li><li class="noprint"><a class="internal" href="http://en.wikipedia.org/wiki/Wikipedia:Contact_us">Contact us</a></li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="http://wikimediafoundation.org/wiki/Privacy_policy" title="wikimedia:Privacy policy">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="http://en.wikipedia.org/wiki/Wikipedia:About" title="Wikipedia:About">About Wikipedia</a></li>
+																							<li id="footer-places-disclaimer"><a href="http://en.wikipedia.org/wiki/Wikipedia:General_disclaimer" title="Wikipedia:General disclaimer">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-copyrightico">
+						<a href="http://wikimediafoundation.org/"><img src="./Sandbox (computer security) - Wikipedia, the free encyclopedia_files/wikimedia-button.png" width="88" height="31" alt="Wikimedia Foundation"></a>
+					</li>
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="./Sandbox (computer security) - Wikipedia, the free encyclopedia_files/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31"></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="./Sandbox (computer security) - Wikipedia, the free encyclopedia_files/load(2).php" type="text/javascript"></script>
+<script type="text/javascript">if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Sandbox_(computer_security)", "wgTitle": "Sandbox (computer security)", "wgAction": "view", "wgArticleId": 1291932, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 422648987, "wgCategories": ["Articles lacking sources from December 2009", "All articles lacking sources", "Operating system security", "Virtualization software", "Computer security software stubs"], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": [], "wgSearchNamespaces": [0], "wgFlaggedRevsParams": {"tags": {"status": {"levels": 1, "quality": 2, "pristine": 3}}}, "wgStableRevisionId": null, "wgRevContents": {"error": "Unable to get content.", "waiting": "Waiting for content"}, "wgWikimediaMobileUrl": "http://en.m.wikipedia.org/wiki", "wgVectorEnabledModules": {"collapsiblenav": true, "collapsibletabs": true, "editwarning": true, "expandablesearch": false, "footercleanup": false, "sectioneditlinks": false, "simplesearch": true, "experiments": true}, "wgWikiEditorEnabledModules": {"toolbar": true, "dialogs": true, "templateEditor": false, "templates": false, "addMediaWizard": false, "preview": false, "previewDialog": false, "publish": false, "toc": false}, "wgTrackingToken": "79ef779461501cd1ff70690086f1ffdc", "Geo": {"city": "", "country": ""}, "wgNoticeProject": "wikipedia"});
+}
+</script>
+<script type="text/javascript">if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.legacy.wikibits", "mediawiki.util", "mediawiki.legacy.ajax", "mediawiki.legacy.mwsuggest", "ext.vector.collapsibleNav", "ext.vector.collapsibleTabs", "ext.vector.editWarning", "ext.vector.simpleSearch", "ext.articleFeedback.startup"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="./Sandbox (computer security) - Wikipedia, the free encyclopedia_files/index.php" type="text/javascript"></script>
+<script src="./Sandbox (computer security) - Wikipedia, the free encyclopedia_files/load(3).php" type="text/javascript"></script>
+<script type="text/javascript">if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":4,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":1,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":"3","watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"flaggedrevssimpleui":1,"flaggedrevsstable":false,"flaggedrevseditdiffs":true,"flaggedrevsviewdiffs":false,"vector-simplesearch":1,"useeditwarning":1,"vector-collapsiblenav":1,"usebetatoolbar":1,"usebetatoolbar-cgd":1,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs100":false,"searchNs101":false,"searchNs108":false,"searchNs109":false});;mediaWiki.loader.state({"user.options":"ready"});
+	
+	/* cache key: enwiki:resourceloader:filter:minify-js:5:27c920e3d777c540f5f38bf4516bf8fd */
+}
+</script><script type="text/javascript" src="./Sandbox (computer security) - Wikipedia, the free encyclopedia_files/saved_resource"></script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served by srv205 in 0.059 secs. -->			
+
+</body></html>

@@ -1,0 +1,1157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0040)http://www.linuxjournal.com/article/6100 -->
+<HTML xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" class="js"><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+  <TITLE>Playing with ptrace, Part I</TITLE>
+  
+<META name="DC.Title" content="Playing with ptrace, Part I">
+<META name="description" content="Using ptrace allows you to set up system call interception and modification at the user level.">
+<META name="keywords" content="SysAdmin,Ubuntu,Linux Journal,free,open source,software,technology">
+<META name="robots" content="index,follow">
+<LINK rel="shortcut icon" href="http://www.linuxjournal.com/sites/linuxjournal.com/themes/linuxjournal/favicon.ico" type="image/x-icon">
+  <STYLE type="text/css" media="all">@import "/modules/aggregator/aggregator.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/modules/book/book.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/modules/node/node.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/modules/poll/poll.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/modules/system/defaults.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/modules/system/system.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/modules/user/user.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/sites/linuxjournal.com/modules/cck/content.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/sites/linuxjournal.com/modules/date/date.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/sites/linuxjournal.com/modules/date/date_popup/themes/white.calendar.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/sites/linuxjournal.com/modules/date/date_popup/themes/timeentry.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/sites/linuxjournal.com/modules/cck/fieldgroup.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/sites/linuxjournal.com/modules/diggthis/diggthis.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/sites/linuxjournal.com/modules/fivestar/css/fivestar.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/files/linuxjournal.com/ufiles/fivestar/outline/outline.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/sites/linuxjournal.com/modules/print/css/printlinks.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/modules/comment/comment.css";</STYLE>
+<STYLE type="text/css" media="all">@import "/sites/linuxjournal.com/themes/linuxjournal/style.css";</STYLE>
+  <LINK rel="stylesheet" type="text/css" href="./Playing with ptrace, Part I_files/pygments.css">
+  <LINK rel="stylesheet" type="text/css" href="./Playing with ptrace, Part I_files/magazine.css">
+  <LINK rel="stylesheet" type="text/css" href="./Playing with ptrace, Part I_files/forum.css">
+
+  <!--[if IE 6]>
+    <link rel="stylesheet" type="text/css" href="/sites/linuxjournal.com/themes/linuxjournal/css/ie6.css" />
+  <![endif]-->
+  <!--[if IE 7]>
+    <link rel="stylesheet" type="text/css" href="/sites/linuxjournal.com/themes/linuxjournal/css/ie7.css" />
+  <![endif]--> 
+
+  <SCRIPT type="text/javascript" src="./Playing with ptrace, Part I_files/jquery.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="./Playing with ptrace, Part I_files/drupal.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="./Playing with ptrace, Part I_files/date_timezone.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="./Playing with ptrace, Part I_files/fivestar.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="./Playing with ptrace, Part I_files/textarea.js"></SCRIPT>
+<SCRIPT type="text/javascript">Drupal.extend({ settings: { "fivestar": { "titleUser": "Your rating: ", "titleAverage": "Average: ", "feedbackSavingVote": "Saving your vote...", "feedbackVoteSaved": "Your vote has been saved.", "feedbackDeletingVote": "Deleting your vote...", "feedbackVoteDeleted": "Your vote has been deleted." } } });</SCRIPT>
+  <SCRIPT src="./Playing with ptrace, Part I_files/ljcustom.js" type="text/javascript" charset="utf-8"></SCRIPT>
+  <SCRIPT src="./Playing with ptrace, Part I_files/openads.js" type="text/javascript" charset="utf-8"></SCRIPT>
+
+<LINK rel="alternate" type="application/rss+xml" title="Linux Journal - The Original Magazine of the Linux Community" href="http://www.linuxjournal.com/node/feed">
+
+<LINK rel="alternate" type="application/rss+xml" title="News from Linux Journal - The Original Magazine of the Linux Community" href="http://www.linuxjournal.com/breaking_news/feed">
+<SCRIPT type="text/javascript" src="./Playing with ptrace, Part I_files/spcjs.php"></SCRIPT><SCRIPT type="text/javascript" src="./Playing with ptrace, Part I_files/spc.php"></SCRIPT><SCRIPT type="text/javascript" src="./Playing with ptrace, Part I_files/fl.js"></SCRIPT>
+
+</HEAD><BODY class="not-logged-in ntype-xmlnode">
+  <SCRIPT src="./Playing with ptrace, Part I_files/urchin.js" type="text/javascript"></SCRIPT>
+  <SCRIPT type="text/javascript">_uacct = "UA-1117794-1"; urchinTracker();</SCRIPT>
+
+<!-- PUT THIS TAG IN THE head SECTION -->
+<SCRIPT type="text/javascript" src="./Playing with ptrace, Part I_files/google_service.js">
+</SCRIPT>
+<SCRIPT type="text/javascript">
+  GS_googleAddAdSenseService("ca-pub-3600556074671070");
+  GS_googleEnableAllServices();
+</SCRIPT><SCRIPT src="./Playing with ptrace, Part I_files/google_ads.js"></SCRIPT>
+<SCRIPT type="text/javascript">
+  GA_googleAddSlot("ca-pub-3600556074671070", "Half_Banner336x90");
+  GA_googleAddSlot("ca-pub-3600556074671070", "Large_Rectangle336x280");
+  GA_googleAddSlot("ca-pub-3600556074671070", "Leaderboard728x90");
+  GA_googleAddSlot("ca-pub-3600556074671070", "MediumRectangle300x250");
+</SCRIPT>
+<SCRIPT type="text/javascript">
+  GA_googleFetchAds();
+</SCRIPT>
+<!-- END OF TAG FOR head SECTION -->
+
+<!-- Start Quantcast tag -->
+<SCRIPT type="text/javascript" src="./Playing with ptrace, Part I_files/quant.js"></SCRIPT>
+<SCRIPT type="text/javascript">_qacct="p-a3K3N6enFe9wA";quantserve();</SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+<!-- End Quantcast tag -->
+
+
+  <DIV id="container">
+
+    <DIV id="innercontainer">
+
+      <!-- HEADER START ================================================== -->
+      <DIV id="header">
+        <H1><A href="http://www.linuxjournal.com/" title="Home"></A></H1>
+      
+        <DIV id="leaderboard-adblock" class="adblock leaderboard-adblock">
+<SCRIPT type="text/javascript"><!--// <![CDATA[
+    OA_show(58143);
+// ]]> --></SCRIPT><SPAN><SCRIPT type="text/javascript"><!--// <![CDATA[
+/* openads=http://d1.openx.org bannerid=125149 zoneid=58143 source= r_id=62462ae44d175588d4b318cda94c7b5c r_ts=kw8sr0 */
+// ]]> --></SCRIPT><SCRIPT type="text/javascript"><!--
+google_ad_client = "pub-3600556074671070";
+/* 728x90, created 7/30/09 */
+google_ad_slot = "0573660397";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</SCRIPT>
+<SCRIPT type="text/javascript" src="./Playing with ptrace, Part I_files/show_ads.js">
+</SCRIPT><SCRIPT src="./Playing with ptrace, Part I_files/test_domain.js"></SCRIPT><SCRIPT type="text/javascript" src="./Playing with ptrace, Part I_files/ag.php"></SCRIPT></SPAN><DIV id="beacon_ccd95c43fd" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><IMG src="./Playing with ptrace, Part I_files/lg.php" width="0" height="0" alt="" style="width: 0px; height: 0px;"></DIV>
+<SCRIPT>google_protectAndRun("ads_core.google_render_ad", google_handleError, google_render_ad);</SCRIPT><IFRAME name="google_ads_frame" width="728" height="90" frameborder="0" src="./Playing with ptrace, Part I_files/ads(3).html" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no"></IFRAME><NOSCRIPT></NOSCRIPT>
+</DIV>      
+        <DIV id="header_menubar">
+          
+<UL class="menu">
+<LI class="leaf"><A href="http://www.linuxjournal.com/">Home</A></LI>
+<LI class="expanded"><A href="http://www.linuxjournal.com/topics">Topics</A>
+<UL class="menu">
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/28">Audio/Video</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/18">Community</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/25">Education</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/27">Embedded</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/23">Hardware</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/19">HOWTOs</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/30">International</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/20">Reviews</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/31">Security</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/17">Software</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/21">SysAdmin</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/taxonomy/term/24">Webmaster</A></LI>
+
+</UL>
+</LI>
+<LI class="expanded"><A href="http://www.linuxjournal.com/xstatic/community">Community</A>
+<UL class="menu">
+<LI class="leaf"><A href="http://www.linuxjournal.com/xstatic/community/whatislinux">What Is Linux?</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/getlinux">How to Get Linux</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/supportedhardware">Supported Hardware</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/software">Software</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/gettinghelp">Getting Help</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/events">Industry Events</A></LI>
+
+</UL>
+</LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/forum">Forums</A></LI>
+<LI class="expanded"><A href="http://www.linuxjournal.com/magazine">Magazine</A>
+<UL class="menu">
+<LI class="leaf"><A href="http://www.linuxjournal.com/magazine">Read</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/subscriptions">Subscribe</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/renew">Renew</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/xstatic/subs/customer_service.html">Customer Service</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/archivecd">Archive CD</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/dlissue">Free Issue</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/aboutus/FAQ">FAQ</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/staff">Masthead</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/contact">Write a Letter</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/xstatic/author/index">Write for Us</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/advertising/">Advertise</A></LI>
+
+</UL>
+</LI>
+<LI class="expanded"><A href="http://lj.mybigcommerce.com/">Store</A>
+<UL class="menu">
+<LI class="leaf"><A href="http://www.linuxjournalstore.com/categories/Buttons-%26-Stickers/">Stickers</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournalstore.com/categories/T%252dShirts-%26-Apparel/">T-shirts</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournalstore.com/categories/Calendars/">Wall Calendars</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournalstore.com/categories/Archive-CD/">Archive CD</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournalstore.com/categories/Gift-Packs%7B47%7DCombo-Packs/">Gift Packs</A></LI>
+
+</UL>
+</LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/buyersguide">Buyer's Guide</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/archive_cd">Archive CD</A></LI>
+
+</UL>
+                      <A class="button" href="http://www.linuxjournal.com/user/login">Login</A>
+                    <!-- Google CSE Search Box Begins  -->
+<FORM action="http://www.linuxjournal.com/googlesearch" id="searchbox_014164207538395607518:w82fvojcgcu">
+  <INPUT type="hidden" name="cx" value="014164207538395607518:w82fvojcgcu">
+  <INPUT type="hidden" name="cof" value="FORID:11">
+  <INPUT type="text" name="as_q" size="25">
+  <INPUT type="submit" name="sa" value="Search">
+</FORM>
+<SCRIPT type="text/javascript" src="./Playing with ptrace, Part I_files/brand"></SCRIPT>
+<!-- Google CSE Search Box Ends -->
+
+
+        </DIV>
+    
+                  <DIV id="header_breadcrumb"><A href="http://www.linuxjournal.com/">Home</A></DIV>
+              </DIV>
+      <!-- HEADER END ==================================================== -->
+
+
+
+      <!-- CONTENT START ================================================= -->
+      <DIV id="content">
+      
+        <!-- CONTENT LEFT -->
+        <DIV id="content_left">
+          
+          <!-- CONTENT HEADER -->
+                    <!-- END CONTENT HEADER -->
+      
+          <!-- CONTENT BODY -->
+          <DIV id="content_body">
+                      
+                    
+                    
+                                    <DIV class="node ntype-xmlnode " id="node-6100">
+  <DIV class="head">
+
+      <H3>Playing with ptrace, Part I</H3>
+  
+        <H4>November 1st, 2002 by <A href="http://www.linuxjournal.com/user/800841" title="View user profile.">Pradeep Padala</A><SPAN class="taxonomy"> in<UL class="links inline"><LI class="first last taxonomy_term_21"><A href="http://www.linuxjournal.com/taxonomy/term/21" rel="tag" title="" class="taxonomy_term_21">SysAdmin</A></LI>
+</UL></SPAN>    </H4>
+      </DIV>
+  
+  <DIV class="content">
+        Using ptrace allows you to set up system call interception and modification at the user level.    <DIV class="diggthis_button"><SCRIPT type="text/javascript">
+digg_url = 'http://www.linuxjournal.com/article/6100';
+digg_title = "Playing with ptrace, Part I";
+digg_bodytext = "";
+
+digg_skin = 'standard';
+</SCRIPT>
+<SCRIPT src="./Playing with ptrace, Part I_files/diggthis.js" type="text/javascript"></SCRIPT><IFRAME src="./Playing with ptrace, Part I_files/diggthis.html" height="80" width="52" frameborder="0" scrolling="no"></IFRAME></DIV><FORM action="./Playing with ptrace, Part I_files/Playing with ptrace, Part I.html" accept-charset="UTF-8" method="post" id="fivestar-form-node-6100" class="fivestar-widget">
+<DIV><DIV class="fivestar-form-6100 clear-block"><INPUT type="hidden" name="content_type" id="edit-content-type-6100" value="node">
+<INPUT type="hidden" name="content_id" id="edit-content-id-6100" value="6100">
+<DIV class="fivestar-form-item  fivestar-combo-text fivestar-smart-stars fivestar-average-stars fivestar-labels-hover"><DIV class="form-item" id="edit-vote-0-wrapper">
+ <LABEL for="edit-vote-0">Average: </LABEL>
+ <INPUT type="hidden" name="vote_count" id="edit-vote-count-0" value="54">
+<INPUT type="hidden" name="vote_average" id="edit-vote-average-0" value="91.8519">
+<INPUT type="hidden" name="auto_submit_path" id="edit-auto-submit-path-0" value="/fivestar/vote/node/6100" class="fivestar-path">
+<SELECT name="vote" class="form-select" id="edit-vote-0" style="display: none; "><OPTION value="-">Select rating</OPTION><OPTION value="0">Cancel rating</OPTION><OPTION value="20">Poor</OPTION><OPTION value="40">Okay</OPTION><OPTION value="60">Good</OPTION><OPTION value="80">Great</OPTION><OPTION value="100" selected="selected">Awesome</OPTION></SELECT><DIV class="fivestar-widget clear-block fivestar-widget-5"><DIV class="cancel"><A href="http://www.linuxjournal.com/article/6100#0" title="Cancel rating">Cancel rating</A></DIV><DIV class="star star-1 star-odd star-first on"><A href="http://www.linuxjournal.com/article/6100#20" title="Poor">Poor</A></DIV><DIV class="star star-2 star-even on"><A href="http://www.linuxjournal.com/article/6100#40" title="Okay">Okay</A></DIV><DIV class="star star-3 star-odd on"><A href="http://www.linuxjournal.com/article/6100#60" title="Good">Good</A></DIV><DIV class="star star-4 star-even on"><A href="http://www.linuxjournal.com/article/6100#80" title="Great">Great</A></DIV><DIV class="star star-5 star-odd star-last on"><A href="http://www.linuxjournal.com/article/6100#100" title="Awesome" style="width: 59.2595%; ">Awesome</A></DIV></DIV>
+ <DIV class="description"><DIV class="fivestar-summary fivestar-summary-combo fivestar-feedback-enabled"><SPAN class="user-rating">Your rating: <SPAN>None</SPAN></SPAN> <SPAN class="average-rating">Average: <SPAN>4.6</SPAN></SPAN> <SPAN class="total-votes">(<SPAN>54</SPAN> votes)</SPAN></DIV></DIV>
+</DIV>
+</DIV><INPUT type="hidden" name="destination" id="edit-destination-6100" value="node/6100">
+<INPUT type="submit" name="op" id="edit-fivestar-submit-6100" value="Rate" class="form-submit fivestar-submit" style="display: none; ">
+<INPUT type="hidden" name="form_id" id="edit-fivestar-form-node-6100" value="fivestar_form_node_6100">
+</DIV>
+</DIV></FORM>
+<DIV class="article" lang="en"><DIV class="simplesect" lang="en"><DIV class="titlepage"><A name="N0xa50890.0xb44f38"></A></DIV><P>Have you ever wondered how system calls
+can be intercepted? Have you ever tried fooling the kernel by
+changing system call arguments? Have you ever wondered how
+debuggers stop a running process and let you take control of the
+process?
+</P><P>If you are thinking of using complex kernel programming to
+accomplish tasks, think again. Linux provides an elegant mechanism
+to achieve all of these things: the ptrace (Process Trace) system
+call. <SPAN class="bold"><B>ptrace</B></SPAN> provides a mechanism
+by which a parent process may observe and control the execution of
+another process. It can examine and change its core image and
+registers and is used primarily to implement breakpoint debugging
+and system call tracing.</P><P>In this article, we learn how to intercept a system call and
+change its arguments. In Part II of the article we will study
+advanced techniques—setting breakpoints and injecting code into a
+running program. We will peek into the child process' registers and
+data segment and modify the contents. We will also describe a way
+to inject code so the process can be stopped and execute arbitrary
+instructions.</P></DIV><DIV class="simplesect" lang="en"><DIV class="titlepage"><A name="N0xa50890.0xb45148"></A>Basics</DIV><P>Operating systems offer services through a standard mechanism
+called system calls. They provide a standard API for accessing the
+underlying hardware and low-level services, such as the
+filesystems. When a process wants to invoke a system call, it puts
+the arguments to system calls in registers and calls soft interrupt
+0x80. This soft interrupt is like a gate to the kernel mode, and
+the kernel will execute the system call after examining the
+arguments.</P><P>On the i386 architecture (all the code in this article is
+i386-specific), the system call number is put in the register %eax.
+The arguments to this system call are put into registers %ebx,
+%ecx, %edx, %esi and %edi, in that order. For example, the
+call:</P><PRE class="programlisting">write(2, "Hello", 5)
+</PRE><P>roughly would translate into
+</P><PRE class="programlisting">movl   $4, %eax
+movl   $2, %ebx
+movl   $hello,%ecx
+movl   $5, %edx
+int    $0x80
+</PRE>
+
+
+where $hello points to a literal string “Hello”.
+<P></P><P>So where does ptrace come into picture? Before executing the
+system call, the kernel checks whether the process is being traced.
+If it is, the kernel stops the process and gives control to the
+tracking process so it can examine and modify the traced process'
+registers.</P><P>Let's clarify this explanation with an example of how the
+process works:</P><PRE class="programlisting">#include &lt;sys/ptrace.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;linux/user.h&gt;   /* For constants
+                                   ORIG_EAX etc */
+int main()
+{   pid_t child;
+    long orig_eax;
+    child = fork();
+    if(child == 0) {
+        ptrace(PTRACE_TRACEME, 0, NULL, NULL);
+        execl("/bin/ls", "ls", NULL);
+    }
+    else {
+        wait(NULL);
+        orig_eax = ptrace(PTRACE_PEEKUSER,
+                          child, 4 * ORIG_EAX,
+                          NULL);
+        printf("The child made a "
+               "system call %ld\n", orig_eax);
+        ptrace(PTRACE_CONT, child, NULL, NULL);
+    }
+    return 0;
+}
+</PRE><P>When run, this program prints:
+</P><PRE class="programlisting">The child made a system call 11
+</PRE>
+
+
+along with the output of ls. System call number 11 is execve, and
+it's the first system call executed by the child. For reference,
+system call numbers can be found in /usr/include/asm/unistd.h.
+<P></P><P>As you can see in the example, a process forks a child and
+the child executes the process we want to trace. Before running
+<B>exec</B>, the child calls ptrace with the first
+argument, equal to PTRACE_TRACEME. This tells the kernel that the
+process is being traced, and when the child executes the execve
+system call, it hands over control to its parent. The parent waits
+for notification from the kernel with a wait() call. Then the
+parent can check the arguments of the system call or do other
+things, such as looking into the registers.</P><P>When the system call occurs, the kernel saves the original
+contents of the eax register, which contains the system call
+number. We can read this value from child's USER segment by calling
+ptrace with the first argument PTRACE_PEEKUSER, shown as
+above.</P><P>After we are done examining the system call, the child can
+continue with a call to ptrace with the first argument PTRACE_CONT,
+which lets the system call continue.</P></DIV><DIV class="simplesect" lang="en"><DIV class="titlepage"><A name="N0xa50890.0xb456c8"></A>ptrace Parameters</DIV><P><SPAN class="bold"><B>ptrace</B></SPAN> is called with four
+arguments:</P><PRE class="programlisting">long ptrace(enum __ptrace_request request,
+            pid_t pid,
+            void *addr,
+            void *data);
+</PRE><P>The first argument determines the behaviour of ptrace and how
+other arguments are used. The value of request should be one of
+PTRACE_TRACEME, PTRACE_PEEKTEXT, PTRACE_PEEKDATA, PTRACE_PEEKUSER,
+PTRACE_POKETEXT, PTRACE_POKEDATA, PTRACE_POKEUSER, PTRACE_GETREGS,
+PTRACE_GETFPREGS, PTRACE_SETREGS, PTRACE_SETFPREGS, PTRACE_CONT,
+PTRACE_SYSCALL, PTRACE_SINGLESTEP, PTRACE_DETACH. The significance
+of each of these requests will be explained in the rest of the
+article.
+</P></DIV><DIV class="simplesect" lang="en"><DIV class="titlepage"><A name="N0xa50890.0xb458d8"></A>Reading System Call Parameters</DIV><P>By calling ptrace with PTRACE_PEEKUSER as the first argument,
+we can examine the contents of the USER area where register
+contents and other information is stored. The kernel stores the
+contents of registers in this area for the parent process to
+examine through ptrace.</P><P>Let's show this with an example:</P><PRE class="programlisting">#include &lt;sys/ptrace.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;linux/user.h&gt;
+#include &lt;sys/syscall.h&gt;   /* For SYS_write etc */
+int main()
+{   pid_t child;
+    long orig_eax, eax;
+    long params[3];
+    int status;
+    int insyscall = 0;
+    child = fork();
+    if(child == 0) {
+        ptrace(PTRACE_TRACEME, 0, NULL, NULL);
+        execl("/bin/ls", "ls", NULL);
+    }
+    else {
+       while(1) {
+          wait(&amp;status);
+          if(WIFEXITED(status))
+              break;
+          orig_eax = ptrace(PTRACE_PEEKUSER,
+                     child, 4 * ORIG_EAX, NULL);
+          if(orig_eax == SYS_write) {
+             if(insyscall == 0) {
+                /* Syscall entry */
+                insyscall = 1;
+                params[0] = ptrace(PTRACE_PEEKUSER,
+                                   child, 4 * EBX,
+                                   NULL);
+                params[1] = ptrace(PTRACE_PEEKUSER,
+                                   child, 4 * ECX,
+                                   NULL);
+                params[2] = ptrace(PTRACE_PEEKUSER,
+                                   child, 4 * EDX,
+                                   NULL);
+                printf("Write called with "
+                       "%ld, %ld, %ld\n",
+                       params[0], params[1],
+                       params[2]);
+                }
+          else { /* Syscall exit */
+                eax = ptrace(PTRACE_PEEKUSER,
+                             child, 4 * EAX, NULL);
+                    printf("Write returned "
+                           "with %ld\n", eax);
+                    insyscall = 0;
+                }
+            }
+            ptrace(PTRACE_SYSCALL,
+                   child, NULL, NULL);
+        }
+    }
+    return 0;
+}
+</PRE><P>This program should print an output similar to the following:
+</P><PRE class="programlisting">ppadala@linux:~/ptrace &gt; ls
+a.out        dummy.s      ptrace.txt
+libgpm.html  registers.c  syscallparams.c
+dummy        ptrace.html  simple.c
+ppadala@linux:~/ptrace &gt; ./a.out
+Write called with 1, 1075154944, 48
+a.out        dummy.s      ptrace.txt
+Write returned with 48
+Write called with 1, 1075154944, 59
+libgpm.html  registers.c  syscallparams.c
+Write returned with 59
+Write called with 1, 1075154944, 30
+dummy        ptrace.html  simple.c
+Write returned with 30
+</PRE>
+
+
+Here we are tracing the write system calls, and
+<B>ls</B> makes three write system calls. The call to
+ptrace, with a first argument of PTRACE_SYSCALL, makes the kernel
+stop the child process whenever a system call entry or exit is
+made. It's equivalent to doing a PTRACE_CONT and stopping at the
+next system call entry/exit.
+<P></P><P>In the previous example, we used PTRACE_PEEKUSER to look into
+the arguments of the write system call. When a system call returns,
+the return value is placed in %eax, and it can be read as shown in
+that example.</P><P>The status variable in the wait call is used to check whether
+the child has exited. This is the typical way to check whether the
+child has been stopped by ptrace or was able to exit. For more
+details on macros like WIFEXITED, see the wait(2) man page.</P></DIV><DIV class="simplesect" lang="en"><DIV class="titlepage"><A name="N0xa50890.0xb45c48"></A>Reading Register Values</DIV><P>If you want to read register values at the time of a syscall
+entry or exit, the procedure shown above can be cumbersome. Calling
+ptrace with a first argument of PTRACE_GETREGS will place all the
+registers in a single call.</P><P>The code to fetch register values looks like this:</P><PRE class="programlisting">#include &lt;sys/ptrace.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;linux/user.h&gt;
+#include &lt;sys/syscall.h&gt;
+int main()
+{   pid_t child;
+    long orig_eax, eax;
+    long params[3];
+    int status;
+    int insyscall = 0;
+    struct user_regs_struct regs;
+    child = fork();
+    if(child == 0) {
+        ptrace(PTRACE_TRACEME, 0, NULL, NULL);
+        execl("/bin/ls", "ls", NULL);
+    }
+    else {
+       while(1) {
+          wait(&amp;status);
+          if(WIFEXITED(status))
+              break;
+          orig_eax = ptrace(PTRACE_PEEKUSER,
+                            child, 4 * ORIG_EAX,
+                            NULL);
+          if(orig_eax == SYS_write) {
+              if(insyscall == 0) {
+                 /* Syscall entry */
+                 insyscall = 1;
+                 ptrace(PTRACE_GETREGS, child,
+                        NULL, &amp;regs);
+                 printf("Write called with "
+                        "%ld, %ld, %ld\n",
+                        regs.ebx, regs.ecx,
+                        regs.edx);
+             }
+             else { /* Syscall exit */
+                 eax = ptrace(PTRACE_PEEKUSER,
+                              child, 4 * EAX,
+                              NULL);
+                 printf("Write returned "
+                        "with %ld\n", eax);
+                 insyscall = 0;
+             }
+          }
+          ptrace(PTRACE_SYSCALL, child,
+                 NULL, NULL);
+       }
+   }
+   return 0;
+}
+</PRE><P>This code is similar to the previous example except for the
+call to ptrace with PTRACE_GETREGS. Here we have made use of the
+user_regs_struct defined in &lt;linux/user.h&gt; to read the
+register values.
+</P></DIV><DIV class="simplesect" lang="en"><DIV class="titlepage"><A name="N0xa50890.0xb45e58"></A>Doing Funny Things</DIV><P>Now it's time for some fun. In the following example, we will
+reverse the string passed to the write system call:</P><PRE class="programlisting">#include &lt;sys/ptrace.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;linux/user.h&gt;
+#include &lt;sys/syscall.h&gt;
+const int long_size = sizeof(long);
+void reverse(char *str)
+{   int i, j;
+    char temp;
+    for(i = 0, j = strlen(str) - 2;
+        i &lt;= j; ++i, --j) {
+        temp = str[i];
+        str[i] = str[j];
+        str[j] = temp;
+    }
+}
+void getdata(pid_t child, long addr,
+             char *str, int len)
+{   char *laddr;
+    int i, j;
+    union u {
+            long val;
+            char chars[long_size];
+    }data;
+    i = 0;
+    j = len / long_size;
+    laddr = str;
+    while(i &lt; j) {
+        data.val = ptrace(PTRACE_PEEKDATA,
+                          child, addr + i * 4,
+                          NULL);
+        memcpy(laddr, data.chars, long_size);
+        ++i;
+        laddr += long_size;
+    }
+    j = len % long_size;
+    if(j != 0) {
+        data.val = ptrace(PTRACE_PEEKDATA,
+                          child, addr + i * 4,
+                          NULL);
+        memcpy(laddr, data.chars, j);
+    }
+    str[len] = '\0';
+}
+void putdata(pid_t child, long addr,
+             char *str, int len)
+{   char *laddr;
+    int i, j;
+    union u {
+            long val;
+            char chars[long_size];
+    }data;
+    i = 0;
+    j = len / long_size;
+    laddr = str;
+    while(i &lt; j) {
+        memcpy(data.chars, laddr, long_size);
+        ptrace(PTRACE_POKEDATA, child,
+               addr + i * 4, data.val);
+        ++i;
+        laddr += long_size;
+    }
+    j = len % long_size;
+    if(j != 0) {
+        memcpy(data.chars, laddr, j);
+        ptrace(PTRACE_POKEDATA, child,
+               addr + i * 4, data.val);
+    }
+}
+int main()
+{
+   pid_t child;
+   child = fork();
+   if(child == 0) {
+      ptrace(PTRACE_TRACEME, 0, NULL, NULL);
+      execl("/bin/ls", "ls", NULL);
+   }
+   else {
+      long orig_eax;
+      long params[3];
+      int status;
+      char *str, *laddr;
+      int toggle = 0;
+      while(1) {
+         wait(&amp;status);
+         if(WIFEXITED(status))
+             break;
+         orig_eax = ptrace(PTRACE_PEEKUSER,
+                           child, 4 * ORIG_EAX,
+                           NULL);
+         if(orig_eax == SYS_write) {
+            if(toggle == 0) {
+               toggle = 1;
+               params[0] = ptrace(PTRACE_PEEKUSER,
+                                  child, 4 * EBX,
+                                  NULL);
+               params[1] = ptrace(PTRACE_PEEKUSER,
+                                  child, 4 * ECX,
+                                  NULL);
+               params[2] = ptrace(PTRACE_PEEKUSER,
+                                  child, 4 * EDX,
+                                  NULL);
+               str = (char *)calloc((params[2]+1)
+                                 * sizeof(char));
+               getdata(child, params[1], str,
+                       params[2]);
+               reverse(str);
+               putdata(child, params[1], str,
+                       params[2]);
+            }
+            else {
+               toggle = 0;
+            }
+         }
+      ptrace(PTRACE_SYSCALL, child, NULL, NULL);
+      }
+   }
+   return 0;
+}
+</PRE><P>The output looks like this:
+</P><PRE class="programlisting">ppadala@linux:~/ptrace &gt; ls
+a.out        dummy.s      ptrace.txt
+libgpm.html  registers.c  syscallparams.c
+dummy        ptrace.html  simple.c
+ppadala@linux:~/ptrace &gt; ./a.out
+txt.ecartp      s.ymmud      tuo.a
+c.sretsiger     lmth.mpgbil  c.llacys_egnahc
+c.elpmis        lmth.ecartp  ymmud
+</PRE>
+
+
+This example makes use of all the concepts previously discussed,
+plus a few more. In it, we use calls to ptrace with PTRACE_POKEDATA
+to change the data values. It works exactly the same way as
+PTRACE_PEEKDATA, except it both reads and writes the data thatt the
+child passes in arguments to the system call whereas PEEKDATA only
+reads the data.
+<P></P></DIV><DIV class="simplesect" lang="en"><DIV class="titlepage"><A name="N0xa50890.0xb46068"></A>Single-Stepping</DIV><P><SPAN class="bold"><B>ptrace</B></SPAN> provides features to
+single-step through the child's code. The call to
+ptrace(PTRACE_SINGLESTEP,..) tells the kernel to stop the child at
+each instruction and let the parent take control. The following
+example shows a way of reading the instruction being executed when
+a system call is executed. I have created a small dummy executable
+for you to understand what is happening instead of bothering with
+the calls made by libc.</P><P>Here's the listing for dummy1.s. It's written in assembly
+language and compiled as gcc -o dummy1 dummy1.s:</P><PRE class="programlisting">.data
+hello:
+    .string "hello world\n"
+.globl  main
+main:
+    movl    $4, %eax
+    movl    $2, %ebx
+    movl    $hello, %ecx
+    movl    $12, %edx
+    int     $0x80
+    movl    $1, %eax
+    xorl    %ebx, %ebx
+    int     $0x80
+    ret
+</PRE><P>The example program that single-steps through the above code
+is:
+</P><PRE class="programlisting">#include &lt;sys/ptrace.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;linux/user.h&gt;
+#include &lt;sys/syscall.h&gt;
+int main()
+{   pid_t child;
+    const int long_size = sizeof(long);
+    child = fork();
+    if(child == 0) {
+        ptrace(PTRACE_TRACEME, 0, NULL, NULL);
+        execl("./dummy1", "dummy1", NULL);
+    }
+    else {
+        int status;
+        union u {
+            long val;
+            char chars[long_size];
+        }data;
+        struct user_regs_struct regs;
+        int start = 0;
+        long ins;
+        while(1) {
+            wait(&amp;status);
+            if(WIFEXITED(status))
+                break;
+            ptrace(PTRACE_GETREGS,
+                   child, NULL, &amp;regs);
+            if(start == 1) {
+                ins = ptrace(PTRACE_PEEKTEXT,
+                             child, regs.eip,
+                             NULL);
+                printf("EIP: %lx Instruction "
+                       "executed: %lx\n",
+                       regs.eip, ins);
+            }
+            if(regs.orig_eax == SYS_write) {
+                start = 1;
+                ptrace(PTRACE_SINGLESTEP, child,
+                       NULL, NULL);
+            }
+            else
+                ptrace(PTRACE_SYSCALL, child,
+                       NULL, NULL);
+        }
+    }
+    return 0;
+}
+</PRE>
+
+
+This program prints:
+<PRE class="programlisting">hello world
+EIP: 8049478 Instruction executed: 80cddb31
+EIP: 804947c Instruction executed: c3
+</PRE>
+
+
+You might have to look at Intel's manuals to make sense out of
+those instruction bytes. Using single stepping for more complex
+processes, such as setting breakpoints, requires careful design and
+more complex code.
+<P></P><P>In Part II, we will see how breakpoints can be inserted and
+code can be injected into a running program.</P><P>All of the example code from this article and from Part II
+(which will be printed in next month's issue) is available as a tar
+archive on the <I>Linux Journal</I> FTP site
+[<A href="ftp://ftp.ssc.com/pub/lj/listings/issue103/6011.tgz">ftp.ssc.com/pub/lj/listings/issue103/6011.tgz</A>].</P></DIV></DIV>
+<DIV class="authorblurb"><P>
+        </P><DIV class="mediaobject"><IMG src="./Playing with ptrace, Part I_files/6100aa.png"></DIV>
+
+       email: <A href="mailto:ppadala@cise.ufl.edu">ppadala@cise.ufl.edu</A>
+       <P></P><P><SPAN class="bold"><B>Pradeep Padala</B></SPAN>
+      is currently working on his Master's degree at the University of
+      Florida. His research interests include Grid and distributed
+      systems. He can be reached via e-mail at
+      <A href="mailto:p_padala@yahoo.com">p_padala@yahoo.com</A>
+      or through his web site
+      (<A href="http://www.cise.ufl.edu/~ppadala">www.cise.ufl.edu/~ppadala</A>).</P></DIV>
+
+
+__________________________
+<BR>    <DIV id="block-block-55" class="block block-block"> 
+    <DIV class="content">
+    <STYLE>
+hr {border: solid 1px #ccc}
+.small {font-size: .8em}
+</STYLE><P>
+</P><HR><P></P>
+<P><A href="http://www.linuxjournal.com/2free"><STRONG>Special Magazine Offer -- Free Gift with Subscription</STRONG></A><BR>
+Receive a free digital copy of <CITE>Linux Journal</CITE>'s System Administration Special Edition as well as instant online access to current and past issues. <A href="http://www.linuxjournal.com/2free">CLICK HERE for offer</A></P>
+<P><CITE>Linux Journal</CITE>: delivering readers the advice and inspiration they need to get the most out of their Linux systems since 1994.</P>
+  </DIV>  
+</DIV>
+
+  </DIV>
+ 
+    <DIV class="links"><UL class="links inline"><LI class="first print_html"><A href="http://www.linuxjournal.com/print/6100" title="Display a printer-friendly version of this page." class="print-page print_html" rel="nofollow">Printer-friendly version</A></LI>
+<LI class="service_links_delicious"><A href="http://del.icio.us/post?url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F6100&title=Playing+with+ptrace%2C+Part+I" title="Bookmark this post on del.icio.us." rel="nofollow" class="service_links_delicious"><IMG src="./Playing with ptrace, Part I_files/delicious.png" alt="Delicious"> Delicious</A></LI>
+<LI class="service_links_digg"><A href="http://digg.com/submit?phase=2&url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F6100&title=Playing+with+ptrace%2C+Part+I" title="Digg this post on digg.com." rel="nofollow" class="service_links_digg"><IMG src="./Playing with ptrace, Part I_files/digg.png" alt="Digg"> Digg</A></LI>
+<LI class="service_links_stumbleupon"><A href="http://www.stumbleupon.com/submit?url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F6100&title=Playing+with+ptrace%2C+Part+I" title="Thumb this up at StumbleUpon." rel="nofollow" class="service_links_stumbleupon"><IMG src="./Playing with ptrace, Part I_files/stumbleit.png" alt="StumbleUpon"> StumbleUpon</A></LI>
+<LI class="service_links_reddit"><A href="http://reddit.com/submit?url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F6100&title=Playing+with+ptrace%2C+Part+I" title="Submit this post on reddit.com." rel="nofollow" class="service_links_reddit"><IMG src="./Playing with ptrace, Part I_files/reddit.png" alt="Reddit"> Reddit</A></LI>
+<LI class="service_links_facebook"><A href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F6100&t=Playing+with+ptrace%2C+Part+I" title="Share on Facebook." rel="nofollow" class="service_links_facebook"><IMG src="./Playing with ptrace, Part I_files/facebook.png" alt="Facebook"> Facebook</A></LI>
+<LI class="last tweet"><A href="http://twitter.com/home?status=From+LinuxJournal.com%3A+Playing+with+ptrace%2C+Part+I+www.is.gd/5IbkR" class="tweet tweet" rel="nofollow" target="_blank"><IMG src="./Playing with ptrace, Part I_files/icon.png" alt="Post to Twitter" title="Post to Twitter"> Post to Twitter</A></LI>
+</UL></DIV>
+    </DIV>
+   <DIV class="contentad">
+<!-- medium rectangle -->
+<SCRIPT type="text/javascript"><!--// <![CDATA[
+    OA_show(58147);
+// ]]> --></SCRIPT><SPAN><SCRIPT type="text/javascript"><!--// <![CDATA[
+/* openads=http://d1.openx.org bannerid=125148 zoneid=58147 source= r_id=351653ec6d466387443ee6cb29b17e98 r_ts=kw8sr0 */
+// ]]> --></SCRIPT><SCRIPT type="text/javascript"><!--
+google_ad_client = "pub-3600556074671070";
+/* 300x250, created 7/30/09 */
+google_ad_slot = "0663527410";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</SCRIPT>
+<SCRIPT type="text/javascript" src="./Playing with ptrace, Part I_files/show_ads.js">
+</SCRIPT><SCRIPT>google_protectAndRun("ads_core.google_render_ad", google_handleError, google_render_ad);</SCRIPT><IFRAME name="google_ads_frame" width="300" height="250" frameborder="0" src="./Playing with ptrace, Part I_files/ads(1).html" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no"></IFRAME><SCRIPT type="text/javascript" src="./Playing with ptrace, Part I_files/ag.php"></SCRIPT></SPAN><DIV id="beacon_16a9904e38" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><IMG src="./Playing with ptrace, Part I_files/lg(1).php" width="0" height="0" alt="" style="width: 0px; height: 0px;"></DIV>
+<NOSCRIPT></NOSCRIPT>
+<!-- end medium rectangle -->
+  </DIV>
+  <DIV id="comments"><FORM action="./Playing with ptrace, Part I_files/Playing with ptrace, Part I.html" accept-charset="UTF-8" method="post" id="comment-controls">
+<DIV>  <DIV class="box">
+    <H2 class="title">Comment viewing options</H2>    <DIV class="content"><DIV class="container-inline"><INPUT type="hidden" name="form_id" id="edit-comment-controls" value="comment_controls">
+<DIV class="form-item" id="edit-mode-wrapper">
+ <SELECT name="mode" class="form-select" id="edit-mode"><OPTION value="1">Flat list - collapsed</OPTION><OPTION value="2">Flat list - expanded</OPTION><OPTION value="3">Threaded list - collapsed</OPTION><OPTION value="4" selected="selected">Threaded list - expanded</OPTION></SELECT>
+</DIV>
+<DIV class="form-item" id="edit-order-wrapper">
+ <SELECT name="order" class="form-select" id="edit-order"><OPTION value="1" selected="selected">Date - newest first</OPTION><OPTION value="2">Date - oldest first</OPTION></SELECT>
+</DIV>
+<DIV class="form-item" id="edit-comments-per-page-wrapper">
+ <SELECT name="comments_per_page" class="form-select" id="edit-comments-per-page"><OPTION value="10">10 comments per page</OPTION><OPTION value="30">30 comments per page</OPTION><OPTION value="50" selected="selected">50 comments per page</OPTION><OPTION value="70">70 comments per page</OPTION><OPTION value="90">90 comments per page</OPTION><OPTION value="150">150 comments per page</OPTION><OPTION value="200">200 comments per page</OPTION><OPTION value="250">250 comments per page</OPTION><OPTION value="300">300 comments per page</OPTION></SELECT>
+</DIV>
+<INPUT type="submit" name="op" id="edit-submit" value="Save settings" class="form-submit">
+</DIV><DIV class="description">Select your preferred way to display the comments and click "Save settings" to activate your changes.</DIV></DIV>
+ </DIV>
+
+
+</DIV></FORM>
+<A id="comment-345221"></A>
+<DIV class="comment odd">
+  <DIV class="head">
+        <SPAN class="avatar"><DIV class="picture"><IMG src="./Playing with ptrace, Part I_files/babytux.png" alt="Aliphany&#39;s picture" title="Aliphany&#39;s picture"></DIV></SPAN>
+    <H3><A href="http://www.linuxjournal.com/article/6100#comment-345221" class="active">Error in putdata()</A></H3>
+    <H4>On November 11th, 2009 Aliphany (not verified) says:</H4>
+  </DIV>
+  <DIV class="content">
+    <P>Please be aware that putdata() contains a serious mistake.  If len is not a multiple of four, then putdata() should read the final long value, replace one, two, or three bytes, and then write the value.  This mistake causes the second example in Part II to seg fault.</P>
+  </DIV>
+  <DIV class="links">
+    <UL class="links"><LI class="first last comment_reply"><A href="http://www.linuxjournal.com/comment/reply/6100/345221" class="comment_reply">reply</A></LI>
+</UL>  </DIV>
+</DIV>
+<A id="comment-343649"></A>
+<DIV class="comment even">
+  <DIV class="head">
+        <SPAN class="avatar"><DIV class="picture"><IMG src="./Playing with ptrace, Part I_files/babytux.png" alt="ChrisO&#39;s picture" title="ChrisO&#39;s picture"></DIV></SPAN>
+    <H3><A href="http://www.linuxjournal.com/article/6100#comment-343649" class="active">Thanks</A></H3>
+    <H4>On October 6th, 2009 ChrisO (not verified) says:</H4>
+  </DIV>
+  <DIV class="content">
+    <P>Great article, thanks!</P>
+<P>One question though, why do you multiply the addresses of registers by 4 when reading them with PTRACE_PEEKDATA?</P>
+  </DIV>
+  <DIV class="links">
+    <UL class="links"><LI class="first last comment_reply"><A href="http://www.linuxjournal.com/comment/reply/6100/343649" class="comment_reply">reply</A></LI>
+</UL>  </DIV>
+</DIV>
+<DIV class="indented"><A id="comment-343653"></A>
+<DIV class="comment odd">
+  <DIV class="head">
+        <SPAN class="avatar"><DIV class="picture"><A href="http://www.linuxjournal.com/users/mitch-frazier" title="View user profile."><IMG src="./Playing with ptrace, Part I_files/picture-801406.jpg" alt="Mitch Frazier&#39;s picture" title="Mitch Frazier&#39;s picture"></A></DIV></SPAN>
+    <H3><A href="http://www.linuxjournal.com/article/6100#comment-343653" class="active">Indexes not addresses</A></H3>
+    <H4>On October 6th, 2009 <A href="http://www.linuxjournal.com/users/mitch-frazier" title="View user profile.">Mitch Frazier</A> says:</H4>
+  </DIV>
+  <DIV class="content">
+    <P>The register "addresses" you're referring to (EAX, EBX, etc) are indexes:</P>
+<PRE>#define EBX 0
+#define ECX 1
+#define EDX 2
+#define ESI 3
+#define EDI 4
+...
+</PRE><P>into the user data:</P>
+<PRE>struct user_regs_struct
+{
+  long int ebx;
+  long int ecx;
+  long int edx;
+  long int esi;
+  long int edi;
+  ...
+</PRE><P>So to get an address, multiply by 4 (the "word" size on a x86 system).</P>
+
+__________________________
+<BR><P>Mitch Frazier is an Associate Editor for <I>Linux Journal</I> and the Web Editor for linuxjournal.com.</P>
+  </DIV>
+  <DIV class="links">
+    <UL class="links"><LI class="first last comment_reply"><A href="http://www.linuxjournal.com/comment/reply/6100/343653" class="comment_reply">reply</A></LI>
+</UL>  </DIV>
+</DIV>
+</DIV><A id="comment-342213"></A>
+<DIV class="comment even">
+  <DIV class="head">
+        <SPAN class="avatar"><DIV class="picture"><IMG src="./Playing with ptrace, Part I_files/babytux.png" alt="Anonymous&#39;s picture" title="Anonymous&#39;s picture"></DIV></SPAN>
+    <H3><A href="http://www.linuxjournal.com/article/6100#comment-342213" class="active">ptrace and threads</A></H3>
+    <H4>On August 31st, 2009 Anonymous (not verified) says:</H4>
+  </DIV>
+  <DIV class="content">
+    <P>I'm posting this hoping the next fellow who encounters this gotcha can save a little time...</P>
+<P>ptrace only works in the base thread of the parent process.  ptrace(PTRACE_CONT, pid) will fail with ESRCH (process not found) if issued in a child thread on Linux.</P>
+<P>If you are thinking of using a debugger thread to watch each child thread, give it up.  It won't work.  And unless you find this message or have a sudden epiphany, you are liable to spend a great deal of time bashing your poor head against the wall.</P>
+<P>Google, take it from here!</P>
+  </DIV>
+  <DIV class="links">
+    <UL class="links"><LI class="first last comment_reply"><A href="http://www.linuxjournal.com/comment/reply/6100/342213" class="comment_reply">reply</A></LI>
+</UL>  </DIV>
+</DIV>
+<A id="comment-342210"></A>
+<DIV class="comment odd">
+  <DIV class="head">
+        <SPAN class="avatar"><DIV class="picture"><IMG src="./Playing with ptrace, Part I_files/babytux.png" alt="Karan Verma&#39;s picture" title="Karan Verma&#39;s picture"></DIV></SPAN>
+    <H3><A href="http://www.linuxjournal.com/article/6100#comment-342210" class="active">line numbers ptrace</A></H3>
+    <H4>On August 31st, 2009 Karan Verma (not verified) says:</H4>
+  </DIV>
+  <DIV class="content">
+    <P>Hi </P>
+<P>If we want to put a breakpoint at a particular line number, how would we accomplish that using ptrace?</P>
+  </DIV>
+  <DIV class="links">
+    <UL class="links"><LI class="first last comment_reply"><A href="http://www.linuxjournal.com/comment/reply/6100/342210" class="comment_reply">reply</A></LI>
+</UL>  </DIV>
+</DIV>
+<A id="comment-342120"></A>
+<DIV class="comment even">
+  <DIV class="head">
+        <SPAN class="avatar"><DIV class="picture"><IMG src="./Playing with ptrace, Part I_files/babytux.png" alt="Patel&#39;s picture" title="Patel&#39;s picture"></DIV></SPAN>
+    <H3><A href="http://www.linuxjournal.com/article/6100#comment-342120" class="active">Hi Pradeep, 
+    Thanks a</A></H3>
+    <H4>On August 27th, 2009 Patel (not verified) says:</H4>
+  </DIV>
+  <DIV class="content">
+    <P>Hi Pradeep, </P>
+<P>    Thanks a lot for this article, this is the one which helped me to write my own tool, to capture all the system calls(including calls from forked/child processes too). Thanks again!!!</P>
+<P>~Patel</P>
+  </DIV>
+  <DIV class="links">
+    <UL class="links"><LI class="first last comment_reply"><A href="http://www.linuxjournal.com/comment/reply/6100/342120" class="comment_reply">reply</A></LI>
+</UL>  </DIV>
+</DIV>
+  <DIV class="box">
+    <H2 class="title">Post new comment</H2>    <DIV class="content"><FORM action="http://www.linuxjournal.com/comment/reply/6100" accept-charset="UTF-8" method="post" id="comment-form">
+<DIV><DIV><DIV class="comment_help">Please note that comments may not appear immediately, so there is no need to repost your comment.</DIV><DIV class="form-item" id="edit-name-wrapper">
+ <LABEL for="edit-name">Your name: </LABEL>
+ <INPUT type="text" maxlength="60" name="name" id="edit-name" size="30" value="Anonymous" class="form-text">
+</DIV>
+<DIV class="form-item" id="edit-mail-wrapper">
+ <LABEL for="edit-mail">E-mail: </LABEL>
+ <INPUT type="text" maxlength="64" name="mail" id="edit-mail" size="30" value="" class="form-text">
+ <DIV class="description">The content of this field is kept private and will not be shown publicly.</DIV>
+</DIV>
+<DIV class="form-item" id="edit-homepage-wrapper">
+ <LABEL for="edit-homepage">Homepage: </LABEL>
+ <INPUT type="text" maxlength="255" name="homepage" id="edit-homepage" size="30" value="" class="form-text">
+</DIV>
+<DIV class="form-item" id="edit-subject-wrapper">
+ <LABEL for="edit-subject">Subject: </LABEL>
+ <INPUT type="text" maxlength="64" name="subject" id="edit-subject" size="60" value="" class="form-text">
+</DIV>
+<DIV class="form-item" id="edit-comment-wrapper">
+ <LABEL for="edit-comment">Comment: <SPAN class="form-required" title="This field is required.">*</SPAN></LABEL>
+ <DIV class="resizable-textarea"><SPAN><TEXTAREA cols="60" rows="15" name="comment" id="edit-comment" class="form-textarea resizable required processed"></TEXTAREA><DIV class="grippie" style="margin-right: -6px; "></DIV></SPAN></DIV>
+</DIV>
+<UL class="tips"><LI>Allowed HTML tags: &lt;a&gt; &lt;em&gt; &lt;strong&gt; &lt;cite&gt; &lt;code&gt; &lt;pre&gt; &lt;ul&gt; &lt;ol&gt; &lt;li&gt; &lt;dl&gt; &lt;dt&gt; &lt;dd&gt; &lt;i&gt; &lt;b&gt;</LI><LI>Lines and paragraphs break automatically.</LI></UL><P><A href="http://www.linuxjournal.com/filter/tips">More information about formatting options</A></P><INPUT type="hidden" name="form_id" id="edit-comment-form" value="comment_form">
+<INPUT type="submit" name="op" id="edit-preview" value="Preview comment" class="form-submit">
+</DIV>
+</DIV></FORM>
+</DIV>
+ </DIV>
+
+</DIV>                      </DIV>
+      
+          <DIV class="clear"></DIV>
+          <!-- END CONTENT BODY -->
+          
+        </DIV>
+        <!-- END CONTENT LEFT -->
+        
+        <!-- CONTENT RIGHT -->
+        <DIV id="content_right">
+          <DIV id="subscribe">
+            <H3>Subscribe now!</H3>
+            
+<UL class="menu">
+<LI class="leaf"><A href="http://www.linuxjournal.com/subscriptions" title="Subscribe">Subscribe</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/renew" title="Renew your subscription">Renew</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/dlissue">Free Issue</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/xstatic/subs/customer_service.html">Customer service</A></LI>
+
+</UL>
+          </DIV>
+          
+          <DIV id="block-block-44" class="block block-block"> 
+    <DIV class="content">
+    <SCRIPT type="text/javascript"><!--// <![CDATA[
+    OA_show(58146);
+// ]]> --></SCRIPT><SPAN><SCRIPT type="text/javascript"><!--// <![CDATA[
+/* openads=http://d1.openx.org bannerid=227019 zoneid=58146 source= r_id=fab1ad6ac1f29dd949148a612acf8249 r_ts=kw8sr0 */
+// ]]> --></SCRIPT><SCRIPT type="text/javascript"><!--
+google_ad_client = "pub-3600556074671070";
+/* 336x280, created 12/16/09 */
+google_ad_slot = "9991506302";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</SCRIPT>
+<SCRIPT type="text/javascript" src="./Playing with ptrace, Part I_files/show_ads.js">
+</SCRIPT><SCRIPT>google_protectAndRun("ads_core.google_render_ad", google_handleError, google_render_ad);</SCRIPT><IFRAME name="google_ads_frame" width="336" height="280" frameborder="0" src="./Playing with ptrace, Part I_files/ads(2).html" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no"></IFRAME><SCRIPT type="text/javascript" src="./Playing with ptrace, Part I_files/ag.php"></SCRIPT></SPAN><DIV id="beacon_528ec954c6" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><IMG src="./Playing with ptrace, Part I_files/lg(2).php" width="0" height="0" alt="" style="width: 0px; height: 0px;"></DIV>
+<NOSCRIPT></NOSCRIPT>  </DIV>  
+</DIV>
+<DIV id="block-views-latest_stories" class="block block-views"> 
+      <H3>The Latest</H3>
+    <DIV class="content">
+    <DIV class="view view-latest-stories"><DIV class="view-content view-content-latest-stories"><TABLE>
+ <THEAD><TR><TH class="view-cell-header view-field-node-title"><TH class="view-cell-header view-field-node-created"> </TR></THEAD>
+<TBODY>
+ <TR class="odd"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/content/google-china-weve-had-enough">Google to China: We've Had Enough</A></TD><TD class="view-field view-field-node-created">Jan-13-10</TD> </TR>
+ <TR class="even"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/content/tech-tip-start-kiosk-style-machine-running-single-x11-application">Tech Tip: Start a Kiosk Style Machine Running a Single X11 Application</A></TD><TD class="view-field view-field-node-created">Jan-12-10</TD> </TR>
+ <TR class="odd"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/video/syncing-preferences-dropbox-or-ubuntu-one">Syncing Preferences with Dropbox or Ubuntu One</A></TD><TD class="view-field view-field-node-created">Jan-11-10</TD> </TR>
+ <TR class="even"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/content/gifting-season-linux-audio-holidays">The Gifting Season: Linux Audio For The Holidays</A></TD><TD class="view-field view-field-node-created">Jan-11-10</TD> </TR>
+ <TR class="odd"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/content/using-windows-xp-virtualbox-linux">Using Windows XP in VirtualBox on Linux</A></TD><TD class="view-field view-field-node-created">Jan-07-10</TD> </TR>
+ <TR class="even"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/content/gphone-hardware-and-all">The gPhone, Hardware And All</A></TD><TD class="view-field view-field-node-created">Jan-06-10</TD> </TR>
+</TBODY>
+</TABLE>
+</DIV><DIV class="more-link"><A href="http://www.linuxjournal.com/latest">more</A></DIV></DIV>
+  </DIV>  
+</DIV>
+<DIV id="block-block-58" class="block block-block"> 
+      <H3>Newsletter</H3>
+    <DIV class="content">
+    Each week <CITE>Linux Journal</CITE> editors will tell you what's hot in the world of Linux. You will receive late breaking news, technical tips and tricks, and links to in-depth stories featured on <A href="http://www.linuxjournal.com/">www.linuxjournal.com</A>.
+
+<!-- BEGIN: Constant Contact Stylish Email Newsletter Form -->
+<DIV align="left">
+<DIV style="width:336px; background-color: #ffffff;">
+<FORM name="ccoptin" action="http://visitor.constantcontact.com/d.jsp" target="_blank" method="post" style="margin-bottom:3;">
+<FONT style="font-weight: bold; font-family:Helvetica, Arial, Verdana, sans-serif; font-size:14px; color:#2f4f4f;">Sign up for our Email Newsletter</FONT>
+<INPUT type="text" name="ea" size="35" value="" style="font-family:Helvetica, Arial, Verdana, sans-serif; font-size:10px; border:1px solid #999999;">
+<INPUT type="submit" name="go" value="GO" class="submit" style="font-family:Helvetica, Arial, Verdana, sans-serif; font-size:10px;">
+<INPUT type="hidden" name="m" value="1102084405266">
+<INPUT type="hidden" name="p" value="oi">
+</FORM>
+</DIV>
+</DIV>
+<!-- END: Constant Contact Stylish Email Newsletter Form -->  </DIV>  
+</DIV>
+<DIV id="block-views-linux_minute" class="block block-views"> 
+      <H3>Tech Tip Videos</H3>
+    <DIV class="content">
+    <DIV class="view view-linux-minute"><DIV class="view-content view-content-linux-minute"><DIV class="item-list"><UL><LI><DIV class="view-item view-item-linux-minute"><DIV class="view-field view-data-node-data-field-embed-video-field-embed-video-embed"><A href="http://www.linuxjournal.com/video/syncing-preferences-dropbox-or-ubuntu-one"><IMG src="http://a.images.blip.tv/Linuxjournal-SyncingPreferencesWithDropboxOrUbuntuOne295.jpg" width="120" height="90" alt="See video" title="See video"></A></DIV><DIV class="view-field view-data-node-title"><A href="http://www.linuxjournal.com/video/syncing-preferences-dropbox-or-ubuntu-one">Syncing Preferences with Dropbox or Ubuntu One</A></DIV><DIV class="view-field view-data-node-created">Jan-11-10</DIV></DIV>
+</LI><LI><DIV class="view-item view-item-linux-minute"><DIV class="view-field view-data-node-data-field-embed-video-field-embed-video-embed"><A href="http://www.linuxjournal.com/video/disabling-password-when-waking-laptop"><IMG src="http://a.images.blip.tv/Linuxjournal-DisablingPasswordWhenWakingALaptop569.jpg" width="120" height="90" alt="See video" title="See video"></A></DIV><DIV class="view-field view-data-node-title"><A href="http://www.linuxjournal.com/video/disabling-password-when-waking-laptop">Disabling Password When Waking a Laptop</A></DIV><DIV class="view-field view-data-node-created">Jan-04-10</DIV></DIV>
+</LI><LI><DIV class="view-item view-item-linux-minute"><DIV class="view-field view-data-node-data-field-embed-video-field-embed-video-embed"><A href="http://www.linuxjournal.com/video/activate-windows-without-losing-your-selected-text"><IMG src="http://a.images.blip.tv/Linuxjournal-ActivateWindowsWithoutLosingYourSelectedText655.jpg" width="120" height="90" alt="See video" title="See video"></A></DIV><DIV class="view-field view-data-node-title"><A href="http://www.linuxjournal.com/video/activate-windows-without-losing-your-selected-text">Activate Windows Without Losing Your Selected Text</A></DIV><DIV class="view-field view-data-node-created">Dec-31-09</DIV></DIV>
+</LI><LI><DIV class="view-item view-item-linux-minute"><DIV class="view-field view-data-node-data-field-embed-video-field-embed-video-embed"><A href="http://www.linuxjournal.com/video/rotating-backgrounds-drapes"><IMG src="http://a.images.blip.tv/Linuxjournal-RotatingBackgroundsWithDrapes213.jpg" width="120" height="90" alt="See video" title="See video"></A></DIV><DIV class="view-field view-data-node-title"><A href="http://www.linuxjournal.com/video/rotating-backgrounds-drapes">Rotating Backgrounds with Drapes</A></DIV><DIV class="view-field view-data-node-created">Dec-08-09</DIV></DIV>
+</LI></UL></DIV></DIV><DIV class="view-footer view-footer-linux-minute"><STYLE>
+p.videofoot {text-align: right; padding-bottom:0; margin-bottom:0; clear: both; padding-top: 20px;}
+</STYLE><P class="videofoot"><A href="http://www.linuxjournal.com/video">See more <CITE>Linux Journal</CITE> Videos</A></P>
+</DIV>
+</DIV>
+  </DIV>  
+</DIV>
+<DIV id="block-views-popular_recent" class="block block-views"> 
+      <H3>Recently Popular</H3>
+    <DIV class="content">
+    <DIV class="view view-popular-recent"><DIV class="view-content view-content-popular-recent"><TABLE>
+ <THEAD><TR><TH class="view-cell-header view-field-node-title"><TH class="view-cell-header view-field-votingapi-cache-vote-percent-average-value"> </TR></THEAD>
+<TBODY>
+ <TR class="odd"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/article/4622">Boot with GRUB</A></TD><TD class="view-field view-field-votingapi-cache-vote-percent-average-value"><DIV class="fivestar-widget-static fivestar-widget-static-5 clear-block"><DIV class="star star-1 star-odd star-first"><SPAN class="on">4.4321</SPAN></DIV><DIV class="star star-2 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-3 star-odd"><SPAN class="on"></SPAN></DIV><DIV class="star star-4 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-5 star-odd star-last"><SPAN class="on" style="width: 43.21%"></SPAN></DIV></DIV></TD> </TR>
+ <TR class="even"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/content/google-china-weve-had-enough">Google to China: We've Had Enough</A></TD><TD class="view-field view-field-votingapi-cache-vote-percent-average-value"><DIV class="fivestar-widget-static fivestar-widget-static-5 clear-block"><DIV class="star star-1 star-odd star-first"><SPAN class="on">5</SPAN></DIV><DIV class="star star-2 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-3 star-odd"><SPAN class="on"></SPAN></DIV><DIV class="star star-4 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-5 star-odd star-last"><SPAN class="on"></SPAN></DIV></DIV></TD> </TR>
+ <TR class="odd"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/content/using-windows-xp-virtualbox-linux">Using Windows XP in VirtualBox on Linux</A></TD><TD class="view-field view-field-votingapi-cache-vote-percent-average-value"><DIV class="fivestar-widget-static fivestar-widget-static-5 clear-block"><DIV class="star star-1 star-odd star-first"><SPAN class="on">4.8</SPAN></DIV><DIV class="star star-2 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-3 star-odd"><SPAN class="on"></SPAN></DIV><DIV class="star star-4 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-5 star-odd star-last"><SPAN class="on" style="width: 80%"></SPAN></DIV></DIV></TD> </TR>
+ <TR class="even"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/content/tech-tip-start-kiosk-style-machine-running-single-x11-application">Tech Tip: Start a Kiosk Style Machine Running a Single X11 Application</A></TD><TD class="view-field view-field-votingapi-cache-vote-percent-average-value"><DIV class="fivestar-widget-static fivestar-widget-static-5 clear-block"><DIV class="star star-1 star-odd star-first"><SPAN class="on">4.866665</SPAN></DIV><DIV class="star star-2 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-3 star-odd"><SPAN class="on"></SPAN></DIV><DIV class="star star-4 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-5 star-odd star-last"><SPAN class="on" style="width: 86.6665%"></SPAN></DIV></DIV></TD> </TR>
+ <TR class="odd"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/content/gifting-season-linux-audio-holidays">The Gifting Season: Linux Audio For The Holidays</A></TD><TD class="view-field view-field-votingapi-cache-vote-percent-average-value"><DIV class="fivestar-widget-static fivestar-widget-static-5 clear-block"><DIV class="star star-1 star-odd star-first"><SPAN class="on">4.75</SPAN></DIV><DIV class="star star-2 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-3 star-odd"><SPAN class="on"></SPAN></DIV><DIV class="star star-4 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-5 star-odd star-last"><SPAN class="on" style="width: 75%"></SPAN></DIV></DIV></TD> </TR>
+ <TR class="even"><TD class="view-field view-field-node-title"><A href="http://www.linuxjournal.com/article/9585">Validate an E-Mail Address with PHP, the Right Way</A></TD><TD class="view-field view-field-votingapi-cache-vote-percent-average-value"><DIV class="fivestar-widget-static fivestar-widget-static-5 clear-block"><DIV class="star star-1 star-odd star-first"><SPAN class="on">4.50633</SPAN></DIV><DIV class="star star-2 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-3 star-odd"><SPAN class="on"></SPAN></DIV><DIV class="star star-4 star-even"><SPAN class="on"></SPAN></DIV><DIV class="star star-5 star-odd star-last"><SPAN class="on" style="width: 50.633%"></SPAN></DIV></DIV></TD> </TR>
+</TBODY>
+</TABLE>
+</DIV><DIV class="more-link"><A href="http://www.linuxjournal.com/popular/latest">more</A></DIV></DIV>
+  </DIV>  
+</DIV>
+<DIV id="block-block-51" class="block block-block"> 
+      <H3>From the Magazine</H3>
+    <DIV class="content">
+    
+<DIV id="latestissue">
+  
+  
+  <DIV class="content">
+    <A href="http://www.linuxjournal.com/issue/190"><IMG src="./Playing with ptrace, Part I_files/cover190.small.jpg"></A>
+    <H4><A href="http://www.linuxjournal.com/issue/190">February 2010,&nbsp;#190</A></H4>
+<P class="big">
+The Linux Desktop just keeps getting better, if only it ran on Windows...
+Well KDE4 is actually getting pretty close, look inside for more on
+this extraordinary transition.
+And don't miss the interview with two of KDE's lead developers.
+Also find out about running remote applications, VPNs,
+Mutt, more command line Twittering, debugging Rails applications,
+and desktops for kids.
+</P>
+<BR>
+<P class="small">
+Also see our reviews of the Always Innovating Touchbook
+and a comparison of OpenOffice and MS Office.
+</P>
+
+
+    
+       <P><A href="http://www.linuxjournal.com/issue/190">Read this issue</A></P>
+
+  
+
+
+
+
+
+  </DIV>
+    
+</DIV>  </DIV>  
+</DIV>
+<DIV id="block-block-45" class="block block-block"> 
+    <DIV class="content">
+    <DIV id="smallbox-adblock" class="adblock smallbox-adblock">
+<SCRIPT type="text/javascript"><!--// <![CDATA[
+    OA_show(58149);
+// ]]> --></SCRIPT><A href="http://d1.openx.org/ck.php?oaparams=2__bannerid=189652__zoneid=58149__OXLCA=1__cb=2657d7c5be__r_id=bd4c7d3f00fe4ce0b615aa47bb85c957__r_ts=kw8sr0__oadest=http%3A%2F%2Fwww.linuxjournalstore.com%2F" target="_blank"><IMG src="./Playing with ptrace, Part I_files/5e1fe47a1f3185e3d11969430307b985.jpg" width="336" height="90" alt="Linux Journal Store" title="Linux Journal Store" border="0"></A><DIV id="beacon_2657d7c5be" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><IMG src="./Playing with ptrace, Part I_files/lg(3).php" width="0" height="0" alt="" style="width: 0px; height: 0px;"></DIV>
+<NOSCRIPT></NOSCRIPT>
+</DIV>
+
+
+  </DIV>  
+</DIV>
+<DIV id="block-block-49" class="block block-block"> 
+    <DIV class="content">
+    <P><IMG src="./Playing with ptrace, Part I_files/flickr.png"><A href="http://www.flickr.com/groups/linuxjournal/pool/" target="_blank">Contribute to the <CITE>Linux Journal</CITE> Flickr Pool</A><BR>
+<IMG src="./Playing with ptrace, Part I_files/twitter.png"><A href="http://twitter.com/linuxjournal" target="_blank">Follow <CITE>Linux Journal</CITE> on Twitter</A><BR>
+<IMG src="./Playing with ptrace, Part I_files/feed.png"><A href="http://www.linuxjournal.com/rss_feeds" target="_blank">Add <CITE>Linux Journal</CITE> to your RSS reader</A><BR>
+<IMG src="./Playing with ptrace, Part I_files/facebook(1).png"><A href="http://www.facebook.com/pages/Houston-TX/Linux-Journal/10098036614?ref=s" target="_blank">Meet other readers on Facebook</A><BR>
+<IMG src="./Playing with ptrace, Part I_files/wii.jpg"><A href="http://www.linuxjournal.com/content/meet-mii">Get <CITE>Linux Journal</CITE> Miis</A></P>
+  </DIV>  
+</DIV>
+<DIV id="block-block-59" class="block block-block"> 
+    <DIV class="content">
+    <SCRIPT type="text/javascript"><!--
+google_ad_client = "pub-3600556074671070";
+google_ad_width = 300;
+google_ad_height = 250;
+google_ad_format = "300x250_as";
+google_ad_type = "text_image";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "ffffff";
+google_color_link = "cc0000";
+google_color_url = "555555";
+google_color_text = "000000";
+//--></SCRIPT><SCRIPT type="text/javascript" src="./Playing with ptrace, Part I_files/show_ads.js">
+</SCRIPT><SCRIPT>google_protectAndRun("ads_core.google_render_ad", google_handleError, google_render_ad);</SCRIPT><IFRAME name="google_ads_frame" width="300" height="250" frameborder="0" src="./Playing with ptrace, Part I_files/ads.html" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no"></IFRAME>  </DIV>  
+</DIV>
+        </DIV>
+        <!-- END CONTENT RIGHT -->
+      
+       <DIV class="clear"></DIV>
+      </DIV>
+      <!-- CONTENT END =================================================== -->
+
+
+
+      <!-- FOOTER START ================================================== -->
+      <DIV id="footer">
+        
+<UL class="menu">
+<LI class="leaf"><A href="http://www.linuxjournal.com/subscriptions" title="Subscribe">Subscribe</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/advertising" title="Advertise with us!">Advertise</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/xstatic/aboutus" title="Contact us">Contact us</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/content/privacy-statement">Privacy statement</A></LI>
+<LI class="leaf"><A href="mailto:webmaster@linuxjournal.com">Report problems</A></LI>
+<LI class="leaf"><A href="http://www.linuxjournal.com/rss_feeds">RSS Feeds</A></LI>
+
+</UL>
+        <P class="copyright">Copyright © 1994 - 2009 <A href="http://www.linuxjournal.com/"><CITE>Linux Journal</CITE></A>. All rights reserved.</P>
+                <P class="message">
+</P>
+        
+              </DIV>
+      <!-- FOOTER END ==================================================== -->
+
+          </DIV>
+  </DIV>
+
+
+</BODY></HTML>

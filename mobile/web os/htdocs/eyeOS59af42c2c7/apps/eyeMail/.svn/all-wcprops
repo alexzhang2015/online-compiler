@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/22/trunk/mobile/web%20os/htdocs/eyeOS59af42c2c7/apps/eyeMail
+END
+info.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/22/trunk/mobile/web%20os/htdocs/eyeOS59af42c2c7/apps/eyeMail/info.xml
+END
+class.phpmailer.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/22/trunk/mobile/web%20os/htdocs/eyeOS59af42c2c7/apps/eyeMail/class.phpmailer.php
+END
+app.eyecode
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/22/trunk/mobile/web%20os/htdocs/eyeOS59af42c2c7/apps/eyeMail/app.eyecode
+END
+class.smtp.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/22/trunk/mobile/web%20os/htdocs/eyeOS59af42c2c7/apps/eyeMail/class.smtp.php
+END
+preferences.eyecode
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/22/trunk/mobile/web%20os/htdocs/eyeOS59af42c2c7/apps/eyeMail/preferences.eyecode
+END
+mail.eyecode
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/22/trunk/mobile/web%20os/htdocs/eyeOS59af42c2c7/apps/eyeMail/mail.eyecode
+END
+events.eyecode
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/22/trunk/mobile/web%20os/htdocs/eyeOS59af42c2c7/apps/eyeMail/events.eyecode
+END

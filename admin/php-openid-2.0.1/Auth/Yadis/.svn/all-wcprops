@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/Yadis
+END
+ParanoidHTTPFetcher.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/Yadis/ParanoidHTTPFetcher.php
+END
+ParseHTML.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/Yadis/ParseHTML.php
+END
+HTTPFetcher.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/Yadis/HTTPFetcher.php
+END
+XML.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/Yadis/XML.php
+END
+XRDS.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/Yadis/XRDS.php
+END
+XRI.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/Yadis/XRI.php
+END
+PlainHTTPFetcher.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/Yadis/PlainHTTPFetcher.php
+END
+Yadis.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/Yadis/Yadis.php
+END
+Manager.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/Yadis/Manager.php
+END
+Misc.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/Yadis/Misc.php
+END
+XRIRes.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/8/trunk/admin/php-openid-2.0.1/Auth/Yadis/XRIRes.php
+END

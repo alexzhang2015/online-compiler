@@ -1,0 +1,17 @@
+<html>
+<head>
+
+<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+<style type="text/css">
+body {background-image:url('/images/i_am_busy.jpg');
+background-repeat:no-repeat;
+background-color:#d0e4fe;
+background-position:center center;
+height:100%;                 <!--to handle the firefox position show problems! ,-->
+}
+</style>
+</head>
+<body>
+
+</body>
+</html>
